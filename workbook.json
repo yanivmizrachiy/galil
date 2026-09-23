@@ -3,7 +3,7 @@
  "title": "גליל — חוברת עבודה",
  "subtitle": "זיהוי, רכיבים, שטח בסיס ונפח",
  "accent": "#1d4ed8",
- "pageCount": 43,
+ "pageCount": 46,
  "stages": [
   {
    "title": "צורות, גופים וזיהוי גליל",
@@ -56,9 +56,14 @@
    "to": 40
   },
   {
-   "title": "מעטפת וחתך צירי — משימות משלבות",
+   "title": "מעטפת, שטח פנים ופריסה",
    "from": 41,
    "to": 43
+  },
+  {
+   "title": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
+   "from": 44,
+   "to": 46
   }
  ],
  "forbiddenTerms": [],
@@ -516,31 +521,64 @@
   {
    "n": 41,
    "file": "page-41.html",
+   "title": "מעטפת הגליל — מלבן ושטחה",
+   "layout": "br-y39",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "subtopic": "מעטפת הגליל: מלבן ושטחו",
+   "level": 3,
+   "kind": "worksheet",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html"
+  },
+  {
+   "n": 42,
+   "file": "page-42.html",
+   "title": "שטח הפנים של הגליל",
+   "layout": "br-y40",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "subtopic": "שטח הפנים של הגליל",
+   "level": 4,
+   "kind": "worksheet",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html"
+  },
+  {
+   "n": 43,
+   "file": "page-43.html",
+   "title": "פריסה ומגלגלים דף לגליל",
+   "layout": "br-y41",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "subtopic": "פריסת הגליל",
+   "level": 5,
+   "kind": "worksheet",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html"
+  },
+  {
+   "n": 44,
+   "file": "page-44.html",
    "title": "מגלגלים דף לגליל",
    "layout": "moe8-p19-1",
-   "stage": "מעטפת וחתך צירי — משימות משלבות",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
    "subtopic": "מעטפת כמלבן — גלגול דף לגליל",
    "level": 6,
    "kind": "curriculum",
    "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-019.webp"
   },
   {
-   "n": 42,
-   "file": "page-42.html",
+   "n": 45,
+   "file": "page-45.html",
    "title": "נפח ושטח מעטפת",
    "layout": "moe8-p14-1",
-   "stage": "מעטפת וחתך צירי — משימות משלבות",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
    "subtopic": "שטח מעטפת ונפח; חתך צירי",
    "level": 5,
    "kind": "curriculum",
    "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-014.webp"
   },
   {
-   "n": 43,
-   "file": "page-43.html",
+   "n": 46,
+   "file": "page-46.html",
    "title": "משולשים בתוך גליל",
    "layout": "moe8-p15-1",
-   "stage": "מעטפת וחתך צירי — משימות משלבות",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
    "subtopic": "חתך צירי ומשולשים בתוך גליל",
    "level": 8,
    "kind": "curriculum",
@@ -1311,8 +1349,86 @@
    "curriculum": null
   },
   {
-   "id": "moe8-p19-q7",
+   "id": "br-y39.1",
    "page": 41,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html#br-y39.1",
+   "curriculum": null
+  },
+  {
+   "id": "br-y39.2",
+   "page": 41,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html#br-y39.2",
+   "curriculum": null
+  },
+  {
+   "id": "br-y39.3",
+   "page": 41,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html#br-y39.3",
+   "curriculum": null
+  },
+  {
+   "id": "br-y39.4",
+   "page": 41,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html#br-y39.4",
+   "curriculum": null
+  },
+  {
+   "id": "br-y40.1",
+   "page": 42,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html#br-y40.1",
+   "curriculum": null
+  },
+  {
+   "id": "br-y40.2",
+   "page": 42,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html#br-y40.2",
+   "curriculum": null
+  },
+  {
+   "id": "br-y40.3",
+   "page": 42,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html#br-y40.3",
+   "curriculum": null
+  },
+  {
+   "id": "br-y40.4",
+   "page": 42,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html#br-y40.4",
+   "curriculum": null
+  },
+  {
+   "id": "br-y40.5",
+   "page": 42,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html#br-y40.5",
+   "curriculum": null
+  },
+  {
+   "id": "br-y41.1",
+   "page": 43,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html#br-y41.1",
+   "curriculum": null
+  },
+  {
+   "id": "br-y41.2",
+   "page": 43,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html#br-y41.2",
+   "curriculum": null
+  },
+  {
+   "id": "br-y41.3",
+   "page": 43,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html#br-y41.3",
+   "curriculum": null
+  },
+  {
+   "id": "br-y41.4",
+   "page": 43,
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html#br-y41.4",
+   "curriculum": null
+  },
+  {
+   "id": "moe8-p19-q7",
+   "page": 44,
    "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-019.webp",
    "curriculum": "moe8-p19-q7",
    "curriculumProof": {
@@ -1328,7 +1444,7 @@
   },
   {
    "id": "moe8-p14-q1",
-   "page": 42,
+   "page": 45,
    "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-014.webp",
    "curriculum": "moe8-p14-q1",
    "curriculumProof": {
@@ -1344,7 +1460,7 @@
   },
   {
    "id": "moe8-p15-q4",
-   "page": 43,
+   "page": 46,
    "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-015.webp",
    "curriculum": "moe8-p15-q4",
    "curriculumProof": {

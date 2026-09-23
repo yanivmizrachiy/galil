@@ -1,29 +1,91 @@
 <!doctype html>
-<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>נפח ושטח מעטפת</title><link rel="stylesheet" href="styles.css">
-<style>
-main[data-layout="moe8-p14-1"] .curriculum-heading{margin-top:4.5mm}
-main[data-layout="moe8-p14-1"] .task{margin:1mm 0 0}
-main[data-layout="moe8-p14-1"] .cur-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6mm;margin-top:2mm}
-main[data-layout="moe8-p14-1"] .cur-part{border:1px solid #e2e8f0;border-radius:3mm;padding:3mm 3.5mm;background:#fff;display:flex;flex-direction:column}
-main[data-layout="moe8-p14-1"] .cur-data{margin:0;font-weight:600;line-height:1.7;min-height:13mm}
-main[data-layout="moe8-p14-1"] .cur-fig{margin:2mm 0 0;text-align:center}
-main[data-layout="moe8-p14-1"] .cur-fig img{height:64mm;width:auto;max-width:100%;display:inline-block}
-main[data-layout="moe8-p14-1"] .cur-work{margin-top:3mm;height:124mm;border:1px dashed #cbd5e1;border-radius:2.5mm;padding:2mm 3mm;background:repeating-linear-gradient(to bottom,#fff 0,#fff 7.5mm,#e2e8f0 7.5mm,#e2e8f0 7.8mm)}
-main[data-layout="moe8-p14-1"] .cur-work::before{content:"מרחב עבודה / חישוב";display:block;color:#64748b;font-size:11px;font-weight:500}
-</style>
-</head><body><main class="a4-page" data-layout="moe8-p14-1">
-<header class="page-header"><h1 class="page-title">נפח ושטח מעטפת</h1><div class="page-number" aria-label="עמוד 42">42</div></header>
-<p class="curriculum-heading">שאלה מתוך תוכנית הלימודים</p>
-<section class="task"><div class="task-row" data-q="moe8-p14-q1" data-curriculum="moe8-p14-q1"><div class="task-num q-bullet" aria-hidden="true"></div><div class="task-body">
-<p class="instruction">חשבו את נפח הגלילים ושטחי המעטפת שלהם על פי הנתונים:</p>
-<div class="cur-cols">
-<div class="cur-part" data-sub=""><p class="cur-data"><span class="sub-bullet" aria-hidden="true"></span><span dir="ltr">r = 3</span> ס״מ<br><span dir="ltr">h = 8</span> ס״מ</p>
-<figure class="cur-fig"><img src="assets/curriculum/fig-p14-3-a.png" alt="גליל שבו מסומן הרדיוס r של הבסיס העליון"></figure>
-<div class="cur-work"></div></div>
-<div class="cur-part" data-sub=""><p class="cur-data"><span class="sub-bullet" aria-hidden="true"></span>שטח <span dir="ltr">ABCD</span> הוא 60 סמ״ר,<br><span dir="ltr">r = 5</span> ס״מ</p>
-<figure class="cur-fig"><img src="assets/curriculum/fig-p14-3-b.png" alt="גליל ובו המלבן ABCD: AB קוטר הבסיס העליון, DC קוטר הבסיס התחתון, ומסומן הרדיוס r"></figure>
-<div class="cur-work"></div></div>
-</div>
-</div></div></section>
-<footer class="footer"><span>שם: ____________________</span><span>תאריך: ____________________</span></footer>
-</main></body></html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>שטח הפנים של הגליל</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+  main[data-layout="br-y40"] .sentence .blank{min-width:22mm}
+  main[data-layout="br-y40"] .formula{margin-top:2.5mm;text-align:center;font-size:17px}
+  main[data-layout="br-y40"] .formula .blank{min-width:14mm}
+  main[data-layout="br-y40"] .classify-table td{padding:3mm 2.5mm}
+  main[data-layout="br-y40"] .unit-note{margin:1.5mm 0 0;color:#475569;font-size:14px}
+  main[data-layout="br-y40"] .calc-line{margin-top:2.5mm;font-weight:600}
+  main[data-layout="br-y40"] .calc-line .blank{min-width:14mm}
+  main[data-layout="br-y40"] .choice-row .choice-pill{font-size:17px}
+  main[data-layout="br-y40"] [data-sub]{margin-top:2.5mm;line-height:1.6}
+  main[data-layout="br-y40"] [data-sub] .blank{min-width:14mm}
+  </style>
+</head>
+<body>
+<main class="a4-page" data-layout="br-y40">
+  <header class="page-header">
+    <h1 class="page-title">שטח הפנים של הגליל</h1>
+    <div class="page-number" aria-label="עמוד 42">42</div>
+  </header>
+
+  <div class="anchor">שטח הפנים של הגליל הוא סכום שני הבסיסים והמעטפת. לכן שטח פנים = <span dir="ltr">2·(π·r²) + 2·π·r·h</span>.</div>
+
+  <section class="task">
+    <div class="task-row" data-q="br-y40.1">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
+      <div class="task-body">
+        <p class="instruction">השלימו בעזרת מחסן המילים ואת הנוסחה.</p>
+        <div class="word-bank"><span class="word">בסיסים</span><span class="word">מעטפת</span><span class="word">פנים</span></div>
+        <div class="sentence-list">
+          <div class="sentence">שטח ה<span class="blank"></span> של הגליל בנוי משני ה<span class="blank"></span> ומן ה<span class="blank"></span>.</div>
+        </div>
+        <div class="thinking formula">שטח פנים = 2 · שטח בסיס + שטח מעטפת = <span dir="ltr">2·π·r² + <span class="blank"></span>·π·r·h</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="task">
+    <div class="task-row" data-q="br-y40.2">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
+      <div class="task-body">
+        <p class="instruction">חשבו את שטח הפנים לכל גליל.</p>
+        <table class="classify-table">
+          <tr><th>רדיוס <span dir="ltr">r</span></th><th>גובה <span dir="ltr">h</span></th><th>שטח בסיסים <span dir="ltr">2·π·r²</span></th><th>שטח מעטפת <span dir="ltr">2·π·r·h</span></th><th>שטח פנים</th></tr>
+          <tr><td>4 ס״מ</td><td>7 ס״מ</td><td><span dir="ltr">____π</span></td><td><span dir="ltr">____π</span></td><td><span dir="ltr">____π</span></td></tr>
+          <tr><td>3 ס״מ</td><td>5 ס״מ</td><td><span dir="ltr">____π</span></td><td><span dir="ltr">____π</span></td><td><span dir="ltr">____π</span></td></tr>
+        </table>
+        <p class="unit-note">יחידת השטח בשלוש העמודות השמאליות היא ס״מ².</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="task thinking">
+    <div class="task-row" data-q="br-y40.3">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
+      <div class="task-body">
+        <p class="instruction">קופסת שימורים גלילית סגורה: רדיוס הבסיס 5 ס״מ וגובהה 8 ס״מ. כמה פח דרוש לכיסוי כל פני הקופסה?</p>
+        <div class="calc-line" dir="ltr"><span dir="rtl">שטח פנים</span> = 2·π·5² + 2·π·5·8 = <span class="blank"></span>π + <span class="blank"></span>π = <span class="blank"></span>π <span dir="rtl">ס״מ²</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="task">
+    <div class="task-row" data-q="br-y40.4">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
+      <div class="task-body">
+        <p class="instruction">בחרו את הנוסחה הנכונה לשטח הפנים של גליל.</p>
+        <div class="choice-row"><span class="choice-pill" dir="ltr">π·r² + 2·π·r·h</span><span class="choice-pill" dir="ltr">2·π·r² + 2·π·r·h</span><span class="choice-pill" dir="ltr">2·π·r·h</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="task thinking">
+    <div class="task-row" data-q="br-y40.5">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
+      <div class="task-body">
+        <p class="instruction">דיון בהשתנות שטח הפנים.</p>
+        <div data-sub><span class="sub-bullet" aria-hidden="true"></span>מכפילים את הרדיוס פי 2 (הגובה קבוע). שטח הבסיסים <span dir="ltr">2·π·r²</span> גדל פי <span class="blank"></span>, שטח המעטפת <span dir="ltr">2·π·r·h</span> גדל פי <span class="blank"></span>, ולכן שטח הפנים כולו אינו גדל פי מספר אחד קבוע: <b style="white-space:nowrap">נכון / לא נכון</b>.</div>
+        <div data-sub><span class="sub-bullet" aria-hidden="true"></span>מגדילים את הגובה ב־1 ס״מ (הרדיוס קבוע). שטח הבסיסים: <b style="white-space:nowrap">גדל / קטן / לא משתנה</b>. שטח המעטפת גדל ב־<span class="blank" style="min-width:22mm"></span> ס״מ² (כתבו ביטוי בעזרת <span dir="ltr">r</span>).</div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
