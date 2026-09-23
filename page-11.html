@@ -7,6 +7,10 @@
   <script>MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, chtml: { fontURL: 'vendor/mathjax/tex-font/chtml/woff2' } };</script>
   <script id="MathJax-script" async src="vendor/mathjax/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="styles.css">
+  <style>
+  main.a4-page[data-layout="y11"]{--a4-work-extra:22mm}
+  main[data-layout="y11"] .classify-table td{padding:2mm 2.5mm}
+  </style>
 </head>
 <body>
 <main class="a4-page" data-layout="y11">
@@ -15,19 +19,19 @@
     <div class="page-number" aria-label="עמוד 11">11</div>
   </header>
 
-  <div class="anchor">\(\pi\) הוא מספר מדויק. כאשר משתמשים ב־\(3.14\) כקירוב, כותבים \(\pi \approx 3.14\) ולא שוויון.</div>
+  <div class="anchor">\(\pi\) הוא מספר מדויק. כאשר משתמשים ב־\(3.14\) כקירוב, כותבים <span dir="ltr">\(\pi \approx 3.14\)</span> ולא שוויון.</div>
 
   <section class="task">
     <div class="task-row" data-q="y11.1"><div class="task-num q-bullet" aria-hidden="true"></div><div class="task-body">
       <p class="instruction">סמנו בכל שורה: תקין / לא תקין.</p>
       <table class="classify-table">
         <tr><th>כתיבה או טענה</th><th>תקין</th><th>לא תקין</th></tr>
-        <tr><td dir="ltr">\(\pi = 3.14\)</td><td>○</td><td>○</td></tr>
-        <tr><td dir="ltr">\(\pi \approx 3.14\)</td><td>○</td><td>○</td></tr>
-        <tr><td dir="ltr">\(\pi &gt; 3\)</td><td>○</td><td>○</td></tr>
-        <tr><td><span dir="ltr">\(C \div d = \pi\)</span> במעגל מתמטי</td><td>○</td><td>○</td></tr>
-        <tr><td>במדידה ממשית <span dir="ltr">\(C \div d\)</span> תמיד מתקבל בדיוק \(\pi\)</td><td>○</td><td>○</td></tr>
-        <tr><td>\(3.14\) הוא קירוב ל־\(\pi\)</td><td>○</td><td>○</td></tr>
+        <tr><td dir="ltr">\(2\pi = 6.28\)</td><td>○</td><td>○</td></tr>
+        <tr><td dir="ltr">\(2\pi \approx 6.28\)</td><td>○</td><td>○</td></tr>
+        <tr><td dir="ltr">\(\pi &lt; 3.2\)</td><td>○</td><td>○</td></tr>
+        <tr><td>בכל גליל, היקף הבסיס מחולק בקוטר הבסיס שווה בדיוק ל־\(\pi\)</td><td>○</td><td>○</td></tr>
+        <tr><td>כשמודדים היקף וקוטר של פחית אמיתית, המנה שלהם יוצאת תמיד בדיוק \(\pi\)</td><td>○</td><td>○</td></tr>
+        <tr><td dir="ltr">\(3.14 &lt; \pi\)</td><td>○</td><td>○</td></tr>
       </table>
     </div></div>
   </section>
@@ -37,7 +41,7 @@
       <p class="instruction">בחרו את הסימן המתאים.</p>
       <div class="sentence-list">
         <div class="sentence" style="text-align:center;font-size:24px"><span dir="ltr">\(\pi\quad\underline{\hspace{12mm}}\quad3.14\)</span></div>
-        <div class="sentence" style="display:flex;justify-content:center;gap:10mm"><b class="choice-pill">\(=\)</b><b class="choice-pill">\(\approx\)</b><b class="choice-pill">\(&gt;\)</b></div>
+        <div class="sentence" style="display:flex;justify-content:center;gap:10mm"><b class="choice-pill">\(=\)</b><b class="choice-pill">\(\approx\)</b><b class="choice-pill">\(&lt;\)</b></div>
       </div>
     </div></div>
   </section>
@@ -46,9 +50,9 @@
     <div class="task-row" data-q="y11.3"><div class="task-num q-bullet" aria-hidden="true"></div><div class="task-body">
       <p class="instruction">בחרו את המשפט הנכון.</p>
       <div class="sentence-list">
-        <div class="sentence"><b>א.</b> \(3.14\) הוא הערך המדויק של \(\pi\).</div>
-        <div class="sentence"><b>ב.</b> \(3.14\) הוא קירוב שימושי ל־\(\pi\).</div>
-        <div class="sentence"><b>ג.</b> \(\pi\) קטן מ־\(3\).</div>
+        <div class="sentence"><span class="mark-box"></span> \(3.14\) הוא הערך המדויק של \(\pi\).</div>
+        <div class="sentence"><span class="mark-box"></span> \(3.14\) הוא קירוב שימושי ל־\(\pi\).</div>
+        <div class="sentence"><span class="mark-box"></span> \(\pi\) קטן מ־\(3\).</div>
       </div>
     </div></div>
   </section>

@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>מה באמת ידוע מן השרטוט?</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+  main[data-layout="y7"] .fig7{min-height:0;padding:2mm}
+  main[data-layout="y7"] .fig7 svg{height:64mm}
+  main[data-layout="y7"] .classify-table td{padding:3mm 2.5mm}
+  main[data-layout="y7"] .sentence-list .sentence{padding:2.6mm 0}
+  main[data-layout="y7"] .read-data{padding:3mm 0 1mm;border-bottom:0}
+  main[data-layout="y7"] .read-data .blank{min-width:18mm}
+  </style>
 </head>
 <body>
 <main class="a4-page" data-layout="y7">
@@ -20,7 +28,7 @@
       <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
         <p class="instruction">קראו את הנתונים המסומנים בשרטוט.</p>
-        <div class="shape-card" style="min-height:82mm">
+        <div class="shape-card fig7">
           <svg viewBox="0 0 430 260" role="img" aria-label="גליל עם רדיוס 3 סנטימטר וגובה 8 סנטימטר">
             <ellipse cx="215" cy="55" rx="92" ry="27" fill="#fff" stroke="#111827" stroke-width="3"/>
             <line x1="123" y1="55" x2="123" y2="215" stroke="#111827" stroke-width="3"/>
@@ -29,11 +37,12 @@
             <path d="M123 215 A92 27 0 0 1 307 215" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="7 5"/>
             <circle cx="215" cy="55" r="4" fill="#111827"/>
             <line x1="215" y1="55" x2="307" y2="55" stroke="#1d4ed8" stroke-width="4"/>
-            <text x="254" y="43" font-size="18">r = 3 ס״מ</text>
+            <text x="250" y="51" text-anchor="middle" font-size="17" font-weight="600" fill="#1d4ed8" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">r = 3 ס״מ</text>
             <line x1="215" y1="55" x2="215" y2="215" stroke="#d97706" stroke-width="4"/>
-            <text x="225" y="143" font-size="18">h = 8 ס״מ</text>
+            <text x="262" y="143" text-anchor="middle" font-size="17" font-weight="600" fill="#b45309" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">h = 8 ס״מ</text>
           </svg>
         </div>
+        <div class="sentence read-data">רדיוס הבסיס: <span class="blank"></span> ס״מ &nbsp;&nbsp;&nbsp; גובה הגליל: <span class="blank"></span> ס״מ</div>
       </div>
     </div>
   </section>
@@ -42,13 +51,13 @@
     <div class="task-row" data-q="y7.2">
       <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
-        <p class="instruction">סמנו בכל שורה: ניתן לדעת או לא ניתן לדעת.</p>
+        <p class="instruction">סמנו בכל שורה: נכון או לא נכון.</p>
         <table class="classify-table">
-          <tr><th>מידע</th><th>ניתן לדעת</th><th>לא ניתן לדעת</th></tr>
-          <tr><td>קוטר הבסיס הוא 6 ס״מ.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
-          <tr><td>גובה הגליל הוא 8 ס״מ.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
-          <tr><td>רוחב האליפסה כפי שהיא נראית על הדף הוא קוטר הבסיס.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
-          <tr><td>אורך קטע אלכסוני שלא סומן במספר.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
+          <tr><th>טענה</th><th>נכון</th><th>לא נכון</th></tr>
+          <tr><td>מן הנתונים אפשר לדעת שקוטר הבסיס הוא 6 ס״מ.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
+          <tr><td>מן הנתונים אפשר לדעת שגובה הגליל הוא 8 ס״מ.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
+          <tr><td>את קוטר הבסיס אפשר למצוא במדידת רוחב האליפסה בסרגל.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
+          <tr><td>אורך של קטע שלא סומן בשרטוט אפשר למצוא במדידה בסרגל.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
           <tr><td>אפשר לחשב את שטח הבסיס בעזרת ידע קודם במעגל.</td><td><span class="mark-box"></span></td><td><span class="mark-box"></span></td></tr>
         </table>
       </div>
@@ -59,7 +68,7 @@
     <div class="task-row" data-q="y7.3">
       <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
-        <p class="instruction">בחרו את הכלל הנכון.</p>
+        <p class="instruction">בחרו את האפשרות הנכונה בכל שורה.</p>
         <div class="sentence-list">
           <div class="sentence"><b>מודדים כל קטע שנראה בשרטוט / משתמשים רק בנתונים ובקשרים מתמטיים.</b></div>
           <div class="sentence">בסיס שנראה כאליפסה בשרטוט הוא מבחינה מתמטית: <b>אליפסה / עיגול</b>.</div>
