@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>חוברת הגליל</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;background:#f4f7fb;font-family:Arial,sans-serif;color:#172033}
+    .bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #d9e2ef;padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .title{font-weight:800;font-size:18px;margin-inline-end:12px} .sub{font-size:13px;color:#52627a}
+    button,a,input{font:inherit} button,.link{border:1px solid #b9c8da;background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;text-decoration:none;color:#172033}
+    button:hover,.link:hover{background:#eef4fb} input{width:72px;border:1px solid #b9c8da;border-radius:9px;padding:8px;text-align:center}
+    .frame-wrap{max-width:1050px;margin:14px auto;padding:0 10px} iframe{display:block;width:100%;height:calc(100vh - 92px);min-height:760px;border:1px solid #ced9e8;border-radius:14px;background:#fff;box-shadow:0 8px 30px rgba(42,61,89,.08)}
+    @media(max-width:700px){.title{width:100%;text-align:center} .sub{display:none} iframe{height:calc(100vh - 135px);min-height:620px}}
+  </style>
+</head>
+<body>
+  <nav class="bar" aria-label="ניווט בחוברת">
+    <span class="title">חוברת הגליל</span><span class="sub">כל דפי הגליל ברצף אחד</span>
+    <button id="prev" type="button">הקודם</button>
+    <span>עמוד <input id="page" type="number" min="1" max="38" value="1" inputmode="numeric"> מתוך 38</span>
+    <button id="next" type="button">הבא</button>
+    <a id="open" class="link" href="page-1.html" target="_blank" rel="noopener">פתח דף מלא</a>
+    <a class="link" href="https://yanivmizrachiy.github.io/razpages/workbooks/index.html">כל החוברות</a>
+  </nav>
+  <div class="frame-wrap"><iframe id="sheet" title="חוברת הגליל — עמוד 1" src="page-1.html"></iframe></div>
+  <script>
+    const total=38;
+    const input=document.getElementById('page'), frame=document.getElementById('sheet'), open=document.getElementById('open');
+    function go(n){n=Math.max(1,Math.min(total,Number(n)||1));input.value=n;const u=`page-${n}.html`;frame.src=u;frame.title=`חוברת הגליל — עמוד ${n}`;open.href=u;history.replaceState(null,'',`#page=${n}`);}
+    document.getElementById('prev').onclick=()=>go(Number(input.value)-1);
+    document.getElementById('next').onclick=()=>go(Number(input.value)+1);
+    input.onchange=()=>go(input.value);
+    const m=location.hash.match(/page=(\d+)/); if(m) go(m[1]);
+  </script>
+</body>
+</html>
