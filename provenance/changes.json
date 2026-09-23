@@ -1,0 +1,1237 @@
+{
+ "count": 124,
+ "changes": [
+  {
+   "layout": null,
+   "qid": "moe8-p17-q6",
+   "type": "official-presentation",
+   "before": "",
+   "after": "'עד קודקוד הרוט' → 'עד קודקוד החרוט' (a letter ח is missing)",
+   "reason": "RULES §5 allowed presentation change",
+   "by": "cur:galil"
+  },
+  {
+   "layout": null,
+   "qid": "moe8-p17-q6",
+   "type": "official-presentation",
+   "before": "",
+   "after": "'חרוט .' / 'הסבירו .': a stray space before the full stop",
+   "reason": "RULES §5 allowed presentation change",
+   "by": "cur:galil"
+  },
+  {
+   "layout": null,
+   "qid": "moe8-p17-q6",
+   "type": "official-presentation",
+   "before": "",
+   "after": "'אפשרות א ':' / 'אפשרות ב ':': fix the bidi punctuation to 'אפשרות א':' / 'אפשרות ב':'",
+   "reason": "RULES §5 allowed presentation change",
+   "by": "cur:galil"
+  },
+  {
+   "layout": "y21",
+   "finalPage": 23,
+   "type": "dedupe-vary",
+   "qid": "y21.4",
+   "before": "השלימו את היחס. [B: 10 → 20] ולכן [V: 40 → ____]",
+   "after": "הגובה נשאר קבוע. השלימו את היחס. [B: 15 → 45] ס״מ² ולכן [V: 60 → ____] ס״מ³",
+   "reason": "The item restated y21.2 exactly (B=10→V=40, B=20→V=80 with h=4) and relied on h being fixed without saying so. New data uses a ×3 ratio (y21.3 already covers ×2). Solution: V = 180 ס״מ³ (h = 4 in both states).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y22",
+   "finalPage": 24,
+   "type": "other",
+   "qid": "",
+   "before": "<title> and <h1>: שטח בסיס · גובה",
+   "after": "<title> and <h1>: חישוב ישיר ועבודה לאחור",
+   "reason": "Page 19 has the identical title. The new title describes the page (direct calculation, then working backwards). workbook.json pages[n=22].title must be synced.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y22",
+   "finalPage": 24,
+   "type": "dedupe-vary",
+   "qid": "y22.1",
+   "before": "rows 10 ס״מ²·4 ס״מ; 15 ס״מ²·6 ס״מ; 12 ס״מ²·7 ס״מ",
+   "after": "rows 14 ס״מ²·3 ס״מ; 9 ס״מ²·8 ס״מ; 11 ס״מ²·6 ס״מ",
+   "reason": "Row 1 repeated y21.2 row 1 (10·4), row 2 repeated y20.2 (15·6=90), and row 3 (12·7=84) printed the answer to y22.3 (V=84, h=7 → B=12). New answers: 42, 72, 66 ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y22",
+   "finalPage": 24,
+   "type": "fix-wording",
+   "qid": "y22.2",
+   "before": "… B = 16 ס״מ² → h = 96 ÷ 16 = ____ ס״מ",
+   "after": "… B = 16 ס״מ² ← h = 96 ÷ 16 = ____ ס״מ",
+   "reason": "Bidi display bug: in the RTL line the → arrow pointed back toward the given data. ← points in the reading direction.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y22",
+   "finalPage": 24,
+   "type": "fix-wording",
+   "qid": "y22.3",
+   "before": "… h = 7 ס״מ → B = 84 ÷ 7 = ____ ס״מ²",
+   "after": "… h = 7 ס״מ ← B = 84 ÷ 7 = ____ ס״מ²",
+   "reason": "Same RTL arrow-direction fix.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y23",
+   "finalPage": 19,
+   "type": "fix-wording",
+   "qid": "",
+   "before": "anchor: השתמשו בעובדות: <span dir=\"ltr\">1 דצ״מ³ = 1000 ס״מ³</span> ו־<span dir=\"ltr\">1 מ׳³ = 1000 דצ״מ³</span>.",
+   "after": "anchor: השתמשו בעובדות: 1 דצ״מ³ = 1000 ס״מ³ ו־1 מ׳³ = 1000 דצ״מ³.",
+   "reason": "Bidi display bug: Hebrew units inside dir=ltr spans reordered the facts, which displayed as 'דצ״מ³ = 1000 ס״מ³ 1'. As plain RTL text they now read correctly (verified in the screenshot).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y23",
+   "finalPage": 19,
+   "type": "other",
+   "qid": "y23.2",
+   "before": "בחרו את ההמרה הנכונה. rows: [1 דצ״מ³] [→] (1000 ס״מ³) / [1 מ׳³] [→] (1000 דצ״מ³), one pill per row",
+   "after": "בכל שורה בחרו את ההמרה הנכונה. rows: 1 דצ״מ³ = (10 ס״מ³)(100 ס״מ³)(1000 ס״מ³) / 1 מ׳³ = (10 דצ״מ³)(100 דצ״מ³)(1000 דצ״מ³)",
+   "reason": "It was not a real choice (one printed option per row, and the → pointed backwards in RTL). Now there is exactly one correct option per row (1000), and the distractors are the linear (×10) and square (×100) misconceptions.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y23",
+   "finalPage": 19,
+   "type": "dedupe-remove",
+   "qid": "y23.3",
+   "before": "בחרו את היחידה המתאימה לנפח. (מ׳ / מ׳² / מ׳³)",
+   "after": "(removed)",
+   "reason": "Same instruction and task as y17.2 (and y18.2, y19.2); it is the fourth 'choose the unit of volume' item in the book.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y23",
+   "finalPage": 19,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 50mm (shared styles.css)",
+   "after": "<style>main.a4-page[data-layout=\"y23\"]{--a4-work-extra:78mm}</style> in the page head",
+   "reason": "Rebalanced the hole left by the removal: larger work area, about 20 mm free at the bottom.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y24",
+   "finalPage": 20,
+   "type": "fix-wording",
+   "qid": "",
+   "before": "anchor: השתמשו בקשרים: <span dir=\"ltr\">1 ס״מ³ = 1 מ״ל</span>, <span dir=\"ltr\">1000 ס״מ³ = 1 ליטר</span>, <span dir=\"ltr\">1 דצ״מ³ = 1 ליטר</span>.",
+   "after": "anchor: השתמשו בקשרים: 1 ס״מ³ = 1 מ״ל, 1000 ס״מ³ = 1 ליטר, 1 דצ״מ³ = 1 ליטר.",
+   "reason": "Bidi display bug: the facts displayed as 'ס״מ³ = 1 מ״ל 1'. Removing dir=ltr fixes the reading order.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y24",
+   "finalPage": 20,
+   "type": "other",
+   "qid": "y24.2",
+   "before": "התאימו בין יחידות שוות. rows of pre-printed pairs: (1 ס״מ³)↔(1 מ״ל), (1000 ס״מ³)↔(1 ליטר), (1 דצ״מ³)↔(1 ליטר)",
+   "after": "התאימו בין גדלים שווים: בכל שורה השלימו גודל מתוך המחסן. bank: 500 מ״ל · 1 מ״ל · 1 ליטר; rows: (1 ס״מ³) = ____, (1000 ס״מ³) = ____, (0.5 ליטר) = ____",
+   "reason": "There was nothing to match because every pair was already printed. Now it is a real matching with a unique solution: 1 מ״ל, 1 ליטר, 500 מ״ל. The third pair was changed because 1 דצ״מ³ and 1000 ס״מ³ would both match 1 ליטר.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y24",
+   "finalPage": 20,
+   "type": "dedupe-remove",
+   "qid": "y24.3",
+   "before": "בחרו את היחידה הנוחה יותר ל־2500 ס״מ³. (2500 מ״ל / 2.5 ליטר)",
+   "after": "(removed)",
+   "reason": "Subjective (both options are correct), and the data repeats y24.1 row 2 (2500 ס״מ³ → ליטר).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y24",
+   "finalPage": 20,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 35mm",
+   "after": "<style>main.a4-page[data-layout=\"y24\"]{--a4-work-extra:55mm}</style>",
+   "reason": "Rebalanced the space freed by the removal (about 19 mm free at the bottom).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y25",
+   "finalPage": 25,
+   "type": "dedupe-vary",
+   "qid": "y25.1",
+   "before": "row 1: 12 ס״מ², 5 ס״מ, 12·5 = ____",
+   "after": "row 1: 14 ס״מ², 5 ס״מ, 14·5 = ____",
+   "reason": "12·5 was the third occurrence in the same role (y19.1 row 1, y21.1 row 1). New answer: 70 ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y25",
+   "finalPage": 25,
+   "type": "fix-wording",
+   "qid": "y25.2",
+   "before": "בחרו את השרשרת המתאימה. row 1: (B → h → V) (V = B·h); row 2: (B + h) (B ÷ h)",
+   "after": "בחרו את הקשר המתאים לחישוב הנפח. one row: (V = B + h) (V = B·h) (V = B ÷ h)",
+   "reason": "Ambiguous: two correct pills in one row and two wrong ones in the other, so it was unclear whether the student picks a row or a pill. Now it is one row with exactly one correct option.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y25",
+   "finalPage": 25,
+   "type": "dedupe-vary",
+   "qid": "y25.3",
+   "before": "B = 40 ס״מ², h = 2.5 ס״מ; pills 16 / 42.5 / 100 ס״מ³",
+   "after": "B = 30 ס״מ², h = 1.5 ס״מ; pills 20 / 31.5 / 45 ס״מ³",
+   "reason": "It repeated y25.1 row 4 (40·2.5). The distractor pattern is kept (B÷h, B+h). Correct answer: 45 ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y25",
+   "finalPage": 25,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 60mm",
+   "after": "<style>main.a4-page[data-layout=\"y25\"]{--a4-work-extra:77mm}</style>",
+   "reason": "The page had about 38 mm of empty band (grown after y25.2 became one row). The work area now fills it (about 20 mm free).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y26",
+   "finalPage": 26,
+   "type": "other",
+   "qid": "y26.2",
+   "before": "word bank: B = π·r² · V = B·h · V = π·r²·h (exactly the three answers, in answer order)",
+   "after": "word bank: V = π·r²·h · B = 2·π·r · V = B·h · B = π·r²",
+   "reason": "The task was pure copying. The bank is now shuffled, with one distractor (the circumference-style expression 2·π·r) so the student must select. Answers unchanged: B = π·r², V = B·h, V = π·r²·h.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y27",
+   "finalPage": 27,
+   "type": "dedupe-vary",
+   "qid": "y27.1",
+   "before": "guided rows r=2, h=5; r=3, h=4",
+   "after": "guided rows r=2, h=8; r=3, h=3",
+   "reason": "Same two cylinders as y26.1 on the previous page. New answers: r²=4 → 32π ס״מ³; r²=9 → 27π ס״מ³. I kept y26.1's data because y31.1 approximates 20π and 36π.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y27",
+   "finalPage": 27,
+   "type": "fix-wording",
+   "qid": "y27.1",
+   "before": "<td>____π ס״מ³</td> (×2)",
+   "after": "<td><span dir=\"ltr\">____π</span> ס״מ³</td> (×2)",
+   "reason": "Bidi display bug: in the RTL cell the blank and π were reordered and displayed as 'π____'.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y29",
+   "finalPage": 28,
+   "type": "dedupe-vary",
+   "qid": "y29.2",
+   "before": "עבור r = 1.5 ו־h = 4 (no units): r² = 1.5² = ____ → V = ____·4·π = ____π",
+   "after": "עבור r = 0.8 ס״מ ו־h = 5 ס״מ: r² = 0.8² = ____ → V = ____·5·π = ____π ס״מ³",
+   "reason": "It repeated y29.1 row 1, and the data had no units. New answer: 0.64 → 3.2π ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y29",
+   "finalPage": 28,
+   "type": "dedupe-vary",
+   "qid": "y29.3",
+   "before": "r = 0.5 ס״מ, h = 10 ס״מ; pills 2.5π / 5π / 25π ס״מ³",
+   "after": "r = 0.4 ס״מ, h = 10 ס״מ; pills 1.6π / 4π / 16π ס״מ³",
+   "reason": "It repeated y29.1 row 5. Correct answer: 0.16·10 = 1.6π ס״מ³. Distractors: forgetting to square (0.4·10 = 4π) and a decimal slip (0.4² taken as 1.6 → 16π).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y31",
+   "finalPage": 32,
+   "type": "dedupe-remove",
+   "qid": "y31.3",
+   "before": "בחרו את המשפט התקין. (3.14 הוא הערך המדויק של π) (π ≈ 3.14)",
+   "after": "(removed)",
+   "reason": "Same two statements as page 11's π item (y11.3), and the concept is also a row of the y11.1 table.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y31",
+   "finalPage": 32,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 50mm",
+   "after": "<style>main.a4-page[data-layout=\"y31\"]{--a4-work-extra:85mm}</style>",
+   "reason": "Rebalanced the space freed by the removal (about 20 mm free).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y32",
+   "finalPage": 33,
+   "type": "internal-text",
+   "qid": "",
+   "before": "anchor: מידות הכלים הן פנימיות וסינתטיות לצורכי תרגול. חשבו נפח מדויק, נפח מקורב ואז קיבול.",
+   "after": "anchor: מידות הכלים הן מידות פנימיות. חשבו נפח מדויק, נפח מקורב ואז קיבול.",
+   "reason": "'סינתטיות לצורכי תרגול' was student-visible internal/generator text (RULES §3).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y32",
+   "finalPage": 33,
+   "type": "fix-table",
+   "qid": "y32.1",
+   "before": "container labels A / B / C",
+   "after": "container labels א׳ / ב׳ / ג׳",
+   "reason": "B is the base-area symbol throughout the workbook (RULES §8, consistent letters). These are the same labels pages 33 and 34 now use.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y32",
+   "finalPage": 33,
+   "type": "dedupe-vary",
+   "qid": "y32.2",
+   "before": "במכל C השלימו קודם את הרדיוס. d = 10 ס״מ → r = ____ ס״מ → V = ____π ס״מ³",
+   "after": "במכל נוסף d = 6 ס״מ ו־h = 15 ס״מ. השלימו קודם את הרדיוס ואז את הנפח. d = 6 ס״מ ← r = ____ ס״מ ← V = ____π ס״מ³",
+   "reason": "It restated row ג׳ (C) of y32.1. New container: r = 3 ס״מ, V = 9·15π = 135π ס״מ³. Arrows reversed for RTL.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y33",
+   "finalPage": 34,
+   "type": "internal-text",
+   "qid": "",
+   "before": "anchor: מידות המכלים סינתטיות לצורכי תרגול. חשבו את הנפח והמירו לקיבול. בחרו מ״ל או ליטר לפי הנוחות.",
+   "after": "anchor: מידות המכלים הן מידות פנימיות. חשבו את הנפח המקורב (השתמשו במקש π ועגלו למאיות) והמירו אותו לקיבול.",
+   "reason": "Removed internal text ('סינתטיות לצורכי תרגול') and the subjective 'לפי הנוחות'. Stated the rounding rule.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y33",
+   "finalPage": 34,
+   "type": "dedupe-vary",
+   "qid": "y33.1",
+   "before": "columns נתונים | נפח מקורב | קיבול ≈ ____ | יחידה נוחה (מ״ל / ליטר); rows r=5,h=10; r=4,h=20; d=10,h=12",
+   "after": "columns מכל | נתונים | נפח מקורב | קיבול; rows א׳ r=3,h=10; ב׳ r=6,h=15; ג׳ d=8,h=25; capacity cell ≈ ____ מ״ל",
+   "reason": "Exactly the same three containers as y32.1 on the previous page, and the 'convenient unit' column was subjective. Answers: 90π≈282.74 ס״מ³ → ≈282.74 מ״ל; 540π≈1696.46 → ≈1696.46 מ״ל; r=4, 400π≈1256.64 → ≈1256.64 מ״ל. Labels were added so y33.2 can refer to a container.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y33",
+   "finalPage": 34,
+   "type": "fix-wording",
+   "qid": "y33.2",
+   "before": "במכל B השלימו שתי צורות קיבול.",
+   "after": "במכל ב׳ כתבו את הקיבול במ״ל ובליטרים (עגלו למאיות).",
+   "reason": "'מכל B' was never labelled on this page. Answer: ≈1696.46 מ״ל ≈ 1.70 ליטר.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y34",
+   "finalPage": 35,
+   "type": "dedupe-vary",
+   "qid": "y34.2",
+   "before": "במכל A השלימו. V = 100·25 = ____ ס״מ³ = ____ ליטר / כמות קיימת: 1.6 ליטר / נשאר: …",
+   "after": "במכל אחר B = 120 ס״מ², h = 25 ס״מ, ויש בו 1.8 ליטר. השלימו. V = 120·25 = ____ ס״מ³ = ____ ליטר / כמות קיימת: 1.8 ליטר / נשאר: ____ ליטר = ____ ס״מ³",
+   "reason": "'מכל A' was never shown and the item restated table row 1. New answers: 3000 ס״מ³ = 3 ליטר; 1.2 ליטר remain = 1200 ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y34",
+   "finalPage": 35,
+   "type": "dedupe-vary",
+   "qid": "y34.3",
+   "before": "במכל B, בחרו את הכמות שנשארה. (450 / 750 / 1200 מ״ל)",
+   "after": "במכל אחר B = 90 ס״מ², h = 10 ס״מ, ויש בו 650 מ״ל. בחרו כמה מקום נשאר במכל. (250 / 650 / 900 מ״ל)",
+   "reason": "'מכל B' was unlabelled, clashed with B = base area, and restated row 2. New: 900 − 650 = 250 מ״ל. Distractors keep the existing-amount and full-capacity pattern.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y34",
+   "finalPage": 35,
+   "type": "dedupe-vary",
+   "qid": "y34.4",
+   "before": "במכל C, השלימו.",
+   "after": "במכל אחר B = 50 ס״מ², h = 30 ס״מ, ויש בו 0.4 ליטר. השלימו.",
+   "reason": "'מכל C' was unlabelled and restated row 3. New answers: 1500 ס״מ³ | 400 מ״ל | 1100 מ״ל.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y36",
+   "finalPage": 37,
+   "type": "dedupe-remove",
+   "qid": "y36.2",
+   "before": "בחרו את היחידה המתאימה ל־B. (ס״מ / ס״מ² / ס״מ³)",
+   "after": "(removed)",
+   "reason": "The acceptance gate flagged it as a near-duplicate of y17.2 (0.94). The anchor already states 'שטח בסיס נכתב ביחידות ריבועיות', and the unit of B is also tested by y22.4 and by y36.3's ס״מ³ distractor.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y36",
+   "finalPage": 37,
+   "type": "dedupe-vary",
+   "qid": "y36.3",
+   "before": "V = 150π ס״מ³, h = 6 ס״מ; pills 25π ס״מ² / 25π ס״מ³ / 900π ס״מ²",
+   "after": "V = 120π ס״מ³, h = 5 ס״מ; pills 24π ס״מ² / 24π ס״מ³ / 600π ס״מ²",
+   "reason": "It repeated y36.1 row 1. Correct answer: 24π ס״מ². Distractors: wrong unit, and V·h.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y36",
+   "finalPage": 37,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 75mm",
+   "after": "<style>main.a4-page[data-layout=\"y36\"]{--a4-work-extra:105mm}</style>",
+   "reason": "Rebalanced the hole left by removing y36.2 (about 25 mm free, as before).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y37",
+   "finalPage": 38,
+   "type": "dedupe-vary",
+   "qid": "y37.1",
+   "before": "rows (72π ס״מ³, 8 ס״מ) and (200π ס״מ³, 8 ס״מ)",
+   "after": "rows (128π ס״מ³, 2 ס״מ) and (162π ס״מ³, 2 ס״מ)",
+   "reason": "Both rows reused y36.1's (V, h) pairs. New: B = 64π → r = 8; B = 81π → r = 9. Rows 100π/4 (→25π, 5) and 147π/3 (→49π, 7) are unchanged.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y37",
+   "finalPage": 38,
+   "type": "dedupe-vary",
+   "qid": "y37.2",
+   "before": "V = 100π ס״מ³, h = 4 ס״מ: B = 100π ÷ 4 = ____π ס״מ² → r² = ____ → r = ____ ס״מ",
+   "after": "V = 12π ס״מ³, h = 3 ס״מ: B = 12π ÷ 3 = ____π ס״מ² ← r² = ____ ← r = ____ ס״מ",
+   "reason": "It repeated y37.1 row 1. New answers: 4π, 4, 2. Arrows reversed for the RTL line.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y37",
+   "finalPage": 38,
+   "type": "dedupe-vary",
+   "qid": "y37.3",
+   "before": "B = 49π ס״מ²; pills 7 / 49 / 24.5 ס״מ",
+   "after": "B = 36π ס״מ²; pills 6 / 36 / 18 ס״מ",
+   "reason": "It restated the last step of y37.1 row 3 (B = 49π → r = 7). Correct answer: 6 ס״מ. Distractors: no square root, and halving.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "internal-text",
+   "qid": "",
+   "before": "anchor: שער מעבר: עבדו לפי הנתון בכל שאלה. שמרו על r, d, h, B, V ועל היחידות המתאימות.",
+   "after": "anchor: עבדו לפי הנתון בכל שאלה. הבחינו בין r, d, h, B, V וכתבו את היחידות המתאימות.",
+   "reason": "'שער מעבר' is design jargon that students could see.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "fix-wording",
+   "qid": "y38.1",
+   "before": "בשרטוט גליל, סמנו איזה סימון מתאים לרדיוס ואיזה לגובה. (r — בבסיס) (h — בין הבסיסים) (הפוך)",
+   "after": "בחרו את המשפט הנכון על גליל. (r הוא רדיוס הבסיס, ו־h הוא המרחק בין הבסיסים) (h הוא רדיוס הבסיס, ו־r הוא המרחק בין הבסיסים)",
+   "reason": "It referred to a drawing the page does not have, and two pills were both true while the third said 'הפוך', so the answer format was unclear. Now there is one correct statement and one swapped distractor.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.3",
+   "before": "d=10 ס״מ, h=3 ס״מ → r, V",
+   "after": "d=14 ס״מ, h=5 ס״מ → r, V",
+   "reason": "Same data as y28.2. New answers: r = 7 ס״מ, V = 245π ס״מ³.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-remove",
+   "qid": "y38.4",
+   "before": "בחרו יחידת נפח. (ס״מ / ס״מ² / ס״מ³)",
+   "after": "(removed)",
+   "reason": "Identical to y17.2 (and y18.2, y19.2): the same question with the same options.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.6",
+   "before": "20π ס״מ³ ___ 62.83 ס״מ³ (= / ≈)",
+   "after": "30π ס״מ³ ___ 94.25 ס״מ³ (= / ≈)",
+   "reason": "Identical to y31.2. 30π = 94.2478… so the answer is ≈.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.7",
+   "before": "B=16π ס״מ², V=80π ס״מ³ → h",
+   "after": "B=9π ס״מ², V=63π ס״מ³ → h",
+   "reason": "Identical to y35.1 row 2. New answer: h = 7 ס״מ.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.8",
+   "before": "V=147π ס״מ³, h=3 ס״מ → r",
+   "after": "V=64π ס״מ³, h=4 ס״מ → r",
+   "reason": "Identical to y37.1 row 3. New: B = 16π → r = 4 ס״מ.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.9",
+   "before": "d=80 מ״מ, h=5 ס״מ; chain d=____ ס״מ → r=____ ס״מ → V=____π ס״מ³",
+   "after": "d=40 מ״מ, h=7 ס״מ; chain d=____ ס״מ ← r=____ ס״מ ← V=____π ס״מ³",
+   "reason": "This was the same cylinder as y38.2 on the same page (r=4, h=5 → 80π), with the same d=80 mm as y30.1. New answers: d = 4 ס״מ, r = 2 ס״מ, V = 28π ס״מ³. Arrows reversed for RTL.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-remove",
+   "qid": "y38.11",
+   "before": "התאימו לפי היחידה. (B — ס״מ²) (V — ס״מ³)",
+   "after": "(removed)",
+   "reason": "Nothing to do: the pairs were printed already matched. As a real matching it would duplicate y22.4.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "dedupe-vary",
+   "qid": "y38.12",
+   "before": "מכל בנפח 1200 ס״מ³ מכיל 750 מ״ל. השלימו: חסרים ______ מ״ל.",
+   "after": "במכל שנפחו הפנימי 1600 ס״מ³ יש 980 מ״ל מים. השלימו: כדי למלא אותו חסרים ______ מ״ל.",
+   "reason": "Same numbers as y34.1 row 2, and 'מכל בנפח' was imprecise (it should be inner volume/capacity). New answer: 620 מ״ל.",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y38",
+   "finalPage": 40,
+   "type": "other",
+   "qid": "",
+   "before": "--a4-work-extra 35mm (class tight kept)",
+   "after": "<style>main.a4-page[data-layout=\"y38\"]{--a4-work-extra:70mm}</style>",
+   "reason": "Rebalanced after the two removals. I tried removing 'tight', but that overflowed by about 8 mm, so I restored it and enlarged the work area instead (about 25 mm free).",
+   "by": "fix:galil-B"
+  },
+  {
+   "layout": "y1",
+   "finalPage": 1,
+   "type": "overflow",
+   "qid": "y1.3",
+   "before": "two sentences 'גליל: ____ · חרוט: ____ · כדור: ____' / 'קובייה: ____ · מלבן: ____ · משולש: ____' (the last '____' wrapped onto its own line)",
+   "after": "six 'name: <blank>' items in a 2-column grid (.name-grid, page-scoped CSS)",
+   "reason": "The blanks wrapped awkwardly and a blank stood on its own line. Same task, clean layout.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y1",
+   "finalPage": 1,
+   "type": "other",
+   "qid": "y1.2",
+   "before": "blanks 20mm, row padding 1mm",
+   "after": "blanks 30mm, row padding 2.2mm (page-scoped CSS)",
+   "reason": "A 20mm blank is too short to hand-write 'צורה מישורית'. Also uses empty space at the bottom of the page.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y2",
+   "finalPage": 2,
+   "type": "fix-figure",
+   "qid": "y2.1",
+   "before": "figs 7 and 9: bottom base drawn as a full solid ellipse; fig 4 (lying): far base drawn as a full solid ellipse",
+   "after": "front half solid, hidden half dashed (same convention as fig 1)",
+   "reason": "The hidden-edge convention was inconsistent between the cylinders.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y2",
+   "finalPage": 2,
+   "type": "fix-figure",
+   "qid": "y2.1",
+   "before": "fig 6 triangular prism: only one hidden edge (28,62)-(53,49)",
+   "after": "added the hidden edges (53,49)-(91,49) and (53,49)-(71,16), dashed",
+   "reason": "The back triangle was incomplete (the finding). Now matches the prism on page 1.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y2",
+   "finalPage": 2,
+   "type": "fix-figure",
+   "qid": "y2.1",
+   "before": "fig 10 hexagonal prism: inconsistent depth vectors, back faces and edges missing",
+   "after": "redrawn: front hexagon (28,52)…(39,71), depth vector (22,−14), visible top, upper-right and lower-right faces, 5 hidden edges dashed",
+   "reason": "The drawing was geometrically incomplete and inconsistent.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y3",
+   "finalPage": 3,
+   "type": "fix-figure",
+   "qid": "y3.1",
+   "before": "large cylinder labels A (top base), B (mantle, placed outside and sitting on the side line), C (bottom base); pills A B C",
+   "after": "labels K (top base), L (centre of the mantle), M (bottom base), all text-anchor=middle; pills K L M; aria-label updated",
+   "reason": "From page 12 on, B means base area (and C is used on page 11), so there was a notation clash. B also overlapped the side line (RTL start anchor).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y3",
+   "finalPage": 3,
+   "type": "fix-wording",
+   "qid": "y3.1",
+   "before": "בגליל הגדול, סמנו אילו אותיות מציינות את הבסיסים.",
+   "after": "בגליל הגדול, סמנו אילו אותיות מציינות את הבסיסים. בשלושת הגלילים האחרים, צבעו את שני הבסיסים.",
+   "reason": "Three cylinders (standing, lying, tilted) had no task. They now practise finding the bases in other orientations, which parallels page 4's mantle task.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y3",
+   "finalPage": 3,
+   "type": "overflow",
+   "qid": "y3.1",
+   "before": "all figures 24mm high inside a 62mm card, so the 'large' cylinder was tiny",
+   "after": "page-scoped CSS: large cylinder 46mm, the others 36mm and vertically centred",
+   "reason": "Figure legibility.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y4",
+   "finalPage": 4,
+   "type": "other",
+   "qid": "y4.2",
+   "before": "DOM order y4.1, y4.3, y4.2, y4.4: the fill-in about the figure's letters came after an unrelated 3-cylinder task",
+   "after": "order y4.1 | y4.2 side by side (pair grid), then y4.3, then y4.4",
+   "reason": "Known DOM-order issue. The fill-in now sits next to the figure it refers to.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y4",
+   "finalPage": 4,
+   "type": "fix-figure",
+   "qid": "y4.1",
+   "before": "labels A (y=46, on the top rim), B (x=318, outside and against the side line), C (y=251, below the bottom ellipse); pills A B C",
+   "after": "labels K (inside the top base), L (centre of the mantle), M (inside the bottom base), text-anchor=middle; pills K L M; viewBox cropped to 90 20 240 245",
+   "reason": "B/C clashed with later notation (B = base area). C sat outside the base. The labels overlapped the lines.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y4",
+   "finalPage": 4,
+   "type": "fix-wording",
+   "qid": "y4.2",
+   "before": "השלימו בעזרת המילים: בסיס, מעטפת. / A הוא ___. B היא ___. C הוא ___.",
+   "after": "היעזרו בשרטוט הגליל והשלימו בעזרת המילים: בסיס, מעטפת. / האות K מציינת ___. האות L מציינת ___. האות M מציינת ___.",
+   "reason": "The grammatical gender (הוא/היא) gave the answer away (מעטפת is feminine). Letters follow the relabel.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y4",
+   "finalPage": 4,
+   "type": "other",
+   "qid": "y4.4",
+   "before": "centred choice rows with □ at the end",
+   "after": "full-width sentence rows with a .mark-box at the start (as on page 2)",
+   "reason": "Layout after the reorder, and a consistent choice style.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y4",
+   "finalPage": 4,
+   "type": "overflow",
+   "qid": "",
+   "before": "large empty band; two 'מרחב עבודה' boxes (one inside the old grid)",
+   "after": "page CSS: suppressed the work area inside the pair grid, figure 58mm, three cylinders 38mm, work area 24mm",
+   "reason": "Rebalanced spacing after the restructure.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y5",
+   "finalPage": 5,
+   "type": "sub-bullets",
+   "qid": "y5.1",
+   "before": "cards labelled א / ב / ג / ד (.shape-id)",
+   "after": "each card is [data-sub] with a leading .sub-bullet (top-right)",
+   "reason": "RULES §4: sub-parts use sub-bullets, not letters. The letters are not referenced.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y5",
+   "finalPage": 5,
+   "type": "fix-figure",
+   "qid": "y5.1",
+   "before": "card ג: segment (48,36)→(103,73) passes through O and stops about 5 units short of the circle on both ends (looks like a short diameter)",
+   "after": "chord (39.3,42)→(104.1,30.6): both endpoints on the circle (angles 200° and 320°, r=38), 19 units from O",
+   "reason": "The distractor was visually ambiguous. It is now clearly not a radius (and not a diameter). Answer still 'לא'.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y5",
+   "finalPage": 5,
+   "type": "fix-figure",
+   "qid": "y5.1",
+   "before": "labels O/A/B/C at font 12 with RTL start anchors (A and C sat on the rim; O overlapped the segment in card ד)",
+   "after": "text-anchor=middle, font 13, white halo; O placed below the centre, A/B/C outside the rim",
+   "reason": "Labels overlapped lines.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y6",
+   "finalPage": 6,
+   "type": "fix-figure",
+   "qid": "y6.1",
+   "before": "correct segment (axis) blue #1d4ed8 width 3; distractors grey #64748b width 2.5",
+   "after": "all nine segments blue #1d4ed8 width 2.5",
+   "reason": "The colour gave the answer away.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y6",
+   "finalPage": 6,
+   "type": "fix-figure",
+   "qid": "y6.1",
+   "before": "labels A–I at font 12 with RTL start anchors (A/G sat on the axis, B/H on the rim, E on the base ellipse)",
+   "after": "text-anchor=middle, font 13 bold, white halo, repositioned (E moved outside the base, etc.); cards in 3 columns, svg 38mm",
+   "reason": "Labels overlapped lines and were too small to read.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y6",
+   "finalPage": 6,
+   "type": "sub-bullets",
+   "qid": "y6.1",
+   "before": "cards labelled א / ב / ג",
+   "after": "[data-sub] cards with .sub-bullet",
+   "reason": "RULES §4.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y6",
+   "finalPage": 6,
+   "type": "fix-wording",
+   "qid": "y6.2",
+   "before": "נתון h = 8 ס״מ ו־r = 3 ס״מ. גובה הגליל הוא: 3 / 6 / 8 ס״מ.",
+   "after": "רדיוס הבסיס 3 ס״מ, והמרחק בין מישורי הבסיסים 8 ס״מ. גובה הגליל: 3 / 6 / 8 ס״מ.",
+   "reason": "The original stated h = 8 and asked for the height, so the answer was given. It now tests the definition of height (answer 8).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y6",
+   "finalPage": 6,
+   "type": "fix-wording",
+   "qid": "y6.2",
+   "before": "הקטע לאורך ציר הגליל / הקטע האנכי לדף",
+   "after": "הקטע לאורך ציר הגליל / הקטע שמצויר מלמעלה למטה בדף",
+   "reason": "'אנכי לדף' literally means perpendicular to the sheet, which is ambiguous.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y7",
+   "finalPage": 7,
+   "type": "fix-figure",
+   "qid": "y7.1",
+   "before": "svg rendered 24mm high inside an 82mm card (unreadable); labels 'r = 3 ס״מ' at x=254 and 'h = 8 ס״מ' at x=225 with RTL start anchor, so the h label ran across the height line",
+   "after": "svg 64mm, card auto height; labels text-anchor=middle at (250,51) and (262,143), colour-coded with a halo",
+   "reason": "Illegible figure; a bidi anchor bug made the label overlap the line.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y7",
+   "finalPage": 7,
+   "type": "other",
+   "qid": "y7.1",
+   "before": "'קראו את הנתונים המסומנים בשרטוט.' with no answer space",
+   "after": "added the line 'רדיוס הבסיס: ___ ס״מ    גובה הגליל: ___ ס״מ'",
+   "reason": "The block had an instruction but no response. Answers: 3, 8.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y7",
+   "finalPage": 7,
+   "type": "fix-math",
+   "qid": "y7.2",
+   "before": "columns 'ניתן לדעת / לא ניתן לדעת'; rows: 'קוטר הבסיס הוא 6 ס״מ.' / 'גובה הגליל הוא 8 ס״מ.' / 'רוחב האליפסה כפי שהיא נראית על הדף הוא קוטר הבסיס.' / 'אורך קטע אלכסוני שלא סומן במספר.' / 'אפשר לחשב את שטח הבסיס…'",
+   "after": "columns 'נכון / לא נכון'; rows: 'מן הנתונים אפשר לדעת שקוטר הבסיס הוא 6 ס״מ.' (נכון) / 'מן הנתונים אפשר לדעת שגובה הגליל הוא 8 ס״מ.' (נכון) / 'את קוטר הבסיס אפשר למצוא במדידת רוחב האליפסה בסרגל.' (לא נכון) / 'אורך של קטע שלא סומן בשרטוט אפשר למצוא במדידה בסרגל.' (לא נכון) / 'אפשר לחשב את שטח הבסיס בעזרת ידע קודם במעגל.' (נכון)",
+   "reason": "Row 3 was a claim that is literally true in this drawing (ellipse width = drawn diameter). Row 4 is not always 'לא ניתן' (the axial diagonal is √(6²+8²)=10). Row 5 was a claim in a knowable/not-knowable format. Each row now has one unambiguous answer and the same teaching idea.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y7",
+   "finalPage": 7,
+   "type": "fix-wording",
+   "qid": "y7.3",
+   "before": "בחרו את הכלל הנכון.",
+   "after": "בחרו את האפשרות הנכונה בכל שורה.",
+   "reason": "The second line (אליפסה / עיגול) is not a rule.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "fix-wording",
+   "qid": "",
+   "before": "<title>/h1: תכונות הגליל",
+   "after": "<title>/h1: בדיקת ביניים — רכיבי הגליל",
+   "reason": "The title did not match the checkpoint content (anchor 'בדיקת בסיס קצרה'). workbook.json pages[8].title must be updated to match (not edited here).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "sub-bullets",
+   "qid": "y8.2",
+   "before": "table with a '#' column numbered 4–10",
+   "after": "'#' column removed; each row is <tr data-sub> starting with .sub-bullet",
+   "reason": "The inner numbering (a second numbering scheme) is forbidden by §4.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "dedupe-vary",
+   "qid": "y8.2",
+   "before": "r = 4 ס״מ. מהו d? / d = 18 ס״מ. מהו r?",
+   "after": "r = 13 ס״מ. מהו d? / d = 54 ס״מ. מהו r?",
+   "reason": "Identical to page 5 y5.3 (dedupe 8:1 = 5:2); d = 18 → r is also in maagal p10. Re-solved: d = 26 ס״מ, r = 27 ס״מ. Neither value is used as the same-role given in maagal or elsewhere in galil.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "fix-wording",
+   "qid": "y8.2",
+   "before": "בגליל שוכב, הגובה חייב להיות אנכי לדף.",
+   "after": "בגליל שוכב, הגובה הוא תמיד קטע שמצויר מלמעלה למטה בדף.",
+   "reason": "'אנכי לדף' is ambiguous (perpendicular to the sheet). Answer still לא נכון.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "page-ref",
+   "qid": "y8.3",
+   "before": "אם טעיתי שוב ושוב בגובה מול רדיוס/קוטר, אחזור לעמודים 5–7: כן / לא.",
+   "after": "אם טעיתי שוב ושוב בגובה מול רדיוס/קוטר, אחזור לדפים על רדיוס, קוטר וגובה: כן / לא.",
+   "reason": "§3: no page-number cross-references.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y8",
+   "finalPage": 8,
+   "type": "fix-wording",
+   "qid": "y8.3",
+   "before": "הצלחתי לפחות ב־8 מתוך 10 פריטים",
+   "after": "מתוך 10 התשובות בדף, הצלחתי לפחות ב־8",
+   "reason": "'10 items' relied on the removed 1–10 numbering (3 figures + 7 items = 10).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "other",
+   "qid": "y9.1",
+   "before": "y9.1 = figure + word bank with the instruction 'השלימו' but no blanks; y9.2 = blanks 'A — קטע מ־O עד הגבול: ___' etc.",
+   "after": "merged into y9.1: figure (right) + word bank + four blanks 'A: ___ … D: ___' (left); the y9.2 block is deleted",
+   "reason": "y9.1 had no response space. The blanks' definitions were near-identical to maagal p10 task 1 (same 4 definitions and word bank), so the task is now identification from the drawing. The definitions remain in the y9.3 statements and the anchor.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "fix-figure",
+   "qid": "y9.1",
+   "before": "C = purple 90° arc (150,65)→(280,65) described as the whole boundary; boundary circle black",
+   "after": "the whole boundary circle stroked purple, with C labelled outside via a leader line from (301.5,98.5)",
+   "reason": "C must mark the whole boundary (מעגל), not an arc.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "fix-figure",
+   "qid": "y9.1",
+   "before": "diameter B drawn horizontally (123,130)→(307,130), overlapping radius A (215,130)→(307,130)",
+   "after": "B = slanted diameter (135.3,84)→(294.7,176) through O (both ends on the circle, r=92); labels re-placed with halos; svg enlarged",
+   "reason": "The two segments overlapped, so the figure was ambiguous.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "fix-figure",
+   "qid": "y9.1",
+   "before": "word bank: מעגל, עיגול, רדיוס, קוטר (4 words, 4 blanks)",
+   "after": "added the distractor 'גובה'",
+   "reason": "Exactly 4 words for 4 blanks could be solved by elimination.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "fix-math",
+   "qid": "y9.3",
+   "before": "הגבול של הבסיס הוא המעגל. (all three statements true); instruction 'סמנו את המשפטים הנכונים.'",
+   "after": "הגבול של הבסיס הוא העיגול. (לא נכון); instruction 'סמנו נכון או לא נכון בכל שורה.'",
+   "reason": "All three statements were true. Now: נכון, לא נכון, נכון.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y10",
+   "finalPage": 11,
+   "type": "dedupe-vary",
+   "qid": "y10.1",
+   "before": "r = 1, 2, 3 | 4.5, 6, 7 ס״מ",
+   "after": "r = 17, 19, 23 | 5.5, 7.5, 8.5 ס״מ",
+   "reason": "RULES §10: review data must differ from the circle workbook (maagal p13 has r = 1, 2, 4, 5, 7, 8… in the same 'השלימו את הקוטר' table; maagal p10 has r = 6, 4.5). Answers d = 34, 38, 46 | 11, 15, 17.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y10",
+   "finalPage": 11,
+   "type": "dedupe-vary",
+   "qid": "y10.2",
+   "before": "d = 8, 10, 18 | 24, 30, 50 ס״מ",
+   "after": "d = 42, 44, 56 | 9, 19, 21 ס״מ",
+   "reason": "5 of 6 values were identical to maagal p14's d→r table (10, 18, 24, 30, 50; maagal p9 has 8, 18). Answers r = 21, 22, 28 | 4.5, 9.5, 10.5.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y10",
+   "finalPage": 11,
+   "type": "dedupe-vary",
+   "qid": "y10.4",
+   "before": "r = 4.5 → d = 2.25 / 6.5 / 9; d = 50 → r = 25 / 48 / 100",
+   "after": "r = 6.5 → d = 3.25 / 8.5 / 13; d = 62 → r = 31 / 60 / 124",
+   "reason": "Both items repeated rows already computed in tasks 1–2 (and r = 4.5 → d is in maagal p10). Same distractor pattern (÷2, ±2, ×2); exactly one correct: 13, 31.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y11",
+   "finalPage": 10,
+   "type": "fix-math",
+   "qid": "y11.2",
+   "before": "π ___ 3.14 with options = / ≈ / >",
+   "after": "options = / ≈ / <",
+   "reason": "Both ≈ and > were correct (π = 3.14159… > 3.14). Now only ≈ is correct.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y11",
+   "finalPage": 10,
+   "type": "dedupe-vary",
+   "qid": "y11.1",
+   "before": "rows: π = 3.14 / π ≈ 3.14 / π > 3 / C ÷ d = π במעגל מתמטי / במדידה ממשית C ÷ d תמיד מתקבל בדיוק π / 3.14 הוא קירוב ל־π",
+   "after": "rows: 2π = 6.28 (לא תקין) / 2π ≈ 6.28 (תקין) / π < 3.2 (תקין) / בכל גליל, היקף הבסיס מחולק בקוטר הבסיס שווה בדיוק ל־π (תקין) / כשמודדים היקף וקוטר של פחית אמיתית, המנה שלהם יוצאת תמיד בדיוק π (לא תקין) / 3.14 < π (תקין)",
+   "reason": "4 of 6 rows restated maagal p25's true/false rows (π גדול מ־3, π = 3.14 בדיוק, C ÷ d = π, 3.14 ≈ π), and §10 requires different data on review pages. C and d were also undefined here (C labelled a base on page 3). The last row duplicated y11.3 option ב on the same page. Same concept and the same 2-invalid/4-valid balance, verified numerically (2π = 6.2832…).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y11",
+   "finalPage": 10,
+   "type": "sub-bullets",
+   "qid": "y11.3",
+   "before": "options prefixed with bold 'א.' 'ב.' 'ג.'",
+   "after": "options prefixed with .mark-box (as on page 4)",
+   "reason": "§4: no letter labels. The labels are not referenced. Answer: '3.14 הוא קירוב שימושי ל־π'.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y11",
+   "finalPage": 10,
+   "type": "fix-math",
+   "qid": "",
+   "before": "anchor \\(\\pi \\approx 3.14\\) directly in RTL text (MathJax output rendered reversed: '3.14≈ π')",
+   "after": "wrapped in <span dir=\"ltr\">",
+   "reason": "Bidi display bug: multi-token MathJax renders mirrored in RTL context.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y11",
+   "finalPage": 10,
+   "type": "overflow",
+   "qid": "",
+   "before": "2px overflow after MathJax",
+   "after": "page CSS: main.a4-page[data-layout=\"y11\"]{--a4-work-extra:22mm} and table cell padding 2mm",
+   "reason": "The page must fit A4.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y12",
+   "finalPage": 12,
+   "type": "dedupe-vary",
+   "qid": "y12.1",
+   "before": "guided rows r = 2, 3 (2² = __, B = __π)",
+   "after": "guided rows r = 10, 20 (10² = __, 20² = __)",
+   "reason": "Identical to maagal p38's r/r²/A table (r = 1–8) in the same role. Answers 100 → 100π, 400 → 400π ס״מ².",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y12",
+   "finalPage": 12,
+   "type": "dedupe-vary",
+   "qid": "y12.2",
+   "before": "r = 4, 5, 7, 10",
+   "after": "r = 11, 12, 15, 30",
+   "reason": "3 of 4 values were identical to maagal p38's second table (r = 2, 4, 5, 7). Answers 121π, 144π, 225π, 900π ס״מ².",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y12",
+   "finalPage": 12,
+   "type": "fix-math",
+   "qid": "",
+   "before": "anchor \\(B=\\pi\\cdot r^2\\) displayed reversed as 'r²·π = B'",
+   "after": "wrapped in <span dir=\"ltr\">",
+   "reason": "Bidi display bug (MathJax in RTL).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y13",
+   "finalPage": 13,
+   "type": "dedupe-vary",
+   "qid": "y13.1",
+   "before": "d = 6, 8, 10, 14, 18",
+   "after": "d = 2, 7, 16, 18, 28",
+   "reason": "4 of 5 values were identical to maagal p39's d→r→r²→A table (d = 4, 6, 8, 10, 12, 14, 3, 5). Answers r = 1, 3.5, 8, 9, 14; B = π, 12.25π, 64π, 81π, 196π ס״מ².",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y13",
+   "finalPage": 13,
+   "type": "dedupe-vary",
+   "qid": "y13.3",
+   "before": "d = 12: r = 6 / 12 / 24; B = 12π / 36π / 144π",
+   "after": "d = 32: r = 16 / 32 / 64; B = 32π / 256π / 1024π",
+   "reason": "d = 12 is in maagal p39 (same role). Same distractor pattern (d·π, correct, d²·π); correct r = 16, B = 256π.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y13",
+   "finalPage": 13,
+   "type": "fix-math",
+   "qid": "y13.2",
+   "before": "choice pills \\(d\\rightarrow r\\rightarrow B\\) etc. without dir, displayed as 'B→ r→ d'",
+   "after": "dir=\"ltr\" on the three pills",
+   "reason": "Bidi bug: the correct order d → r → B displayed reversed, so the correct option looked wrong.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y13",
+   "finalPage": 13,
+   "type": "fix-math",
+   "qid": "",
+   "before": "anchor \\(r=d\\div2\\) and \\(B=\\pi\\cdot r^2\\) displayed reversed ('2÷ d= r'); instruction \\(d=12\\) displayed '12= d'",
+   "after": "wrapped in <span dir=\"ltr\"> (and the r options in <b dir=\"ltr\">)",
+   "reason": "Bidi display bug.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y14",
+   "finalPage": 17,
+   "type": "fix-math",
+   "qid": "y14.1",
+   "before": "\\(16\\pi\\) ס״מ²",
+   "after": "<span dir=\"ltr\">\\(16\\pi\\)</span> ס״מ²",
+   "reason": "Guards against the MathJax RTL reversal seen on pages 11–13 (it rendered correctly here, so this is preventive).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y15",
+   "finalPage": 14,
+   "type": "fix-wording",
+   "qid": "y15.1",
+   "before": "columns 'A' / 'B', answers 'A / B / שווים', instruction 'בכל שורה בחרו: A / B / שווים…'",
+   "after": "columns 'גליל א' / 'גליל ב', answers 'א / ב / שווים', instruction 'בכל שורה בחרו לאיזה גליל שטח בסיס גדול יותר (א / ב / שווים), והשלימו חישוב קצר.'",
+   "reason": "On a base-area page, 'B' as a cylinder name clashes with B = base area (same issue as pages 3–4).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y15",
+   "finalPage": 14,
+   "type": "dedupe-vary",
+   "qid": "y15.1",
+   "before": "row 4: r = 35 מ״מ | d = 6 ס״מ",
+   "after": "row 4: r = 45 מ״מ | d = 8 ס״מ",
+   "reason": "Identical pair to maagal p18 row 4. Re-solved: 4.5 ס״מ > 4 ס״מ, so א (same answer as before).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y15",
+   "finalPage": 14,
+   "type": "fix-wording",
+   "qid": "y15.2",
+   "before": "רדיוס גדול יותר ⇒ שטח בסיס גדול יותר / קוטר גדול יותר תמיד ⇒ רדיוס קטן יותר",
+   "after": "אם הרדיוס גדול יותר, אז שטח הבסיס גדול יותר / אם הקוטר גדול יותר, אז הרדיוס תמיד קטן יותר",
+   "reason": "Bidi: '⇒' is not mirrored in RTL, so the arrow visually pointed from the conclusion to the premise. Words are unambiguous.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y16",
+   "finalPage": 15,
+   "type": "fix-table",
+   "qid": "y16.1",
+   "before": "<td dir=\"ltr\">9π ס״מ²</td>: in an LTR cell the unit displayed to the right of the number, so RTL readers read 'ס״מ² 9π'",
+   "after": "plain RTL cells '<td>4π ס״מ²</td>'",
+   "reason": "Bidi display bug.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y16",
+   "finalPage": 15,
+   "type": "dedupe-vary",
+   "qid": "y16.1",
+   "before": "B = 9π, 16π, 25π, 49π, 81π, 100π (r² column 9…100)",
+   "after": "B = 4π, 9π, 16π, 144π, 169π, 400π (r² column 4…400)",
+   "reason": "49π, 81π, 100π were identical to maagal p45's A→r table (and 25π to maagal p46). Answers r = 2, 3, 4, 12, 13, 20 ס״מ.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y16",
+   "finalPage": 15,
+   "type": "dedupe-vary",
+   "qid": "y16.3",
+   "before": "B = 36π; options 3 / 6 / 18 / 36 ס״מ",
+   "after": "B = 324π; options 9 / 18 / 162 / 324 ס״מ",
+   "reason": "36π → r is maagal p45 row 1. Same distractor pattern (r/2, r, B/2, coefficient); exactly one correct: 18.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y17",
+   "finalPage": 16,
+   "type": "fix-wording",
+   "qid": "y17.1",
+   "before": "אורך עיפרון / שטח שולחן / המקום בתוך קופסה / גובה בקבוק / שטח בסיס גליל / כמות המקום שגוף תופס / שטח דף / נפח תיבה",
+   "after": "המרחק בין שני הקצוות של עיפרון / מפה שמכסה את כל השולחן / המקום בתוך קופסה / גובה בקבוק / נייר שמכסה את בסיס הגליל / כמות המים שממלאת אקווריום / אריחים שמרצפים את רצפת החדר / כמות החול שממלאת ארגז",
+   "reason": "Five rows contained their own answer word (אורך/שטח/נפח). 'כמות המקום שגוף תופס' is the anchor's definition and duplicated page 14 y14.2. Same answer pattern: אורך, שטח, נפח, אורך, שטח, נפח, שטח, נפח.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y18",
+   "finalPage": 18,
+   "type": "fix-figure",
+   "qid": "y18.1",
+   "before": "three structures showing only a front-face grid (2×2, 3×2, 4×3). Depth layer not subdivided, cells not square, and a hidden edge drawn solid in figure 1.",
+   "after": "redrawn in oblique projection with square unit cells (s=20, depth vector (10,−8)): front a×b grid, top a×c grid, right c×b grid, shaded faces; (a,b,c) = (2,2,2), (3,2,2), (4,3,2)",
+   "reason": "The figures did not show the third dimension, so the cubes could not be counted as the task asks. Now 8, 12, 24 cubes are visible and countable.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y18",
+   "finalPage": 18,
+   "type": "fix-wording",
+   "qid": "",
+   "before": "anchor: 'ספרו קוביות או השתמשו בממדים המסומנים.'",
+   "after": "anchor: 'ספרו את הקוביות, או כפלו את מספר הקוביות לאורך, לרוחב ולגובה.'",
+   "reason": "No dimensions are marked on the figures.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y18",
+   "finalPage": 18,
+   "type": "dedupe-remove",
+   "qid": "y18.2",
+   "before": "בחרו את היחידה המתאימה לנפח המבנים: ס״מ / ס״מ² / ס״מ³",
+   "after": "(removed)",
+   "reason": "Dedupe judgement: near-duplicate of y17.2 (the one kept); the page already prints ס״מ³ beside every blank.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y18",
+   "finalPage": 18,
+   "type": "overflow",
+   "qid": "",
+   "before": "—",
+   "after": "page CSS: figures 40mm, answer lines line-height 1.9, work area 95mm",
+   "reason": "Rebalanced the space freed by the removal.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y19",
+   "finalPage": 21,
+   "type": "dedupe-remove",
+   "qid": "y19.2",
+   "before": "בחרו את היחידה המתאימה לתוצאה: ס״מ / ס״מ² / ס״מ³",
+   "after": "(removed)",
+   "reason": "Dedupe judgement: third copy of y17.2 (kept); the V column already prints ס״מ³.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y19",
+   "finalPage": 21,
+   "type": "dedupe-vary",
+   "qid": "y19.1",
+   "before": "row 1: B = 12 ס״מ², h = 5 ס״מ, 12·5 = ____",
+   "after": "row 1: B = 16 ס״מ², h = 5 ס״מ, 16·5 = ____",
+   "reason": "12·5 in the same role also appears on galil pages 21 and 25. Re-solved: 80 ס״מ³ (other rows: 72, 150 ס״מ³).",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y19",
+   "finalPage": 21,
+   "type": "overflow",
+   "qid": "",
+   "before": "—",
+   "after": "page CSS: table cell padding 3.4mm, work area 62mm",
+   "reason": "Rebalanced the space freed by the removal.",
+   "by": "fix:galil-A"
+  },
+  {
+   "layout": "y9",
+   "finalPage": 9,
+   "type": "ported-from-branch",
+   "before": "yanivmizrachiy/smartschool-hebrew-voice-notes@df5abb7dc74e6c0eeb40a2d5e84660073bb78ebf:cylinder/page-9.html (origin/chore/world-class-architecture-chatgpt-20260826-2324)",
+   "after": "Removed the 'גבול/תחום' wording from the circle-and-disc prerequisite page. I edited 3 spots only. (1) Anchor: 'בבסיס הגליל: הגבול הוא מעגל, והתחום הפנימי הוא עיגול.' became 'בבסיס הגליל: מעגל הוא אוסף של כל הנקודות שנמצאות באותו מרחק מנקודה קבועה, והעיגול הוא המעגל והשטח שבתוכו.' (2) SVG aria-label: '…הגבול C והתחום הפנימי D' became '…המעגל C והעיגול D'. (3) True/false row y9.3: 'הגבול של הבסיס הוא העיגול.' (false) became 'העיגול הוא אוסף של כל הנקודות שנמצאות באותו מרחק מהמרכז.' It is still a false item that contrasts circle and disc. The branch's rewording of the A–D labels does not apply: galil y9 now uses bare letters with a word bank.",
+   "reason": "existing page, order unchanged",
+   "by": "port:galil"
+  },
+  {
+   "layout": "y2, y3",
+   "finalPage": null,
+   "type": "ported-from-branch",
+   "before": "yanivmizrachiy/smartschool-hebrew-voice-notes@f9c078c145ec583d57d5e147c2ab9f82cfca703f:cylinder/page-2.html + cylinder/page-3.html (also b628fccacb43ba3c65bdaa317d79c1068d6cbf8a) (origin/chore/world-class-architecture-chatgpt-20260826-2324)",
+   "after": "Replaced the cylinder definition in the anchor line of y2 and y3. Before: 'לגליל ישר שני בסיסים עגולים חופפים הנמצאים במישורים מקבילים.' After: 'גליל הוא גוף המורכב משני עיגולים חופפים הממוקמים במישורים מקבילים, ומכל הקטעים המחברים עיגולים אלה. לשני העיגולים קוראים בסיסי הגליל.' I changed only the anchor sentence on each page.",
+   "reason": "existing pages, order unchanged",
+   "by": "port:galil"
+  },
+  {
+   "layout": "br-y39",
+   "finalPage": 41,
+   "type": "ported-from-branch",
+   "before": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html (identical at branch tip 1b77178) (origin/chore/world-class-architecture-chatgpt-20260826-2324)",
+   "after": "New supplementary page 'מעטפת הגליל — מלבן ושטחה', rebuilt in galil markup: layout id, data-q, .q-bullet, no name/date, page number 0, scoped CSS in <head>, SVG in galil's black-line style. It has the anchor (the mantle unrolls to a rectangle; width = circumference, height = cylinder height) and 4 questions: br-y39.1 net figure plus word-bank fill-in (מלבן/היקף/גובה); br-y39.2 complete 'שטח המעטפת = רוחב·גובה = היקף הבסיס·גובה = __·π·r·h'; br-y39.3 lateral-area table; br-y39.4 drink-can label r=3, h=12, exact and ≈. Fixes: (a) the branch drew the bases in the NET as ellipses, whose circumference did not match the rectangle width. I redrew them as circles tangent to the rectangle with r = 160/(2π) ≈ 25.5, so the circumference matches the width. (b) Table row 3 changed from (r=5, h=6) to (r=5, h=9); reason in dedupe_check. The work box sits in the can question.",
+   "reason": "New stage 'מעטפת, שטח פנים ופריסה' (or the start of the existing stage 'מעטפת וחתך צירי — משימות משלבות'). It goes right after y38 (current p40, 'סיכום נפח הגליל'), before br-y40 → br-y41 → moe8-p19-1 → moe8-p14-1 → moe8-p15-1. Prerequisites: mantle as a surface (y4, p4); π and radius/diameter (y11 p10, y10 p11); multiplication with π kept exact (volume stage). It must come before moe8-p19-1, which rolls a sheet into a mantle whose side is the circumference, and before moe8-p14-1, which asks for lateral areas with no teaching page today. Placing it after y38 keeps the volume unit continuous.",
+   "by": "port:galil"
+  },
+  {
+   "layout": "br-y40",
+   "finalPage": 42,
+   "type": "ported-from-branch",
+   "before": "yanivmizrachiy/smartschool-hebrew-voice-notes@f9c078c145ec583d57d5e147c2ab9f82cfca703f:cylinder/page-40.html (identical at branch tip) (origin/chore/world-class-architecture-chatgpt-20260826-2324)",
+   "after": "New supplementary page 'שטח הפנים של הגליל'. Anchor: S = 2·(π·r²) + 2·π·r·h. br-y40.1 word-bank sentence plus formula blank. br-y40.2 table: bases / mantle / total. br-y40.3 sealed can r=5, h=8, as an LTR calculation chain with the Hebrew label and unit isolated. br-y40.4 choose the correct formula. br-y40.5 change discussion with 2 data-sub parts. Part 1 is the branch's doubling-r item verbatim. Part 2 is ADDED by me, not from the branch: the official p.14 text asks for additive changes too, and galil had none. It reads 'מגדילים את הגובה ב־1 ס״מ (הרדיוס קבוע). שטח הבסיסים: גדל / קטן / לא משתנה. שטח המעטפת גדל ב־___ ס״מ² (כתבו ביטוי בעזרת r)'. Fixes: the branch note 'היחידה בכל התאים היא ס״מ²' was wrong for the r and h cells, which are lengths. I put ס״מ in those cells and wrote 'יחידת השטח בשלוש העמודות השמאליות היא ס״מ²'. Table row 1 changed from (4,10) to (4,7); reason in dedupe_check.",
+   "reason": "Same new stage, after br-y39 and before br-y41. Prerequisites: lateral area 2·π·r·h (br-y39), base area π·r² (stage 'שטח הבסיס', y12–y16), and the idea of multiplicative change (moe8-p16-1, p31, honey jars, for volume). It must precede the integrative official pages moe8-p19-1, moe8-p14-1 and moe8-p15-1.",
+   "by": "port:galil"
+  },
+  {
+   "layout": "br-y41",
+   "finalPage": 43,
+   "type": "ported-from-branch",
+   "before": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html (identical at branch tip) (origin/chore/world-class-architecture-chatgpt-20260826-2324)",
+   "after": "New supplementary page 'פריסה ומגלגלים דף לגליל'. Anchor: the net is 2 circles and 1 rectangle, and the rectangle's width is the circumference. br-y41.1 net figure A/B/C with 3 fill-ins. br-y41.2 rolling a 12×8 sheet two ways, as a table. br-y41.3 which way gives the larger volume and why: 3 pills plus a work box. br-y41.4 three true/false rows. Minimal wording fixes: 'דף מלבן' became 'דף מלבני'. The pills 'כשההיקף הגדול (12) הוא הבסיס' / 'כשההיקף הקטן (8) הוא הבסיס' confused the circumference with the base; they now read 'כשהצלע 12 היא היקף הבסיס' / 'כשהצלע 8 היא היקף הבסיס'. I removed a stray empty span. The figure is redrawn in galil style; circles r=21 have circumference ≈ 132, equal to the rectangle width.",
+   "reason": "Same new stage, after br-y40 and IMMEDIATELY before moe8-p19-1 (current p41, official 30×21 sheet). Prerequisites: mantle = rectangle with width = circumference (br-y39); V = π·r²·h (stage 'נפח הגליל', y26–y30). It is the scaffold for the official rolling question that follows (same two-way rolling, smaller data).",
+   "by": "port:galil"
+  }
+ ]
+}

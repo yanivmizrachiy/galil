@@ -1,0 +1,377 @@
+{
+ "summary": {
+  "phase1Commit": "yanivmizrachiy/galil@6abc44d",
+  "phase1Pages": 38,
+  "finalPages": 46,
+  "statusCounts": {
+   "preserved": 16,
+   "moved": 22
+  },
+  "addedPages": 8,
+  "equation": "38 phase-1 pages − 0 replaced/merged/retired + 8 added = 46 final pages"
+ },
+ "phase1Pages": [
+  {
+   "phase1Page": 1,
+   "layout": "y1",
+   "finalPage": 1,
+   "status": "preserved",
+   "stage": "צורות, גופים וזיהוי גליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 2,
+   "layout": "y2",
+   "finalPage": 2,
+   "status": "preserved",
+   "stage": "צורות, גופים וזיהוי גליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 3,
+   "layout": "y3",
+   "finalPage": 3,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 4,
+   "layout": "y4",
+   "finalPage": 4,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 5,
+   "layout": "y5",
+   "finalPage": 5,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 6,
+   "layout": "y6",
+   "finalPage": 6,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 7,
+   "layout": "y7",
+   "finalPage": 7,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 8,
+   "layout": "y8",
+   "finalPage": 8,
+   "status": "preserved",
+   "stage": "רכיבי הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 9,
+   "layout": "y9",
+   "finalPage": 9,
+   "status": "preserved",
+   "stage": "ידע קודם: חזרה על המעגל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 10,
+   "layout": "y10",
+   "finalPage": 11,
+   "status": "moved",
+   "stage": "ידע קודם: חזרה על המעגל",
+   "reason": "pedagogical order (RULES §6): stage 'ידע קודם: חזרה על המעגל'"
+  },
+  {
+   "phase1Page": 11,
+   "layout": "y11",
+   "finalPage": 10,
+   "status": "moved",
+   "stage": "ידע קודם: חזרה על המעגל",
+   "reason": "pedagogical order (RULES §6): stage 'ידע קודם: חזרה על המעגל'"
+  },
+  {
+   "phase1Page": 12,
+   "layout": "y12",
+   "finalPage": 12,
+   "status": "preserved",
+   "stage": "שטח הבסיס",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 13,
+   "layout": "y13",
+   "finalPage": 13,
+   "status": "preserved",
+   "stage": "שטח הבסיס",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 14,
+   "layout": "y14",
+   "finalPage": 17,
+   "status": "moved",
+   "stage": "מושג הנפח, יחידות נפח וקיבול",
+   "reason": "pedagogical order (RULES §6): stage 'מושג הנפח, יחידות נפח וקיבול'"
+  },
+  {
+   "phase1Page": 15,
+   "layout": "y15",
+   "finalPage": 14,
+   "status": "moved",
+   "stage": "שטח הבסיס",
+   "reason": "pedagogical order (RULES §6): stage 'שטח הבסיס'"
+  },
+  {
+   "phase1Page": 16,
+   "layout": "y16",
+   "finalPage": 15,
+   "status": "moved",
+   "stage": "שטח הבסיס",
+   "reason": "pedagogical order (RULES §6): stage 'שטח הבסיס'"
+  },
+  {
+   "phase1Page": 17,
+   "layout": "y17",
+   "finalPage": 16,
+   "status": "moved",
+   "stage": "מושג הנפח, יחידות נפח וקיבול",
+   "reason": "pedagogical order (RULES §6): stage 'מושג הנפח, יחידות נפח וקיבול'"
+  },
+  {
+   "phase1Page": 18,
+   "layout": "y18",
+   "finalPage": 18,
+   "status": "preserved",
+   "stage": "מושג הנפח, יחידות נפח וקיבול",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 19,
+   "layout": "y19",
+   "finalPage": 21,
+   "status": "moved",
+   "stage": "נפח = שטח בסיס · גובה",
+   "reason": "pedagogical order (RULES §6): stage 'נפח = שטח בסיס · גובה'"
+  },
+  {
+   "phase1Page": 20,
+   "layout": "y20",
+   "finalPage": 22,
+   "status": "moved",
+   "stage": "נפח = שטח בסיס · גובה",
+   "reason": "pedagogical order (RULES §6): stage 'נפח = שטח בסיס · גובה'"
+  },
+  {
+   "phase1Page": 21,
+   "layout": "y21",
+   "finalPage": 23,
+   "status": "moved",
+   "stage": "נפח = שטח בסיס · גובה",
+   "reason": "pedagogical order (RULES §6): stage 'נפח = שטח בסיס · גובה'"
+  },
+  {
+   "phase1Page": 22,
+   "layout": "y22",
+   "finalPage": 24,
+   "status": "moved",
+   "stage": "נפח = שטח בסיס · גובה",
+   "reason": "pedagogical order (RULES §6): stage 'נפח = שטח בסיס · גובה'"
+  },
+  {
+   "phase1Page": 23,
+   "layout": "y23",
+   "finalPage": 19,
+   "status": "moved",
+   "stage": "מושג הנפח, יחידות נפח וקיבול",
+   "reason": "pedagogical order (RULES §6): stage 'מושג הנפח, יחידות נפח וקיבול'"
+  },
+  {
+   "phase1Page": 24,
+   "layout": "y24",
+   "finalPage": 20,
+   "status": "moved",
+   "stage": "מושג הנפח, יחידות נפח וקיבול",
+   "reason": "pedagogical order (RULES §6): stage 'מושג הנפח, יחידות נפח וקיבול'"
+  },
+  {
+   "phase1Page": 25,
+   "layout": "y25",
+   "finalPage": 25,
+   "status": "preserved",
+   "stage": "נפח הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 26,
+   "layout": "y26",
+   "finalPage": 26,
+   "status": "preserved",
+   "stage": "נפח הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 27,
+   "layout": "y27",
+   "finalPage": 27,
+   "status": "preserved",
+   "stage": "נפח הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 28,
+   "layout": "y28",
+   "finalPage": 29,
+   "status": "moved",
+   "stage": "נפח הגליל",
+   "reason": "pedagogical order (RULES §6): stage 'נפח הגליל'"
+  },
+  {
+   "phase1Page": 29,
+   "layout": "y29",
+   "finalPage": 28,
+   "status": "moved",
+   "stage": "נפח הגליל",
+   "reason": "pedagogical order (RULES §6): stage 'נפח הגליל'"
+  },
+  {
+   "phase1Page": 30,
+   "layout": "y30",
+   "finalPage": 30,
+   "status": "preserved",
+   "stage": "נפח הגליל",
+   "reason": "same page"
+  },
+  {
+   "phase1Page": 31,
+   "layout": "y31",
+   "finalPage": 32,
+   "status": "moved",
+   "stage": "מדויק ומקורב; קיבול כלים",
+   "reason": "pedagogical order (RULES §6): stage 'מדויק ומקורב; קיבול כלים'"
+  },
+  {
+   "phase1Page": 32,
+   "layout": "y32",
+   "finalPage": 33,
+   "status": "moved",
+   "stage": "מדויק ומקורב; קיבול כלים",
+   "reason": "pedagogical order (RULES §6): stage 'מדויק ומקורב; קיבול כלים'"
+  },
+  {
+   "phase1Page": 33,
+   "layout": "y33",
+   "finalPage": 34,
+   "status": "moved",
+   "stage": "מדויק ומקורב; קיבול כלים",
+   "reason": "pedagogical order (RULES §6): stage 'מדויק ומקורב; קיבול כלים'"
+  },
+  {
+   "phase1Page": 34,
+   "layout": "y34",
+   "finalPage": 35,
+   "status": "moved",
+   "stage": "מדויק ומקורב; קיבול כלים",
+   "reason": "pedagogical order (RULES §6): stage 'מדויק ומקורב; קיבול כלים'"
+  },
+  {
+   "phase1Page": 35,
+   "layout": "y35",
+   "finalPage": 36,
+   "status": "moved",
+   "stage": "בעיות הפוכות",
+   "reason": "pedagogical order (RULES §6): stage 'בעיות הפוכות'"
+  },
+  {
+   "phase1Page": 36,
+   "layout": "y36",
+   "finalPage": 37,
+   "status": "moved",
+   "stage": "בעיות הפוכות",
+   "reason": "pedagogical order (RULES §6): stage 'בעיות הפוכות'"
+  },
+  {
+   "phase1Page": 37,
+   "layout": "y37",
+   "finalPage": 38,
+   "status": "moved",
+   "stage": "בעיות הפוכות",
+   "reason": "pedagogical order (RULES §6): stage 'בעיות הפוכות'"
+  },
+  {
+   "phase1Page": 38,
+   "layout": "y38",
+   "finalPage": 40,
+   "status": "moved",
+   "stage": "סיכום נפח הגליל",
+   "reason": "pedagogical order (RULES §6): stage 'סיכום נפח הגליל'"
+  }
+ ],
+ "addedPages": [
+  {
+   "finalPage": 31,
+   "layout": "moe8-p16-1",
+   "title": "צנצנות הדבש",
+   "stage": "נפח הגליל",
+   "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-016.webp"
+  },
+  {
+   "finalPage": 39,
+   "layout": "moe8-p14-2",
+   "title": "נפח של כלים",
+   "stage": "בעיות הפוכות",
+   "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-014.webp"
+  },
+  {
+   "finalPage": 41,
+   "layout": "br-y39",
+   "title": "מעטפת הגליל — מלבן ושטחה",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-39.html"
+  },
+  {
+   "finalPage": 42,
+   "layout": "br-y40",
+   "title": "שטח הפנים של הגליל",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-40.html"
+  },
+  {
+   "finalPage": 43,
+   "layout": "br-y41",
+   "title": "פריסה ומגלגלים דף לגליל",
+   "stage": "מעטפת, שטח פנים ופריסה",
+   "source": "yanivmizrachiy/smartschool-hebrew-voice-notes@47ad6ebda643797a835d09088e7a6ebb82cb2a83:cylinder/page-41.html"
+  },
+  {
+   "finalPage": 44,
+   "layout": "moe8-p19-1",
+   "title": "מגלגלים דף לגליל",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
+   "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-019.webp"
+  },
+  {
+   "finalPage": 45,
+   "layout": "moe8-p14-1",
+   "title": "נפח ושטח מעטפת",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
+   "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-014.webp"
+  },
+  {
+   "finalPage": 46,
+   "layout": "moe8-p15-1",
+   "title": "משולשים בתוך גליל",
+   "stage": "משימות משלבות מתוך תוכנית הלימודים: מעטפת וחתך צירי",
+   "source": "yanivmizrachiy/jerusalem2@ffa9833f9f:public/media/curriculum/idkun-geometri-8/pages/page-015.webp"
+  }
+ ]
+}

@@ -3,21 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>תכונות הגליל</title>
+  <title>בדיקת ביניים — רכיבי הגליל</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+  main[data-layout="y8"] .classify-table td:first-child{text-align:right}
+  main[data-layout="y8"] .classify-table td{padding:3.4mm 2.5mm}
+  main[data-layout="y8"] .classify-table td:last-child{width:34mm}
+  main[data-layout="y8"] .shape-grid{grid-template-columns:repeat(3,1fr)}
+  main[data-layout="y8"] .shape-card svg{height:34mm}
+  main[data-layout="y8"] .sentence-list .sentence{padding:3.5mm 0}
+  </style>
 </head>
 <body>
-<main class="a4-page">
+<main class="a4-page" data-layout="y8">
   <header class="page-header">
-    <h1 class="page-title">תכונות הגליל</h1>
+    <h1 class="page-title">בדיקת ביניים — רכיבי הגליל</h1>
     <div class="page-number" aria-label="עמוד 8">8</div>
   </header>
 
   <div class="anchor">בדיקת בסיס קצרה: זיהוי גוף, בסיסים, מעטפת, רדיוס, קוטר וגובה.</div>
 
   <section class="task">
-    <div class="task-row">
-      <div class="task-num">1</div>
+    <div class="task-row" data-q="y8.1">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
         <p class="instruction">סמנו בכל איור: גליל או לא גליל.</p>
         <div class="shape-grid">
@@ -30,38 +38,36 @@
   </section>
 
   <section class="task">
-    <div class="task-row">
-      <div class="task-num">2</div>
+    <div class="task-row" data-q="y8.2">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
         <p class="instruction">השלימו את שבעת הפריטים.</p>
         <table class="classify-table">
-          <tr><th>#</th><th>פריט</th><th>תשובה</th></tr>
-          <tr><td>4</td><td>לגליל ישר יש כמה בסיסים?</td><td></td></tr>
-          <tr><td>5</td><td>המשטח הצדדי נקרא:</td><td><b>בסיס / מעטפת</b></td></tr>
-          <tr><td>6</td><td><span dir="ltr">r = 4</span> ס״מ. מהו <span dir="ltr">d</span>?</td><td></td></tr>
-          <tr><td>7</td><td><span dir="ltr">d = 18</span> ס״מ. מהו <span dir="ltr">r</span>?</td><td></td></tr>
-          <tr><td>8</td><td>גובה הגליל מאונך למישורי הבסיסים.</td><td><b>נכון / לא נכון</b></td></tr>
-          <tr><td>9</td><td>בגליל שוכב, הגובה חייב להיות אנכי לדף.</td><td><b>נכון / לא נכון</b></td></tr>
-          <tr><td>10</td><td>אפשר למדוד קוטר אמיתי לפי רוחב האליפסה שנראית בפרספקטיבה.</td><td><b>כן / לא</b></td></tr>
+          <tr><th>פריט</th><th>תשובה</th></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span>לגליל ישר יש כמה בסיסים?</td><td></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span>המשטח הצדדי נקרא:</td><td><b>בסיס / מעטפת</b></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span><span dir="ltr">r = 13</span> ס״מ. מהו <span dir="ltr">d</span>?</td><td></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span><span dir="ltr">d = 54</span> ס״מ. מהו <span dir="ltr">r</span>?</td><td></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span>גובה הגליל מאונך למישורי הבסיסים.</td><td><b>נכון / לא נכון</b></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span>בגליל שוכב, הגובה הוא תמיד קטע שמצויר מלמעלה למטה בדף.</td><td><b>נכון / לא נכון</b></td></tr>
+          <tr data-sub><td><span class="sub-bullet" aria-hidden="true"></span>אפשר למדוד קוטר אמיתי לפי רוחב האליפסה שנראית בפרספקטיבה.</td><td><b>כן / לא</b></td></tr>
         </table>
       </div>
     </div>
   </section>
 
   <section class="task">
-    <div class="task-row">
-      <div class="task-num">3</div>
+    <div class="task-row" data-q="y8.3">
+      <div class="task-num q-bullet" aria-hidden="true"></div>
       <div class="task-body">
         <p class="instruction">סמנו אם אתם מוכנים להמשיך.</p>
         <div class="sentence-list">
-          <div class="sentence">הצלחתי לפחות ב־8 מתוך 10 פריטים: <b>כן / עדיין לא</b>.</div>
-          <div class="sentence">אם טעיתי שוב ושוב בגובה מול רדיוס/קוטר, אחזור לעמודים 5–7: <b>כן / לא</b>.</div>
+          <div class="sentence">מתוך 10 התשובות בדף, הצלחתי לפחות ב־8: <b>כן / עדיין לא</b>.</div>
+          <div class="sentence">אם טעיתי שוב ושוב בגובה מול רדיוס/קוטר, אחזור לדפים על רדיוס, קוטר וגובה: <b>כן / לא</b>.</div>
         </div>
       </div>
     </div>
   </section>
-
-  <footer class="footer"><span>שם: ____________________</span><span>תאריך: ____________________</span></footer>
 </main>
 </body>
 </html>
