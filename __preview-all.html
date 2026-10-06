@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>חוברת גליל — כל העבודה</title>
+<style>
+  html,body{margin:0;background:#475569}
+  .bar{position:sticky;top:0;z-index:10;background:#1e3a8a;color:#fff;
+       font:600 14px/1.4 "Rubik","Heebo",Arial,sans-serif;padding:9px 14px;text-align:center;
+       box-shadow:0 1px 6px rgba(0,0,0,.4)}
+  .bar small{font-weight:400;opacity:.85}
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:26px;padding:24px 0 80px}
+  .section-head{color:#fff;font:600 15px "Rubik","Heebo",Arial,sans-serif;letter-spacing:.3px;
+       background:#0f2d6b;padding:7px 16px;border-radius:999px;margin:18px 0 2px}
+  .sheet{display:flex;flex-direction:column;align-items:center;gap:7px}
+  .lbl{color:#e2e8f0;font:600 13px "Rubik","Heebo",Arial,sans-serif;letter-spacing:.3px}
+  iframe{width:210mm;height:297mm;border:0;background:#fff;
+         box-shadow:0 3px 18px rgba(0,0,0,.4);display:block}
+  /* scale the A4 sheets down on narrow panes so they fit without horizontal scroll */
+  @media (max-width:840px){ .sheet{transform:scale(calc((100vw - 24px)/794));transform-origin:top center;
+         margin-bottom:calc((297mm) * ((100vw - 24px)/794 - 1))} }
+</style>
+</head>
+<body>
+<div class="bar">חוברת גליל · תצוגה מקדימה חיה · כל העבודה &nbsp;<small>(מקומי — מתעדכן עם כל שינוי)</small></div>
+<div class="wrap" id="wrap"></div>
+<script>
+  const wrap = document.getElementById('wrap');
+  function addSheet(src, label){
+    const sheet = document.createElement('div'); sheet.className = 'sheet';
+    const lbl = document.createElement('div'); lbl.className = 'lbl'; lbl.textContent = label;
+    const f = document.createElement('iframe'); f.src = src; f.loading = 'lazy'; f.title = label;
+    sheet.appendChild(lbl); sheet.appendChild(f); wrap.appendChild(sheet);
+  }
+  function addHead(text){
+    const h = document.createElement('div'); h.className = 'section-head'; h.textContent = text; wrap.appendChild(h);
+  }
+
+  // ---- סקשן: שאלות מתוך תוכנית הלימודים — ראשון ----
+  addHead('שאלות מתוך תוכנית הלימודים (טיוטות)');
+  const extras = [
+    { src: 'draft-curriculum-def.html', label: 'עמוד הגדרה — השלמת משפטים' },
+    { src: 'draft-curriculum-1.html',   label: 'נפח ושטח מעטפת — סעיפים א, ב' }
+  ];
+  for (const p of extras) addSheet(p.src, p.label);
+
+  // ---- החוברת: 39 הדפים ----
+  addHead('החוברת — דפים 1–39');
+  const N = 39;
+  for (let i = 1; i <= N; i++) addSheet('page-' + i + '.html', 'דף ' + i);
+</script>
+</body>
+</html>

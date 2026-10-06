@@ -1,10 +1,59 @@
 <!doctype html>
-<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>שטח בסיס · גובה</title><link rel="stylesheet" href="styles.css"></head><body><main class="a4-page">
-<header class="page-header"><h1 class="page-title">שטח בסיס · גובה</h1><div class="page-number" aria-label="עמוד 22">22</div></header>
-<div class="anchor">השתמשו בקשר <span dir="ltr">V = B·h</span>. בנפח כותבים יחידות מעוקבות.</div>
-<section class="task"><div class="task-row"><div class="task-num">1</div><div class="task-body"><p class="instruction">השלימו את שלוש שורות החישוב הישיר.</p><table class="classify-table"><tr><th>B</th><th>h</th><th>חישוב</th><th>V</th></tr><tr><td>10 ס״מ²</td><td>4 ס״מ</td><td dir="ltr">10·4 = ____</td><td>____ ס״מ³</td></tr><tr><td>15 ס״מ²</td><td>6 ס״מ</td><td dir="ltr">15·6 = ____</td><td>____ ס״מ³</td></tr><tr><td>12 ס״מ²</td><td>7 ס״מ</td><td dir="ltr">12·7 = ____</td><td>____ ס״מ³</td></tr></table></div></div></section>
-<section class="task"><div class="task-row"><div class="task-num">2</div><div class="task-body"><p class="instruction">עבדו לאחור והשלימו את הגובה.</p><div class="thinking"><span dir="ltr">V = 96</span> ס״מ³, <span dir="ltr">B = 16</span> ס״מ² &nbsp;→&nbsp; <span dir="ltr">h = 96 ÷ 16 = ____</span> ס״מ</div></div></div></section>
-<section class="task"><div class="task-row"><div class="task-num">3</div><div class="task-body"><p class="instruction">עבדו לאחור והשלימו את שטח הבסיס.</p><div class="thinking"><span dir="ltr">V = 84</span> ס״מ³, <span dir="ltr">h = 7</span> ס״מ &nbsp;→&nbsp; <span dir="ltr">B = 84 ÷ 7 = ____</span> ס״מ²</div></div></div></section>
-<section class="task thinking"><div class="task-row"><div class="task-num">4</div><div class="task-body"><p class="instruction">בחרו את היחידה הנכונה לכל גודל.</p><table class="classify-table"><tr><th>גודל</th><th>יחידה</th></tr><tr><td>B</td><td>ס״מ / ס״מ² / ס״מ³</td></tr><tr><td>h</td><td>ס״מ / ס״מ² / ס״מ³</td></tr><tr><td>V</td><td>ס״מ / ס״מ² / ס״מ³</td></tr></table></div></div></section>
-
-</main></body></html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+<script src="render.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="page">
+{
+  "n": 22,
+  "title": "שטח בסיס × גובה — תרגול והיפוך",
+  "anchor": "השתמשו בקשר <span dir='ltr'>V = B×h</span>. בנפח כותבים יחידות מעוקבות.",
+  "tasks": [
+    {
+      "q": "השלימו את שלוש שורות החישוב הישיר.",
+      "blocks": [
+        { "t": "table",
+          "head": ["שטח בסיס <span dir='ltr'>(B)</span>", "גובה <span dir='ltr'>(h)</span>", "חישוב", "נפח <span dir='ltr'>(V)</span>"],
+          "rows": [
+            ["10 ס״מ²", "4 ס״מ", "<span dir='ltr'>10×4 = ____</span>", "____ ס״מ³"],
+            ["15 ס״מ²", "6 ס״מ", "<span dir='ltr'>15×6 = ____</span>", "____ ס״מ³"],
+            ["12 ס״מ²", "7 ס״מ", "<span dir='ltr'>12×7 = ____</span>", "____ ס״מ³"]
+          ]
+        }
+      ]
+    },
+    {
+      "q": "עבדו לאחור והשלימו את הגובה.",
+      "blocks": [
+        { "t": "think", "html": "<span dir='ltr'>V = 96</span> ס״מ³, <span dir='ltr'>B = 16</span> ס״מ², <span dir='ltr'>h = 96 ÷ 16 = ____</span> ס״מ" }
+      ]
+    },
+    {
+      "q": "עבדו לאחור והשלימו את שטח הבסיס.",
+      "blocks": [
+        { "t": "think", "html": "<span dir='ltr'>V = 84</span> ס״מ³, <span dir='ltr'>h = 7</span> ס״מ, <span dir='ltr'>B = 84 ÷ 7 = ____</span> ס״מ²" }
+      ]
+    },
+    {
+      "q": "בחרו את היחידה הנכונה לכל גודל.",
+      "think": true,
+      "blocks": [
+        { "t": "table",
+          "head": ["גודל", "יחידה"],
+          "rows": [
+            ["<span dir='ltr'>B</span>", "ס״מ / ס״מ² / ס״מ³"],
+            ["<span dir='ltr'>h</span>", "ס״מ / ס״מ² / ס״מ³"],
+            ["<span dir='ltr'>V</span>", "ס״מ / ס״מ² / ס״מ³"]
+          ]
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>
