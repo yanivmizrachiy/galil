@@ -78,7 +78,7 @@ body{direction:rtl;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-ser
 .task-row{display:flex;align-items:flex-start;gap:3mm}
 .qmark{flex:0 0 9px;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-top:2.2mm}
 .task-body{flex:1;min-width:0}
-.instruction{margin:0 0 3mm;font-weight:600}
+.instruction{margin:0 0 3mm;font-weight:500}
 
 /* --- שרטוטים (כרטיסי SVG) --- */
 .shape-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm}
@@ -98,7 +98,7 @@ body{direction:rtl;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-ser
 .mark-box{display:inline-block;width:5mm;height:5mm;border:1.2px solid #64748b;border-radius:1mm;vertical-align:middle}
 
 /* --- מחסן מילים --- */
-.word-bank{display:flex;gap:3mm;flex-wrap:wrap;margin:2mm 0;border:1px solid var(--line);border-radius:var(--radius);padding:2mm 3mm;background:var(--panel);font-weight:600}
+.word-bank{display:flex;gap:3mm;flex-wrap:wrap;margin:2mm 0;border:1px solid var(--line);border-radius:var(--radius);padding:2mm 3mm;background:var(--panel);font-weight:500}
 .word{border:1px solid #94a3b8;border-radius:999px;padding:1.2mm 3mm;background:var(--paper)}
 .word-bank .sep{color:var(--muted);font-weight:700;opacity:.6}
 .note{margin:1mm 0}
