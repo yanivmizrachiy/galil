@@ -63,6 +63,16 @@ body{direction:rtl;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-ser
 /* --- תיבת עוגן (הקשר/הגדרה בראש העמוד) --- */
 .anchor{margin:5mm 0 4mm;padding:3mm 4mm;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);font-weight:500}
 
+/* --- דוגמה פתורה: תיבת-מורה לפני מיומנות חדשה --- */
+.example{margin:4mm 0;border:1px solid var(--blue-soft);border-inline-start:3px solid var(--blue);border-radius:var(--radius);background:#eff4ff;padding:3mm 4mm}
+.example-lab{display:inline-block;font-weight:700;color:var(--blue);font-size:12.5px;margin-bottom:1.5mm;padding:.3mm 2mm;border:1px solid var(--blue-soft);border-radius:2mm;background:#fff}
+.example-given{font-weight:600;margin-bottom:1mm}
+.example-steps{margin:1mm 0;padding-inline-start:6mm;line-height:1.5}
+.example-steps li{margin:.4mm 0}
+.example-answer{margin-top:1.5mm;font-weight:700;color:var(--blue)}
+.a4-page.tight .example{margin:2.5mm 0;padding:2mm 3mm}
+.a4-page.tight .example-steps{line-height:1.35}
+
 /* --- משימה + סמן נקודה כחול (מחליף מספור) --- */
 .task{margin:4mm 0}
 .task-row{display:flex;align-items:flex-start;gap:3mm}

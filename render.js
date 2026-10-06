@@ -46,6 +46,17 @@
   const BLOCKS = {
     note: (b) => `<p class="note">${fillInline(b.text)}</p>`,
 
+    // דוגמה פתורה: תווית "דוגמה" → נתון → צעדי פתרון → תשובה (לפני מיומנות חדשה)
+    example: (b) => {
+      const steps = (b.steps || []).map((s) => `<li>${T(s)}</li>`).join("");
+      return `<div class="example">` +
+        `<div class="example-lab">${T(b.lab || "דוגמה")}</div>` +
+        (b.given ? `<div class="example-given">${T(b.given)}</div>` : "") +
+        (steps ? `<ol class="example-steps">${steps}</ol>` : "") +
+        (b.answer ? `<div class="example-answer">${T(b.answer)}</div>` : "") +
+        `</div>`;
+    },
+
     html: (b) => M(b.html),                    // פתח-מילוט: markup מדויק מותאם-אישית
 
     table: (b) => {
@@ -128,10 +139,11 @@
       `${page.sub ? `<div class="page-subtitle">${T(page.sub)}</div>` : ""}</div>` +
       `<div class="page-number" aria-label="עמוד ${page.n}">${page.n}</div></header>`;
     const anchor = page.anchor ? `<div class="anchor">${T(page.anchor)}</div>` : "";
+    const example = page.example ? BLOCKS.example(page.example) : "";
     const tasks = (page.tasks || []).map(renderTask).join("\n");
     const main = document.createElement("main");
     main.className = "a4-page" + (page.tight ? " tight" : "");
-    main.innerHTML = header + anchor + tasks + FOOTER;
+    main.innerHTML = header + anchor + example + tasks + FOOTER;
     document.body.innerHTML = "";
     document.body.appendChild(main);
     document.title = (page.title || "גליל").replace(/<[^>]+>/g, "");
@@ -170,9 +182,10 @@
         `${page.sub ? `<div class="page-subtitle">${T(page.sub)}</div>` : ""}</div>` +
         `<div class="page-number" aria-label="עמוד ${page.n}">${page.n}</div></header>`;
       const anchor = page.anchor ? `<div class="anchor">${T(page.anchor)}</div>` : "";
+      const example = page.example ? BLOCKS.example(page.example) : "";
       const tasks = (page.tasks || []).map(renderTask).join("\n");
       tmp.className = "a4-page" + (page.tight ? " tight" : "");
-      tmp.innerHTML = header + anchor + tasks + FOOTER;
+      tmp.innerHTML = header + anchor + example + tasks + FOOTER;
       mount.appendChild(tmp);
       return tmp;
     },
@@ -183,6 +196,7 @@
 /* ----------------------------------------------------------------------------
    אוצר סוגי-בלוקים (t):
      note    {text}                               פסקה חופשית
+     example {lab?, given?, steps:[...], answer?}  דוגמה פתורה (לפני מיומנות חדשה)
      html    {html}                                markup גולמי מדויק (פתח-מילוט)
      table   {head:[...], rows:[[...]]}            טבלה; תא "" = ריק להשלמה
      bank    {words:[...], plain?}                 מחסן מילים/קשרים
