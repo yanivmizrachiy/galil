@@ -79,6 +79,8 @@ body{direction:rtl;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-ser
 .qmark{flex:0 0 9px;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-top:2.2mm}
 .task-body{flex:1;min-width:0}
 .instruction{margin:0 0 3mm;font-weight:500}
+/* בידוד דו-כיווני: כל ביטוי LTR נשאר יציב בתוך פרוזה RTL (כמו math-ltr במעגל) */
+[dir="ltr"]{unicode-bidi:isolate}
 
 /* --- שרטוטים (כרטיסי SVG) --- */
 .shape-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm}
