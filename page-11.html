@@ -1,59 +1,53 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>π — תזכורת מדויקת</title>
-  <script>MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, chtml: { fontURL: 'vendor/mathjax/tex-font/chtml/woff2' } };</script>
-  <script id="MathJax-script" async src="vendor/mathjax/tex-mml-chtml.js"></script>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+<script src="render.js" defer></script>
 </head>
 <body>
-<main class="a4-page">
-  <header class="page-header">
-    <h1 class="page-title">\(\pi\) — תזכורת מדויקת</h1>
-    <div class="page-number" aria-label="עמוד 11">11</div>
-  </header>
-
-  <div class="anchor">\(\pi\) הוא מספר מדויק. כאשר משתמשים ב־\(3.14\) כקירוב, כותבים \(\pi \approx 3.14\) ולא שוויון.</div>
-
-  <section class="task">
-    <div class="task-row"><div class="task-num">1</div><div class="task-body">
-      <p class="instruction">סמנו בכל שורה: תקין / לא תקין.</p>
-      <table class="classify-table">
-        <tr><th>כתיבה או טענה</th><th>תקין</th><th>לא תקין</th></tr>
-        <tr><td dir="ltr">\(\pi = 3.14\)</td><td>○</td><td>○</td></tr>
-        <tr><td dir="ltr">\(\pi \approx 3.14\)</td><td>○</td><td>○</td></tr>
-        <tr><td dir="ltr">\(\pi &gt; 3\)</td><td>○</td><td>○</td></tr>
-        <tr><td><span dir="ltr">\(C \div d = \pi\)</span> במעגל מתמטי</td><td>○</td><td>○</td></tr>
-        <tr><td>במדידה ממשית <span dir="ltr">\(C \div d\)</span> תמיד מתקבל בדיוק \(\pi\)</td><td>○</td><td>○</td></tr>
-        <tr><td>\(3.14\) הוא קירוב ל־\(\pi\)</td><td>○</td><td>○</td></tr>
-      </table>
-    </div></div>
-  </section>
-
-  <section class="task">
-    <div class="task-row"><div class="task-num">2</div><div class="task-body">
-      <p class="instruction">בחרו את הסימן המתאים.</p>
-      <div class="sentence-list">
-        <div class="sentence" style="text-align:center;font-size:24px"><span dir="ltr">\(\pi\quad\underline{\hspace{12mm}}\quad3.14\)</span></div>
-        <div class="sentence" style="display:flex;justify-content:center;gap:10mm"><b class="choice-pill">\(=\)</b><b class="choice-pill">\(\approx\)</b><b class="choice-pill">\(&gt;\)</b></div>
-      </div>
-    </div></div>
-  </section>
-
-  <section class="task">
-    <div class="task-row"><div class="task-num">3</div><div class="task-body">
-      <p class="instruction">בחרו את המשפט הנכון.</p>
-      <div class="sentence-list">
-        <div class="sentence"><b>א.</b> \(3.14\) הוא הערך המדויק של \(\pi\).</div>
-        <div class="sentence"><b>ב.</b> \(3.14\) הוא קירוב שימושי ל־\(\pi\).</div>
-        <div class="sentence"><b>ג.</b> \(\pi\) קטן מ־\(3\).</div>
-      </div>
-    </div></div>
-  </section>
-
-
-</main>
+<script type="application/json" id="page">
+{
+  "n": 11,
+  "title": "\\(\\pi\\) — תזכורת מדויקת",
+  "anchor": "<span dir='ltr'>\\(\\pi\\)</span> הוא מספר מדויק. כאשר משתמשים ב־<span dir='ltr'>\\(3.14\\)</span> כקירוב, כותבים <span dir='ltr'>\\(\\pi \\approx 3.14\\)</span> ולא שוויון.",
+  "tasks": [
+    {
+      "q": "סמנו בכל שורה: תקין / לא תקין.",
+      "blocks": [
+        { "t": "table",
+          "head": ["כתיבה או טענה", "תקין", "לא תקין"],
+          "rows": [
+            ["<span dir='ltr'>\\(\\pi = 3.14\\)</span>", "○", "○"],
+            ["<span dir='ltr'>\\(\\pi \\approx 3.14\\)</span>", "○", "○"],
+            ["<span dir='ltr'>\\(\\pi > 3\\)</span>", "○", "○"],
+            ["<span dir='ltr'>היקף ÷ קוטר = \\(\\pi\\)</span> במעגל מתמטי", "○", "○"],
+            ["במדידה ממשית <span dir='ltr'>היקף ÷ קוטר</span> תמיד מתקבל בדיוק <span dir='ltr'>\\(\\pi\\)</span>", "○", "○"],
+            ["<span dir='ltr'>\\(3.14\\)</span> הוא קירוב ל־<span dir='ltr'>\\(\\pi\\)</span>", "○", "○"]
+          ]
+        }
+      ]
+    },
+    {
+      "q": "בחרו את הסימן המתאים.",
+      "blocks": [
+        { "t": "html", "html": "<div class='sentence-list'><div class='sentence' style='text-align:center;font-size:24px'><span dir='ltr'>\\(\\pi\\quad\\underline{\\hspace{12mm}}\\quad3.14\\)</span></div></div>" },
+        { "t": "choice", "opts": ["\\(=\\)", "\\(\\approx\\)", "\\(>\\)"] }
+      ]
+    },
+    {
+      "q": "בחרו את המשפט הנכון.",
+      "blocks": [
+        { "t": "choices", "opts": [
+          "<b>א.</b> <span dir='ltr'>\\(3.14\\)</span> הוא הערך המדויק של <span dir='ltr'>\\(\\pi\\)</span>.",
+          "<b>ב.</b> <span dir='ltr'>\\(3.14\\)</span> הוא קירוב שימושי ל־<span dir='ltr'>\\(\\pi\\)</span>.",
+          "<b>ג.</b> <span dir='ltr'>\\(\\pi\\)</span> קטן מ־<span dir='ltr'>\\(3\\)</span>."
+        ] }
+      ]
+    }
+  ]
+}
+</script>
 </body>
 </html>
