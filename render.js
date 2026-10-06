@@ -14,6 +14,13 @@
 (function () {
   "use strict";
 
+  /* ---- פוטר-קרדיט קבוע של המחוז (נוסח מחייב — אין לשנות מילה) ---- */
+  const FOOTER =
+    '<footer class="gz-footer">' +
+    '<div class="f1">יניב רז - מדריך מחוזי חט"ב בעיר ירושלים</div>' +
+    '<div class="f2">הדרכה במחוז ירושלים והעיר ירושלים - מנח"י, בהובלת איילת קריספין</div>' +
+    '</footer>';
+
   /* ---- כלי-עזר לאכיפת SSOT ---- */
   const MULT = /·|∙|\\cdot/g;                 // כל צורות הכפל → ×
   function M(s) {                              // נירמול מתמטי (רשת-ביטחון)
@@ -124,7 +131,7 @@
     const tasks = (page.tasks || []).map(renderTask).join("\n");
     const main = document.createElement("main");
     main.className = "a4-page" + (page.tight ? " tight" : "");
-    main.innerHTML = header + anchor + tasks;
+    main.innerHTML = header + anchor + tasks + FOOTER;
     document.body.innerHTML = "";
     document.body.appendChild(main);
     document.title = (page.title || "גליל").replace(/<[^>]+>/g, "");
@@ -165,7 +172,7 @@
       const anchor = page.anchor ? `<div class="anchor">${T(page.anchor)}</div>` : "";
       const tasks = (page.tasks || []).map(renderTask).join("\n");
       tmp.className = "a4-page" + (page.tight ? " tight" : "");
-      tmp.innerHTML = header + anchor + tasks;
+      tmp.innerHTML = header + anchor + tasks + FOOTER;
       mount.appendChild(tmp);
       return tmp;
     },
