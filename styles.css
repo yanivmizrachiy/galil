@@ -28,7 +28,7 @@
 .gap.wide{min-width:22mm}
 .work{display:block;border:1px dashed #cbd5e1;border-radius:2.5mm;padding:1.5mm 3mm;margin:1.5mm 0;color:#64748b;font-size:10.5px;font-weight:500;background:repeating-linear-gradient(to bottom,#fff 0,#fff 7.5mm,#e2e8f0 7.5mm,#e2e8f0 7.8mm)}
 .work::before{content:"מרחב עבודה / חישוב"}
-.work.h10{height:10mm}.work.h14{height:14mm}.work.h18{height:18mm}.work.h22{height:22mm}.work.h28{height:28mm}.work.h36{height:36mm}.work.h45{height:45mm}.work.h60{height:60mm}.work.h80{height:80mm}
+.work.h8{height:8mm}.work.h10{height:10mm}.work.h12{height:12mm}.work.h16{height:16mm}.work.h14{height:14mm}.work.h18{height:18mm}.work.h22{height:22mm}.work.h28{height:28mm}.work.h36{height:36mm}.work.h45{height:45mm}.work.h60{height:60mm}.work.h80{height:80mm}
 .answer{margin:0;font-weight:600}
 .q-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3mm 5mm;align-items:start}
 .q-item{border:1px solid #e2e8f0;border-radius:3mm;padding:2mm 3mm;background:#fff}
@@ -38,3 +38,8 @@
 .figure svg{width:100%;height:auto;display:block}
 .official-q{margin:2mm 0 0}
 .official-q p{margin:0 0 1.5mm;line-height:1.5;font-weight:500}
+.a4-page.dense .classify-table th,.a4-page.dense .classify-table td{padding:1.3mm 2mm}
+.a4-page.dense .q-item{padding:1.5mm 2.5mm}
+.a4-page.dense .q-grid{gap:2mm 4mm}
+.a4-page.dense .instruction{margin-bottom:1.5mm}
+.a4-page.dense .formula{margin:1mm 0}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>גליל — חישוב שטח הפנים</title><link rel="stylesheet" href="styles.css"></head>
+<body><main class="a4-page tight dense" data-page-id="galil-surface-area">
+<header class="page-header"><div class="page-titles"><h1 class="page-title">גליל</h1><p class="page-subtitle">חישוב שטח הפנים</p></div><div class="page-number" aria-label="עמוד 41">41</div></header>
+
+<div class="anchor" id="surface-anchor" style="margin:3mm 0 2mm">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 60mm;gap:4mm;align-items:center">
+    <div>
+      <p style="margin:0 0 1mm">שטח הפנים של גליל = שני בסיסים + מעטפת. השלימו את בניית הנוסחה ואת הדוגמה.</p>
+      <p class="formula" style="font-size:16px">שני בסיסים: <span dir="ltr">2 · π · r²</span> &nbsp;|&nbsp; מעטפת: <span dir="ltr">2 · π · r · <span class="gap"></span></span></p>
+      <p class="formula">שטח הפנים: <span dir="ltr">S = 2πr² + <span class="gap wide"></span></span></p>
+      <p class="formula" style="font-size:16px">דוגמה: <span dir="ltr">r = 2</span> ס״מ, <span dir="ltr">h = 5</span> ס״מ &nbsp;⟵&nbsp; <span dir="ltr">S = 2·π·2² + 2·π·2·5 = <span class="gap"></span>π + <span class="gap"></span>π = <span class="gap"></span>π</span> ס״מ²</p>
+    </div>
+    <svg viewBox="0 0 240 120" role="img" aria-label="פריסה מלאה של גליל: שני עיגולים (הבסיסים) ומלבן (המעטפת)" style="width:60mm;height:auto;display:block">
+      <ellipse cx="46" cy="20" rx="30" ry="9" fill="#fde68a" stroke="#111827" stroke-width="2"/>
+      <rect x="16" y="20" width="60" height="64" fill="#dbeafe"/>
+      <line x1="16" y1="20" x2="16" y2="84" stroke="#111827" stroke-width="2"/>
+      <line x1="76" y1="20" x2="76" y2="84" stroke="#111827" stroke-width="2"/>
+      <path d="M16 84 A30 9 0 0 0 76 84" fill="none" stroke="#111827" stroke-width="2"/>
+      <path d="M16 84 A30 9 0 0 1 76 84" fill="none" stroke="#64748b" stroke-width="1.3" stroke-dasharray="5 4"/>
+      <ellipse cx="46" cy="20" rx="30" ry="9" fill="none" stroke="#111827" stroke-width="2"/>
+      <path d="M92 52 H116 M110 46 L116 52 L110 58" fill="none" stroke="#475569" stroke-width="2"/>
+      <circle cx="178" cy="22" r="18" fill="#fde68a" stroke="#111827" stroke-width="2"/>
+      <circle cx="178" cy="22" r="1.8" fill="#111827"/>
+      <line x1="178" y1="22" x2="196" y2="22" stroke="#1d4ed8" stroke-width="2"/>
+      <text x="188" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8">r</text>
+      <rect x="128" y="44" width="100" height="40" fill="#dbeafe" stroke="#111827" stroke-width="2"/>
+      <text x="178" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">2πr</text>
+      <text x="234" y="68" text-anchor="middle" font-size="11" fill="#111827">h</text>
+      <circle cx="178" cy="104" r="14" fill="#fde68a" stroke="#111827" stroke-width="2"/>
+    </svg>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5mm;align-items:start">
+<section class="task" id="q-surface-1" style="margin:1.5mm 0"><div class="task-row"><div class="task-num">1</div><div class="task-body">
+  <p class="instruction">השלימו: שני בסיסים, מעטפת, ואז שטח הפנים.</p>
+  <table class="classify-table" style="margin-top:1mm">
+    <thead><tr><th>r</th><th>h</th><th>2πr²</th><th>2πrh</th><th>S</th></tr></thead>
+    <tbody>
+      <tr data-qa="total" data-r="3" data-h="4"><td>3 ס״מ</td><td>4 ס״מ</td><td>____π</td><td>____π</td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total" data-r="5" data-h="2"><td>5 ס״מ</td><td>2 ס״מ</td><td>____π</td><td>____π</td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total" data-r="1" data-h="6"><td>1 ס״מ</td><td>6 ס״מ</td><td>____π</td><td>____π</td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total" data-r="4" data-h="4"><td>4 ס״מ</td><td>4 ס״מ</td><td>____π</td><td>____π</td><td>____π ס״מ²</td></tr>
+    </tbody>
+  </table>
+</div></div></section>
+
+<section class="task" id="q-surface-2" style="margin:1.5mm 0"><div class="task-row"><div class="task-num">2</div><div class="task-body">
+  <p class="instruction">נתון הקוטר. עברו תחילה לרדיוס ורק אז חשבו.</p>
+  <table class="classify-table" style="margin-top:1mm">
+    <thead><tr><th>d</th><th>h</th><th>r</th><th>S</th></tr></thead>
+    <tbody>
+      <tr data-qa="total-d" data-d="10" data-h="3"><td>10 ס״מ</td><td>3 ס״מ</td><td></td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total-d" data-d="6" data-h="7"><td>6 ס״מ</td><td>7 ס״מ</td><td></td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total-d" data-d="2" data-h="9"><td>2 ס״מ</td><td>9 ס״מ</td><td></td><td>____π ס״מ²</td></tr>
+      <tr data-qa="total-d" data-d="16" data-h="2"><td>16 ס״מ</td><td>2 ס״מ</td><td></td><td>____π ס״מ²</td></tr>
+    </tbody>
+  </table>
+</div></div></section>
+</div>
+
+<section class="task" id="q-surface-3" style="margin:2mm 0"><div class="task-row"><div class="task-num">3</div><div class="task-body">
+  <p class="instruction">חשבו את שטח הפנים. החישוב במרחב העבודה, התשובה בשורה.</p>
+  <div class="q-grid">
+    <div class="q-item" data-qa="total" data-r="4" data-h="9" data-expect="104π"><p class="q-text"><span class="q-num">א.</span><span dir="ltr">r = 4</span> ס״מ, <span dir="ltr">h = 9</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ________ ס״מ²</p></div>
+    <div class="q-item" data-qa="total-d" data-d="20" data-h="5" data-expect="300π"><p class="q-text"><span class="q-num">ב.</span><span dir="ltr">d = 20</span> ס״מ, <span dir="ltr">h = 5</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ________ ס״מ²</p></div>
+    <div class="q-item" data-qa="total" data-r="1" data-h="2" data-approx="3.14" data-expect="18.84"><p class="q-text"><span class="q-num">ג.</span><span dir="ltr">r = 1</span> ס״מ, <span dir="ltr">h = 2</span> ס״מ. גם מקורב: <span dir="ltr">π ≈ 3.14</span>.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ______π ס״מ² ≈ ________ ס״מ²</p></div>
+    <div class="q-item" data-qa="total" data-r="3" data-h="10" data-expect="78π"><p class="q-text"><span class="q-num">ד.</span><span dir="ltr">r = 3</span> ס״מ, <span dir="ltr">h = 10</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ________ ס״מ²</p></div>
+  </div>
+</div></div></section>
+
+<section class="task" id="q-surface-4" style="margin:2mm 0"><div class="task-row"><div class="task-num">4</div><div class="task-body">
+  <p class="instruction">ביטויים אלגבריים. כתבו את שטח הפנים כביטוי אלגברי מצומצם.</p>
+  <div class="q-grid">
+    <div class="q-item" data-qa="algebra" data-expect="2πx² + 6πx"><p class="q-text"><span class="q-num">א.</span>רדיוס הבסיס <span dir="ltr">x</span> ס״מ, הגובה 3 ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ____________</p></div>
+    <div class="q-item" data-qa="algebra" data-expect="8π + 4πy"><p class="q-text"><span class="q-num">ב.</span>רדיוס הבסיס 2 ס״מ, הגובה <span dir="ltr">y</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ____________</p></div>
+    <div class="q-item" data-qa="algebra" data-expect="4πa²"><p class="q-text"><span class="q-num">ג.</span>רדיוס הבסיס <span dir="ltr">a</span> ס״מ, הגובה <span dir="ltr">a</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ____________</p></div>
+    <div class="q-item" data-qa="algebra" data-expect="24πk²"><p class="q-text"><span class="q-num">ד.</span>רדיוס הבסיס <span dir="ltr">3k</span> ס״מ, הגובה <span dir="ltr">k</span> ס״מ.</p><span class="work h10"></span><p class="answer">תשובה: <span dir="ltr">S =</span> ____________</p></div>
+  </div>
+</div></div></section>
+
+</main></body></html>

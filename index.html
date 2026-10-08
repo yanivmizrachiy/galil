@@ -35,8 +35,8 @@
 <body>
   <nav class="bar" aria-label="ניווט בחוברת">
     <span class="title">חוברת הגליל</span><span class="sub" id="pageTotalSub"></span>
-    <button id="singleMode" type="button" aria-pressed="true">דף בודד</button>
-    <button id="continuousMode" type="button" aria-pressed="false">דפדוף מלמעלה למטה ↓</button>
+    <button id="continuousMode" type="button" aria-pressed="true">גלילה רציפה מלמעלה למטה ↓</button>
+    <button id="singleMode" type="button" aria-pressed="false">דף בודד</button>
     <button id="prev" type="button">הקודם</button>
     <span>עמוד <input id="page" type="number" min="1" max="38" value="1" inputmode="numeric"> מתוך <span id="pageTotal"></span></span>
     <button id="next" type="button">הבא</button>
@@ -50,7 +50,7 @@
   <main id="continuousView" aria-label="חוברת הגליל — צפייה רציפה"></main>
 
   <script>
-    const total=38;
+    const total=41;
     const input=document.getElementById('page');
     input.max=total;
     document.getElementById('pageTotal').textContent=total;
@@ -62,7 +62,7 @@
     const singleMode=document.getElementById('singleMode');
     const continuousMode=document.getElementById('continuousMode');
     const mobileQuery=window.matchMedia('(max-width:700px)');
-    let mode='single';
+    let mode='continuous';
     let continuousBuilt=false;
 
     function clampPage(n){return Math.max(1,Math.min(total,Number(n)||1));}
@@ -191,8 +191,8 @@
     document.getElementById('prev').onclick=()=>go(Number(input.value)-1);
     document.getElementById('next').onclick=()=>go(Number(input.value)+1);
     input.onchange=()=>go(input.value);
-    singleMode.onclick=()=>setMode('single');
-    continuousMode.onclick=()=>setMode('continuous');
+    singleMode.onclick=()=>{setMode('single');rememberMode('single');};
+    continuousMode.onclick=()=>{setMode('continuous');rememberMode('continuous');};
 
     const observer=new IntersectionObserver(entries=>{
       if(mode!=='continuous') return;
@@ -214,8 +214,12 @@
     });
     window.addEventListener('orientationchange',()=>setTimeout(fitVisibleFrames,180));
 
+    // Continuous top-to-bottom scrolling is the default view (Yaniv, 2026-10-09; SOURCE_OF_TRUTH.md §19).
+    function rememberMode(value){try{localStorage.setItem('galil-view-mode',value);}catch(e){}}
+    function savedMode(){try{return localStorage.getItem('galil-view-mode');}catch(e){return null;}}
     const m=location.hash.match(/page=(\d+)/);
-    if(m) go(m[1]);
+    if(m) updateCurrent(m[1],false);
+    setMode(savedMode()==='single'?'single':'continuous');
   </script>
 </body>
 </html>
