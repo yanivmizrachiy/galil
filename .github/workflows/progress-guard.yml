@@ -1,0 +1,31 @@
+name: Galil Progress Guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  progress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify tracker structure
+        run: node scripts/verify-progress.mjs
+      - name: Require tracker update on pull request
+        if: github.event_name == 'pull_request'
+        run: node scripts/verify-progress.mjs "${{ github.event.pull_request.base.sha }}" "$GITHUB_SHA"
+      - name: Require tracker update on push
+        if: github.event_name == 'push'
+        run: node scripts/verify-progress.mjs "${{ github.event.before }}" "$GITHUB_SHA"
