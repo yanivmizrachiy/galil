@@ -29,6 +29,10 @@ jobs:
         run: node ssot-qa.mjs
       - name: Run workbook contract QA
         run: node qa.mjs
+      - name: Verify foundational cylinder concepts
+        run: node core-qa.mjs
+      - name: Verify volume progression and inverse calculations
+        run: node volume-qa.mjs
       - name: Verify surface-area mathematics and progression
         run: node surface-qa.mjs
       - name: Enforce progress update on pull request

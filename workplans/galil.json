@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T02:52:00+03:00",
+  "updatedAt": "2026-10-09T02:58:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -45,7 +45,7 @@
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
       "percent": 40,
-      "evidence": ["SOURCE_OF_TRUTH.md records the current cylinder-question mapping and explicitly requires re-verification before closure.", "Default-branch code search for the required heading 'שאלות מתוך תוכנית הלימודים' currently finds the requirement in SSOT but not verified student-page implementation."],
+      "evidence": ["SOURCE_OF_TRUTH.md records the current cylinder-question mapping and explicitly requires re-verification before closure.", "The authoritative curriculum fragment is accessible in yanivmizrachiy/jerusalem2, but exact official cylinder-question 1:1 reconciliation is intentionally still open and no completion credit is added without that source audit."],
       "blockedReason": null
     },
     {
@@ -54,7 +54,7 @@
       "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
       "status": "in_progress",
       "percent": 60,
-      "evidence": ["Existing workbook pages and index provide a substantial cylinder baseline.", "Full page-by-page compliance against the current SSOT has not yet been completed, so this task is not marked done."],
+      "evidence": ["Pages 2-8 visibly cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs now turns those SOURCE_OF_TRUTH requirements into deterministic gates; completion credit is withheld until the exact new head is green."],
       "blockedReason": null
     },
     {
@@ -63,7 +63,7 @@
       "title": "שלושה דפי שטח נפרדים: בסיס, מעטפת, פנים",
       "status": "done",
       "percent": 100,
-      "evidence": ["claude/galil-work contains three separate A4 pages: page-39.html 'גליל — חישוב שטח הבסיס', page-40.html 'גליל — חישוב שטח המעטפת', and page-41.html 'גליל — חישוב שטח הפנים'.", "Each page includes dedicated student practice, diameter/radius transitions, work areas, and algebraic-expression practice.", "Draft PR #4 targets main from claude/galil-work and GitHub Actions run 37854678739 completed successfully: single-source-of-truth verification, workbook QA, and evidence-backed progress verification all passed."],
+      "evidence": ["claude/galil-work contains three separate A4 pages: page-39.html 'גליל — חישוב שטח הבסיס', page-40.html 'גליל — חישוב שטח המעטפת', and page-41.html 'גליל — חישוב שטח הפנים'.", "Each page includes dedicated student practice, diameter/radius transitions, work areas, and algebraic-expression practice.", "Draft PR #4 targets main from claude/galil-work and earlier green CI established the three-page implementation; surface-qa.mjs now adds deterministic mathematics/progression checks."],
       "blockedReason": null
     },
     {
@@ -72,7 +72,7 @@
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
       "status": "in_progress",
       "percent": 65,
-      "evidence": ["Existing pages include volume/base-height work, including page-19.html, page-20.html, page-21.html, page-22.html, page-25.html, page-28.html and page-38.html.", "Final compliance and pedagogical-order audit against the expanded SSOT is still open."],
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs now encodes the progression plus deterministic arithmetic checks (including d=10→r=5→75π, inverse h=5, inverse r=7, and capacity conversions); completion credit remains withheld until the exact new head is green."],
       "blockedReason": null
     },
     {
@@ -81,7 +81,7 @@
       "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
       "status": "in_progress",
       "percent": 0,
-      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory.", "Current-head run 37861261022 passed SSOT QA, workbook QA, surface mathematics/progression QA and progress coupling before browser QA exposed two layout overflows; algebra completion credit remains withheld until the repaired head is green."],
+      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory.", "Run 37861261022 passed surface mathematics/progression QA before browser QA exposed layout overflows; algebra completion credit remains withheld until the repaired head is green."],
       "blockedReason": null
     },
     {
@@ -90,7 +90,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "in_progress",
       "percent": 70,
-      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "Run 37861261022 generated screenshots for all 41 pages and exposed real internal A4 overflow on pages 11 and 41; the current repair removes the unnecessary legacy auto-workspace on the page-11 multiple-choice ending and reduces only page-41 work-grid height from 10mm to 8mm while preserving a dedicated workspace for every exercise."],
+      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "Run 37861261022 generated screenshots for all 41 pages and exposed internal A4 overflow only on pages 11 and 41; commit 24a21a690236bd71082ece150f9572bf773690dc applies a minimal repair by removing an unnecessary legacy auto-workspace on page 11 and preserving shorter dedicated workspaces on page 41."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 30,
-      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 successfully produced a 46-file galil-visual-qa artifact (41 page screenshots, mobile reader screenshots and PDF evidence) but correctly failed the browser gate because pages 11 and 41 overflowed internally; repair and revalidation are in progress.", "Galil Progress Guard run 37861261024 passed on the synchronized branch."],
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 produced a 46-file galil-visual-qa artifact with all page screenshots, mobile reader screenshots and PDF evidence; it correctly failed only the two internal-overflow pages now repaired.", "Browser QA verifies continuous-view default, Android/iPhone portrait+landscape, A4 page geometry, print/PDF and page-39..41 mobile fit; exact-head green evidence is pending."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "The new expert QA gates found two genuine A4 overflow defects instead of falsely declaring success. Run 37861261022 passed SSOT/workbook/surface/progress checks, generated full visual/PDF evidence, then failed only pages 11 and 41 for internal overflow. A minimal pedagogically safe repair is being applied and progress deliberately remains 60/40 until the repaired exact head passes CI."
+    "summary": "Expert audit expanded beyond structural checks: pages 2-8 and 25-38 were traced to the canonical concept/volume requirements, and new core-qa.mjs plus volume-qa.mjs convert that evidence into deterministic CI gates. No percentage is inflated before the repaired exact head passes all browser, math, source-of-truth and progress checks."
   }
 }
