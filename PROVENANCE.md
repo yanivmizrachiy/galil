@@ -1,5 +1,7 @@
 # Provenance — galil (cylinder workbook)
 
+> מסמך תיעוד היסטורי בלבד. הוא **אינו** מקור דרישות ואינו רשאי להוסיף, לפרש או לשנות דרישה. מקור הדרישות היחיד הוא [`SOURCE_OF_TRUTH.md`](SOURCE_OF_TRUTH.md). מפת המקורות המרוכזת נמצאת ב־[`SOURCES.md`](SOURCES.md).
+
 Extracted 2026-09-23. The two copies had diverged on disjoint files; both change sets are included.
 
 | Target | Source |
@@ -14,3 +16,7 @@ Pages 1–10 and 15–38 are identical in both sources.
 - `page-*.html`: `../../vendor/mathjax/` → `vendor/mathjax/`
 - `index.html`: link "כל החוברות" `../index.html` → https://yanivmizrachiy.github.io/razpages/workbooks/index.html
 - `qa.mjs`: normalizes TeX (`\(\pi\)`, `\approx`) before the π notation checks. The QA predates the MathJax fix and failed on razpages main; page content is unchanged.
+
+## Canonical rule
+
+Historical provenance explains where the existing implementation came from. It does **not** freeze the historical 38-page structure and it must never override newer requirements in `SOURCE_OF_TRUTH.md`.
