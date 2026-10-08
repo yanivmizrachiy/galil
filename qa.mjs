@@ -30,6 +30,11 @@ assert(pages.length > 0, 'at least one student page must exist');
 assert(new Set(pages).size === pages.length, 'page numbers must be unique');
 pages.forEach((page, index) => assert(page === index + 1, `student sequence must be continuous from 1; found page ${page} at position ${index + 1}`));
 
+// index.html navigation must always match the real number of student pages (SOURCE_OF_TRUTH.md §19).
+const indexHtml = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+const indexTotal = Number((indexHtml.match(/const total\s*=\s*(\d+)/) || [])[1]);
+assert(indexTotal === pages.length, `index.html total (${indexTotal}) must equal the number of student pages (${pages.length})`);
+
 for (const page of pages) {
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
     .replace(/\\[()]/g, '').replace(/\\pi\b/g, 'π').replace(/\\approx/g, '≈');
@@ -37,7 +42,9 @@ for (const page of pages) {
   assert(count(html, /<h1\b/g) === 1, `page ${page}: exactly one visible page heading is required`);
   assert(count(html, /<h[23]\b/g) === 0, `page ${page}: question-level headings are forbidden`);
   assert(new RegExp(`aria-label="עמוד ${page}"[^>]*>${page}<\\/div>`).test(html), `page ${page}: visible page number mismatch`);
-  assert(/<footer class="footer">/.test(html), `page ${page}: name/date footer is required`);
+  // The canonical district footer is rendered by styles.css (.a4-page::after, asserted above);
+  // the legacy name/date <footer> was removed in fe9d26d, so pages must only link the shared stylesheet.
+  assert(/<link rel="stylesheet" href="styles.css">/.test(html), `page ${page}: shared styles.css (canonical district footer) is required`);
   assert(!/[×]/.test(html), `page ${page}: multiplication sign × is forbidden`);
   assert(!/\d\s*[xX]\s*\d/.test(html), `page ${page}: x/X must not be used as a numeric multiplication sign`);
   if (page === 11) {
@@ -48,7 +55,10 @@ for (const page of pages) {
     assert(!/π\s*=\s*3(?:[.,])14/.test(html), `page ${page}: π must never be written as exactly 3.14 outside the page-11 error-detection task`);
   }
   assert(!/demo|placeholder/i.test(html), `page ${page}: demo/placeholder text is forbidden`);
-  assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
+  // SOURCE_OF_TRUTH.md §6: official curriculum questions keep their wording 1:1, so pages marked
+  // data-official="curriculum" are exempt from the open-response wording guard.
+  const official = /data-official="curriculum"/.test(html);
+  if (!official) assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
   if (page === 1) assert(/<h1[^>]*>מושגים בסיסיים<\/h1>/.test(html), 'page 1: canonical opening title must be מושגים בסיסיים');
   if (page < 19) assert(!/V\s*=/.test(html), `page ${page}: volume formula is forbidden before page 19`);
 
