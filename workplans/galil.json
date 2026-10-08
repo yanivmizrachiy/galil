@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T02:45:00+03:00",
+  "updatedAt": "2026-10-09T02:52:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -81,7 +81,7 @@
       "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
       "status": "in_progress",
       "percent": 0,
-      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs now adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory; current-head CI evidence is still pending, so no completion credit is claimed yet."],
+      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory.", "Current-head run 37861261022 passed SSOT QA, workbook QA, surface mathematics/progression QA and progress coupling before browser QA exposed two layout overflows; algebra completion credit remains withheld until the repaired head is green."],
       "blockedReason": null
     },
     {
@@ -90,7 +90,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "in_progress",
       "percent": 70,
-      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "browser-qa.mjs now checks every active page for exact A4 geometry, internal overflow, RTL/heading/page-number integrity and creates per-page screenshots; current-head CI evidence is still pending, so this task is not advanced yet."],
+      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "Run 37861261022 generated screenshots for all 41 pages and exposed real internal A4 overflow on pages 11 and 41; the current repair removes the unnecessary legacy auto-workspace on the page-11 multiple-choice ending and reduces only page-41 work-grid height from 10mm to 8mm while preserving a dedicated workspace for every exercise."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 30,
-      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "preview.mjs exists on claude/galil-work and PR #4 workbook QA is green.", "The QA workflow now installs Chromium and runs browser-qa.mjs for Android/iPhone portrait+landscape, continuous-reader fit, pages 39-41 mobile single-view fit, print and a combined A4 PDF, then uploads visual/PDF artifacts; current-head CI evidence is still pending."],
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 successfully produced a 46-file galil-visual-qa artifact (41 page screenshots, mobile reader screenshots and PDF evidence) but correctly failed the browser gate because pages 11 and 41 overflowed internally; repair and revalidation are in progress.", "Galil Progress Guard run 37861261024 passed on the synchronized branch."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "QA infrastructure for SSOT §27 and full browser evidence is now committed on claude/galil-work. This tracker-only follow-up deliberately keeps progress at 60/40 and triggers a fresh PR workflow for the exact current branch state; percentages will move only after green evidence is recorded."
+    "summary": "The new expert QA gates found two genuine A4 overflow defects instead of falsely declaring success. Run 37861261022 passed SSOT/workbook/surface/progress checks, generated full visual/PDF evidence, then failed only pages 11 and 41 for internal overflow. A minimal pedagogically safe repair is being applied and progress deliberately remains 60/40 until the repaired exact head passes CI."
   }
 }
