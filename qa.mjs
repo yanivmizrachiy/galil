@@ -1,3 +1,4 @@
+import './ssot-qa.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,7 +29,6 @@ pages.forEach((page, index) => assert(page === index + 1, `current approved sequ
 assert(!pages.some(page => page >= 39), 'pages 39+ are blocked until the תשפ״ז status of nets/lateral/total surface area is resolved');
 
 for (const page of pages) {
-  // Pages 11-14 render π via local MathJax (\(\pi\)); normalize TeX so notation checks see π / ≈.
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
     .replace(/\\[()]/g, '').replace(/\\pi\b/g, 'π').replace(/\\approx/g, '≈');
   assert(/<html[^>]*lang="he"[^>]*dir="rtl"/.test(html), `page ${page}: Hebrew RTL root is required`);
