@@ -35,6 +35,8 @@ const meaningful=(file)=>[
   /^styles\.css$/,
   /^qa\.mjs$/,
   /^ssot-qa\.mjs$/,
+  /^core-qa\.mjs$/,
+  /^volume-qa\.mjs$/,
   /^surface-qa\.mjs$/,
   /^browser-qa\.mjs$/,
   /^package(?:-lock)?\.json$/,

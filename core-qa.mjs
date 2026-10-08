@@ -15,7 +15,7 @@ ok(has(3,'שני בסיסים','שני הבסיסים חופפים','מישור�
 ok(has(4,'מעטפת הגליל','המשטח הצדדי שמחבר בין שני הבסיסים'),'page 4: lateral-surface concept missing');
 ok(has(5,'רדיוס וקוטר בבסיס','d = 2·r','d = 10','r = 3.5'),'page 5: radius/diameter relation or bidirectional practice missing');
 ok(has(6,'גובה הגליל','המרחק המאונך בין מישורי שני הבסיסים','גליל שוכב','גליל מסובב'),'page 6: height definition/orientation practice missing');
-ok(has(6,'גובה הגליל מאונך למישורי הבסיסים','כיוון הדף קובע מהו גובה הגליל'),'page 6: height misconception checks missing');
+ok(has(6,'בגליל ישר הגובה מאונך למישורי הבסיסים','כיוון הדף קובע מהו גובה הגליל'),'page 6: height misconception checks missing');
 ok(has(7,'לא מודדים מן המראה של הציור','רדיוס 3 סנטימטר','גובה 8 סנטימטר','קוטר הבסיס הוא 6'),'page 7: perspective-data discipline missing');
 ok(has(8,'זיהוי גוף, בסיסים, מעטפת, רדיוס, קוטר וגובה','r = 4','d = 18','גובה הגליל מאונך'),'page 8: foundational checkpoint coverage missing');
 
