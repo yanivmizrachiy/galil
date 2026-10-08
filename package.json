@@ -1,0 +1,12 @@
+{
+  "name": "galil-hadash-workbook",
+  "private": true,
+  "scripts": {
+    "qa": "node qa.mjs && node surface-qa.mjs && node scripts/verify-progress.mjs",
+    "qa:browser": "node browser-qa.mjs"
+  },
+  "devDependencies": {
+    "pdf-lib": "1.17.1",
+    "playwright": "1.55.0"
+  }
+}

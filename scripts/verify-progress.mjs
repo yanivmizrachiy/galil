@@ -35,6 +35,10 @@ const meaningful=(file)=>[
   /^styles\.css$/,
   /^qa\.mjs$/,
   /^ssot-qa\.mjs$/,
+  /^surface-qa\.mjs$/,
+  /^browser-qa\.mjs$/,
+  /^package(?:-lock)?\.json$/,
+  /^\.github\/workflows\/qa\.yml$/,
   /^scripts\/(?!verify-progress\.mjs$)/,
   /^assets\//,
   /^provenance\//

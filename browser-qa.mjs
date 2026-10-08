@@ -1,0 +1,143 @@
+import { chromium } from 'playwright';
+import { PDFDocument } from 'pdf-lib';
+import fs from 'node:fs';
+import http from 'node:http';
+import path from 'node:path';
+
+const failures=[];
+const ok=(cond,msg)=>{if(!cond)failures.push(msg)};
+const root=process.cwd();
+const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'};
+const pages=fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n)).map(n=>Number(n.match(/\d+/)[0])).sort((a,b)=>a-b);
+const total=pages.length;
+
+const server=http.createServer((req,res)=>{
+  const pathname=new URL(req.url,'http://127.0.0.1').pathname;
+  const rel=pathname==='/'?'index.html':pathname.replace(/^\//,'');
+  const file=path.resolve(root,rel);
+  if(!file.startsWith(root+path.sep)&&file!==path.join(root,'index.html')){res.writeHead(403);res.end();return;}
+  fs.readFile(file,(err,buf)=>{
+    if(err){res.writeHead(404);res.end('not found');return;}
+    res.writeHead(200,{'content-type':mime[path.extname(file)]||'application/octet-stream','cache-control':'no-store'});
+    res.end(buf);
+  });
+});
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+const {port}=server.address();
+const base=`http://127.0.0.1:${port}/`;
+
+fs.mkdirSync('qa-artifacts',{recursive:true});
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1200}});
+const consoleErrors=[];
+page.on('pageerror',e=>consoleErrors.push(`pageerror: ${e.message}`));
+page.on('console',m=>{if(m.type()==='error')consoleErrors.push(`console: ${m.text()}`)});
+
+const mmPx=96/25.4;
+const expectedW=210*mmPx;
+const expectedH=297*mmPx;
+const combined=await PDFDocument.create();
+
+for(const n of pages){
+  await page.goto(`${base}page-${n}.html`,{waitUntil:'load'});
+  await page.waitForTimeout(30);
+  const audit=await page.evaluate(()=>{
+    const p=document.querySelector('.a4-page');
+    const cs=getComputedStyle(p);
+    const r=p.getBoundingClientRect();
+    return {
+      w:parseFloat(cs.width),h:parseFloat(cs.height),
+      rectW:r.width,rectH:r.height,
+      internalOverflow:p.scrollWidth>p.clientWidth+1||p.scrollHeight>p.clientHeight+1,
+      bodyOverflow:document.documentElement.scrollWidth>innerWidth+1,
+      h1:document.querySelectorAll('h1').length,
+      dir:document.documentElement.dir,
+      lang:document.documentElement.lang,
+      pageNumber:document.querySelector('.page-number')?.textContent?.trim()||''
+    };
+  });
+  ok(Math.abs(audit.w-expectedW)<2&&Math.abs(audit.h-expectedH)<2,`page ${n}: A4 geometry drift ${audit.w}x${audit.h}`);
+  ok(!audit.internalOverflow,`page ${n}: internal A4 overflow`);
+  ok(!audit.bodyOverflow,`page ${n}: desktop horizontal overflow`);
+  ok(audit.h1===1,`page ${n}: expected exactly one h1`);
+  ok(audit.dir==='rtl'&&audit.lang==='he',`page ${n}: Hebrew RTL root missing`);
+  ok(audit.pageNumber===String(n),`page ${n}: visible page number mismatch (${audit.pageNumber})`);
+  await page.locator('.a4-page').screenshot({path:`qa-artifacts/page-${String(n).padStart(2,'0')}.png`});
+  const bytes=await page.pdf({format:'A4',printBackground:true,preferCSSPageSize:true,margin:{top:'0',right:'0',bottom:'0',left:'0'}});
+  const one=await PDFDocument.load(bytes);
+  ok(one.getPageCount()===1,`page ${n}: print produced ${one.getPageCount()} PDF pages instead of 1`);
+  const [copied]=await combined.copyPages(one,[0]);
+  combined.addPage(copied);
+}
+
+const pdfBytes=await combined.save();
+fs.writeFileSync('qa-artifacts/galil-student.pdf',pdfBytes);
+ok(combined.getPageCount()===total,`combined PDF page count ${combined.getPageCount()} != ${total}`);
+for(const [i,p] of combined.getPages().entries()){
+  const {width,height}=p.getSize();
+  ok(Math.abs(width-595.28)<1.5&&Math.abs(height-841.89)<1.5,`combined PDF page ${i+1}: not A4 (${width}x${height})`);
+}
+
+async function inspectReader(width,height,label){
+  await page.setViewportSize({width,height});
+  await page.goto(base,{waitUntil:'load'});
+  await page.waitForTimeout(500);
+  const shell=await page.evaluate(()=>({
+    overflow:document.documentElement.scrollWidth>innerWidth+1,
+    totalText:document.querySelector('#pageTotal')?.textContent?.trim(),
+    max:document.querySelector('#page')?.max,
+    continuousPressed:document.querySelector('#continuousMode')?.getAttribute('aria-pressed'),
+    continuousVisible:getComputedStyle(document.querySelector('#continuousView')).display!=='none',
+    cards:document.querySelectorAll('.sheet-card').length,
+    firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})()
+  }));
+  ok(!shell.overflow,`${label}: reader shell has horizontal overflow`);
+  ok(shell.totalText===String(total)&&shell.max===String(total),`${label}: reader total mismatch`);
+  ok(shell.continuousPressed==='true'&&shell.continuousVisible,`${label}: continuous view is not the default`);
+  ok(shell.cards===total,`${label}: expected ${total} continuous cards, got ${shell.cards}`);
+  if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
+
+  const firstFrame=page.locator('.sheet-card iframe').first();
+  await firstFrame.waitFor({state:'attached'});
+  await page.waitForTimeout(150);
+  const scaled=await firstFrame.evaluate(f=>{
+    const p=f.contentDocument?.querySelector('.a4-page');
+    if(!p)return null;
+    const r=p.getBoundingClientRect();
+    return {w:r.width,frame:f.clientWidth};
+  });
+  if(width<=700)ok(scaled&&scaled.w<=scaled.frame+2,`${label}: scaled A4 wider than mobile iframe (${scaled?.w}/${scaled?.frame})`);
+  await page.screenshot({path:`qa-artifacts/reader-${label}.png`,fullPage:false});
+}
+
+await inspectReader(360,800,'android-portrait');
+await inspectReader(915,412,'android-landscape');
+await inspectReader(390,844,'iphone-portrait');
+await inspectReader(844,390,'iphone-landscape');
+
+// Verify the newest surface-area pages in single-page mobile mode as well.
+await page.setViewportSize({width:390,height:844});
+await page.goto(base,{waitUntil:'load'});
+await page.click('#singleMode');
+for(const n of [39,40,41]){
+  await page.fill('#page',String(n));
+  await page.locator('#page').evaluate(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
+  await page.waitForFunction(expected=>document.querySelector('#sheet')?.getAttribute('src')===`page-${expected}.html`,n);
+  await page.waitForTimeout(120);
+  const fit=await page.locator('#sheet').evaluate(f=>{
+    const p=f.contentDocument?.querySelector('.a4-page'); if(!p)return null;
+    const r=p.getBoundingClientRect(); return {pageW:r.width,frameW:f.clientWidth,src:f.getAttribute('src')};
+  });
+  ok(fit&&fit.src===`page-${n}.html`&&fit.pageW<=fit.frameW+2,`mobile single view page ${n}: clipping or wrong source`);
+}
+
+ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);
+await browser.close();
+await new Promise(resolve=>server.close(resolve));
+
+if(failures.length){
+  console.error(`BROWSER QA FAILED (${failures.length})`);
+  failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
+  process.exit(1);
+}
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape, pages 39-41 mobile single-view fit, no horizontal/internal overflow.`);

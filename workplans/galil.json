@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T01:39:00+03:00",
+  "updatedAt": "2026-10-09T02:40:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -79,9 +79,9 @@
       "id": "G-07",
       "weight": 10,
       "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
-      "status": "pending",
+      "status": "in_progress",
       "percent": 0,
-      "evidence": ["The latest main commit refines the algebraic-expression requirement in SOURCE_OF_TRUTH.md.", "The new surface-area pages include algebraic-expression exercises, but the full scope of approved algebraic extensions has not yet been audited against SSOT, so no extra completion credit is claimed here yet."],
+      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs now adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory; current-head CI evidence is still pending, so no completion credit is claimed yet."],
       "blockedReason": null
     },
     {
@@ -90,7 +90,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "in_progress",
       "percent": 70,
-      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "A complete current visual audit of every retained page is still required before done."],
+      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "browser-qa.mjs now checks every active page for exact A4 geometry, internal overflow, RTL/heading/page-number integrity and creates per-page screenshots; current-head CI evidence is still pending, so this task is not advanced yet."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 30,
-      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "preview.mjs exists on claude/galil-work and PR #4 workbook QA is green, but a current visual/mobile/print/PDF evidence set for this exact head has not yet been recorded, so this remains partial."],
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "preview.mjs exists on claude/galil-work and PR #4 workbook QA is green.", "The QA workflow now installs Chromium and runs browser-qa.mjs for Android/iPhone portrait+landscape, continuous-reader fit, pages 39-41 mobile single-view fit, print and a combined A4 PDF, then uploads visual/PDF artifacts; current-head CI evidence is still pending."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "Reconciled the canonical tracker with verified branch evidence. G-05 is now complete because the three required separate A4 surface-area pages exist on claude/galil-work and PR #4 GitHub Actions run 37854678739 passed SSOT verification, workbook QA and progress verification. No other task was inflated without full evidence."
+    "summary": "Added evidence-oriented surface-math and browser QA infrastructure without inflating progress before CI. The new gates cover SSOT §27 algebra progression, all-page A4/RTL/overflow screenshots, mobile reader checks, print, combined PDF, and stricter tracker coupling; percentages stay at 60/40 until the exact new head is proven green."
   }
 }
