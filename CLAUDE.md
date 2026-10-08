@@ -78,18 +78,20 @@ node scripts/verify-progress.mjs
 
 QA שאינו תואם יותר ל־`SOURCE_OF_TRUTH.md` נחשב drift ויש לתקן את ה־QA, לא להחזיר את הדרישה הישנה.
 
-## 7. Git / שמירה
+## 7. Git / שמירה ומדד התקדמות
 
 אחרי כל שלב מהותי:
 
 1. להריץ QA.
-2. לעדכן את `workplans/galil.json` רק לפי ראיות אמיתיות מהקוד/Preview/QA/commit; אין להעלות אחוז על סמך תחושה או דיווח מילולי.
-3. לבצע commit ברור ל־`claude/galil-work`.
-4. push ל־GitHub.
-5. למסור SHA מדויק.
-6. לא למזג ל־`main` בעצמך אלא אם יניב הורה מפורשות.
+2. לחשב מחדש את מצב כל המשימות שנגעו בהן לפי ראיות אמיתיות בלבד.
+3. לעדכן את `workplans/galil.json` **באותו מחזור עבודה ובאותו commit/PR** שבו משתנה מימוש מהותי, QA, ראיה או דרישה ב־SSOT.
+4. לעדכן `updatedAt`, `updatedBy`, task status/percent/evidence ואת `progress`/`lastProgressReport` לפי המצב האמיתי. אם האחוז לא השתנה — עדיין לרשום שהמצב נבדק מחדש ולא להמציא עלייה.
+5. לבצע commit ברור ל־`claude/galil-work`.
+6. push ל־GitHub.
+7. למסור SHA מדויק ואת האחוז שהושלם/נותר מתוך tracker, לא מהערכה מילולית.
+8. לא למזג ל־`main` בעצמך אלא אם יניב הורה מפורשות.
 
-שלב שלא הגיע ל־GitHub עם SHA מאומת אינו נחשב שמור.
+`node scripts/verify-progress.mjs` ו־CI חוסמים שינוי מהותי שאינו כולל את tracker באותו change. שלב שלא הגיע ל־GitHub עם SHA מאומת אינו נחשב שמור.
 
 ## 8. מצב ביצוע ממוקד ומהיר
 
