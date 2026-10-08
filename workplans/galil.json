@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T02:40:00+03:00",
+  "updatedAt": "2026-10-09T02:45:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "Added evidence-oriented surface-math and browser QA infrastructure without inflating progress before CI. The new gates cover SSOT §27 algebra progression, all-page A4/RTL/overflow screenshots, mobile reader checks, print, combined PDF, and stricter tracker coupling; percentages stay at 60/40 until the exact new head is proven green."
+    "summary": "QA infrastructure for SSOT §27 and full browser evidence is now committed on claude/galil-work. This tracker-only follow-up deliberately keeps progress at 60/40 and triggers a fresh PR workflow for the exact current branch state; percentages will move only after green evidence is recorded."
   }
 }
