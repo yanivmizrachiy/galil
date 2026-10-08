@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "project": "גליל חדש",
+  "repository": "yanivmizrachiy/galil",
+  "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
+  "canonicalProgressTracker": true,
+  "updatedAt": "2026-10-09T00:58:00+03:00",
+  "updatedBy": "ChatGPT",
+  "scoring": {
+    "weightTotal": 100,
+    "formula": "round(sum(task.weight * task.percent / 100))",
+    "evidenceRequiredForProgress": true,
+    "doneRequiresAcceptanceAndEvidence": true,
+    "completionRule": "100% is allowed only when every task is done, no blocker exists, required QA passes, and current visual/print/PDF evidence exists where relevant.",
+    "noGuessing": true
+  },
+  "progress": {
+    "overallProgressPercent": 45,
+    "remainingPercent": 55,
+    "blockedCount": 0,
+    "totalTasks": 10
+  },
+  "tasks": [
+    {
+      "id": "G-01",
+      "weight": 8,
+      "title": "מקור אמת יחיד וממשל ריפו",
+      "status": "done",
+      "percent": 100,
+      "evidence": ["SOURCE_OF_TRUTH.md exists on main and explicitly overrides competing requirement documents.", "README.md is navigation-only.", "ssot-qa.mjs exists as a source-of-truth integrity gate."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-02",
+      "weight": 7,
+      "title": "פרוטוקול Claude Code, ענף עבודה ו-Preview/QA",
+      "status": "done",
+      "percent": 100,
+      "evidence": ["CLAUDE.md defines claude/galil-work, mandatory SSOT reading, preview checks and QA before completion claims.", "qa.mjs and ssot-qa.mjs are present."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-03",
+      "weight": 10,
+      "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
+      "status": "in_progress",
+      "percent": 40,
+      "evidence": ["SOURCE_OF_TRUTH.md records the current cylinder-question mapping and explicitly requires re-verification before closure.", "Default-branch code search for the required heading 'שאלות מתוך תוכנית הלימודים' currently finds the requirement in SSOT but not verified student-page implementation."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-04",
+      "weight": 10,
+      "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
+      "status": "in_progress",
+      "percent": 60,
+      "evidence": ["Existing workbook pages and index provide a substantial cylinder baseline.", "Full page-by-page compliance against the current SSOT has not yet been completed, so this task is not marked done."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-05",
+      "weight": 15,
+      "title": "שלושה דפי שטח נפרדים: בסיס, מעטפת, פנים",
+      "status": "pending",
+      "percent": 0,
+      "evidence": ["SOURCE_OF_TRUTH.md requires three separate A4 pages with exact main/subtitle structure.", "Default-branch code search for the exact required surface-area page wording currently reaches SSOT; matching final pages have not yet been verified."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-06",
+      "weight": 15,
+      "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
+      "status": "in_progress",
+      "percent": 65,
+      "evidence": ["Existing pages include volume/base-height work, including page-19.html, page-20.html, page-21.html, page-22.html, page-25.html, page-28.html and page-38.html.", "Final compliance and pedagogical-order audit against the expanded SSOT is still open."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-07",
+      "weight": 10,
+      "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
+      "status": "pending",
+      "percent": 0,
+      "evidence": ["The latest main commit refines the algebraic-expression requirement in SOURCE_OF_TRUTH.md.", "No completion evidence for the corresponding final student pages has yet been recorded in this tracker."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-08",
+      "weight": 10,
+      "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
+      "status": "in_progress",
+      "percent": 70,
+      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "A complete current visual audit of every retained page is still required before done."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-09",
+      "weight": 10,
+      "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
+      "status": "in_progress",
+      "percent": 30,
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "No current accessible preview/visual artifact or current-commit CI evidence has yet been recorded in this tracker."],
+      "blockedReason": null
+    },
+    {
+      "id": "G-10",
+      "weight": 5,
+      "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
+      "status": "pending",
+      "percent": 0,
+      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and final QA therefore remain open."],
+      "blockedReason": null
+    }
+  ],
+  "lastProgressReport": {
+    "completedPercent": 45,
+    "remainingPercent": 55,
+    "summary": "Initial evidence-backed baseline. Existing implementation receives credit only where repository evidence exists; unverified new requirements remain at 0 or partial progress. This number must be recalculated whenever Claude Code or GPT changes implementation or evidence."
+  }
+}
