@@ -23,10 +23,12 @@ const pages = fs.readdirSync(dir)
   .map(name => Number(name.match(/\d+/)[0]))
   .sort((a,b) => a-b);
 
-assert(pages.length === 38, `current approved cylinder sequence must contain exactly 38 student pages; found ${pages.length}`);
-assert(new Set(pages).size === 38, 'page numbers must be unique');
-pages.forEach((page, index) => assert(page === index + 1, `current approved sequence must be continuous from 1 to 38; found page ${page} at position ${index + 1}`));
-assert(!pages.some(page => page >= 39), 'pages 39+ are blocked until the תשפ״ז status of nets/lateral/total surface area is resolved');
+// The historical workbook currently has 38 pages, but SOURCE_OF_TRUTH.md explicitly
+// says 38 is not a target. QA therefore protects structural integrity without freezing
+// the new Galil workbook to the legacy page count while the specification is still open.
+assert(pages.length > 0, 'at least one student page must exist');
+assert(new Set(pages).size === pages.length, 'page numbers must be unique');
+pages.forEach((page, index) => assert(page === index + 1, `student sequence must be continuous from 1; found page ${page} at position ${index + 1}`));
 
 for (const page of pages) {
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
@@ -49,7 +51,11 @@ for (const page of pages) {
   assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
   if (page === 1) assert(/<h1[^>]*>מושגים בסיסיים<\/h1>/.test(html), 'page 1: canonical opening title must be מושגים בסיסיים');
   if (page < 19) assert(!/V\s*=/.test(html), `page ${page}: volume formula is forbidden before page 19`);
-  assert(!/S\s*=|M\s*=/.test(html), `page ${page}: lateral/total surface-area formula is not authorized in current produced sequence`);
+
+  // Surface-area work is no longer forbidden here. SOURCE_OF_TRUTH.md now explicitly
+  // requires separate base-area, lateral-area and total-surface-area student pages.
+  // Their implementation/completeness gates will be added only after Yaniv finishes
+  // the still-open specification; this legacy integrity QA must not contradict it.
 
   if (page === 20) {
     assert(/<th>V לפני<\/th><th>V אחרי<\/th>[\s\S]*____ ס״מ³<\/td><td>____ ס״מ³/.test(html), 'page 20: before/after volume answers must carry cubic-centimeter units');
@@ -64,4 +70,4 @@ for (const page of pages) {
   }
 }
 
-console.log('Cylinder QA: PASS (38 student pages checked; approved sequence locked at 1–38; math-notation/unit guards active; intentional page-11 error-detection exception locked; no separate answer keys; surface-area extension blocked)');
+console.log(`Cylinder QA: PASS (${pages.length} current student pages checked; page count remains open per SOURCE_OF_TRUTH.md; math-notation/unit guards active; intentional page-11 error-detection exception locked; no separate answer keys; surface-area requirements are no longer blocked by legacy QA)`);
