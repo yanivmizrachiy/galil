@@ -1,0 +1,27 @@
+name: Galil Workbook QA
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify single source of truth
+        run: node ssot-qa.mjs
+      - name: Run workbook QA
+        run: node qa.mjs
+      - name: Verify evidence-backed progress
+        run: node scripts/verify-progress.mjs
