@@ -33,6 +33,8 @@ jobs:
         run: node official-source-qa.mjs
       - name: Verify rendered official curriculum pages
         run: node official-render-qa.mjs
+      - name: Capture pinned official source visual evidence
+        run: node official-source-visual-evidence.mjs
       - name: Verify foundational cylinder concepts
         run: node core-qa.mjs
       - name: Verify volume progression and inverse calculations
