@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T04:20:00+03:00",
+  "updatedAt": "2026-10-09T05:05:00+03:00",
   "updatedBy": "Claude Code",
   "scoring": {
     "weightTotal": 100,
@@ -97,7 +97,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "done",
       "percent": 100,
-      "evidence": ["All 47 current pages are individual page-N.html A4 pages using shared styles.css and RTL Hebrew layout.", "The prior page-11/page-41 overflow defects were repaired.", "Run 37865712779 passed A4 geometry/internal-overflow checks for all 47 pages and generated one-page PDFs plus the combined 47-page A4 PDF; artifact 11587249569 visually confirms the new official pages remain within A4 bounds."],
+      "evidence": ["All 47 current pages are individual page-N.html A4 pages using shared styles.css and RTL Hebrew layout.", "The prior page-11/page-41 overflow defects were repaired.", "Run 37865712779 passed A4 geometry/internal-overflow checks for all 47 pages and generated one-page PDFs plus the combined 47-page A4 PDF; artifact 11587249569 visually confirms the new official pages remain within A4 bounds.", "Claude Code multi-agent SSOT audit surfaced and fixed three §15/§16 defects, each re-verified in a real browser (A4 fit, no clipping, 297.1mm): page-7 and page-9 teaching figures were force-capped to 24mm by .shape-card svg{height:24mm} and now render at 70mm/68mm with legible r/h/O-A-B-C-D labels; page-41 task-3/4 work boxes raised from h8 to h12 to match the heavier surface-area arithmetic and sibling pages 39-40."],
       "blockedReason": null
     },
     {
@@ -115,7 +115,7 @@
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
       "status": "pending",
       "percent": 0,
-      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition, final source-diagram fidelity audit and user closure therefore remain open."],
+      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition, final source-diagram fidelity audit and user closure therefore remain open.", "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed 6 binding gaps. Fixed this cycle: pages 7/9/41 figure-legibility and work-space (§15/§16). Still to implement before closure: (a) a Pythagoras-in-cylinder teaching page in the didactic sequence before the official-questions block, per §7/§8/§13 — official Q4 (page-45) requires computing the highlighted side (√164, √116) but the theorem is taught/practiced nowhere in pages 1-41, and page-7 row 4 ('unmarked diagonal cannot be known') must be reconciled; (b) an axial-cross-section teaching page per §7 — official Q1ב (page-42) and Q4 assume the axial rectangle has width 2r and height h, a concept taught nowhere and easily confused with the 2πr net; (c) volume-qa.mjs must RE-SOLVE the §12 completion-table rows on pages 27/28/30/35/36/37 (tag rows with data-expect and recompute) instead of relying on hard-coded/absent answers, as §12 requires."],
       "blockedReason": null
     }
   ],
