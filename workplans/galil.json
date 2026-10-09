@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:02:00+03:00",
+  "updatedAt": "2026-10-09T03:08:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -54,7 +54,7 @@
       "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
       "status": "in_progress",
       "percent": 60,
-      "evidence": ["Pages 2-8 visibly cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs turns those SOURCE_OF_TRUTH requirements into deterministic gates.", "Run 37862029724 reached core QA after SSOT/workbook QA passed; it failed only because one assertion searched for 'גובה הגליל' while the approved page text correctly says 'בגליל ישר הגובה...'. The gate is corrected to the exact canonical wording; no product content was weakened and completion credit remains withheld until a green rerun."],
+      "evidence": ["Pages 2-8 visibly cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs turns those SOURCE_OF_TRUTH requirements into deterministic gates.", "Run 37862308225 passed SSOT, workbook and core-concept QA on head b5686acb before the subsequent volume gate stopped the workflow."],
       "blockedReason": null
     },
     {
@@ -72,7 +72,7 @@
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
       "status": "in_progress",
       "percent": 65,
-      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks (including d=10→r=5→75π, inverse h=5, inverse r=7, and capacity conversions); completion credit remains withheld until the exact new head is green."],
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks (including d=10→r=5→75π, inverse h=5, inverse r=7, and capacity conversions).", "Run 37862308225 exposed two brittle text probes rather than product defects: page 27 stores the visible value as '7 ס״מ' without an 'r =' token, and page 35 stores 25π/100π inside table cells. The gate is corrected to verify the actual canonical visible values; no content requirement is weakened."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 30,
-      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 produced a 46-file galil-visual-qa artifact with all page screenshots, mobile reader screenshots and PDF evidence; it correctly failed only the two internal-overflow pages now repaired.", "Browser QA verifies continuous-view default, Android/iPhone portrait+landscape, A4 page geometry, print/PDF and page-39..41 mobile fit; exact-head green evidence is pending."],
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 produced a 46-file galil-visual-qa artifact with all page screenshots, mobile reader screenshots and PDF evidence; it correctly failed only the two internal-overflow pages now repaired.", "A dedicated Vercel staging deployment for branch head b5686acb is READY at galil-ceec8clw0-yanivs-projects-322b2b37.vercel.app; live smoke checks returned HTTP 200 for both / and /page-41.html and showed the 41-page continuous reader plus the repaired surface-area page. Browser CI still must be green before completion credit moves."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "Run 37862029724 proved SSOT/workbook checks green and exposed one overly literal core-QA phrase check rather than a content defect. The gate is corrected to the exact approved Hebrew wording, and progress coupling now explicitly treats core-qa.mjs and volume-qa.mjs as meaningful changes. Progress stays 60/40 until the corrected exact head passes all gates."
+    "summary": "Live staging preview is now verified (root and page 41 HTTP 200). CI run 37862308225 passed SSOT/workbook/core QA and then found two overly literal volume-QA probes rather than content defects; the gate is corrected against the actual visible canonical values. Progress intentionally remains 60/40 until the corrected exact head passes volume, surface, progress and browser/PDF gates."
   }
 }
