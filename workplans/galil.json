@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:40:00+03:00",
-  "updatedBy": "ChatGPT",
+  "updatedAt": "2026-10-09T04:20:00+03:00",
+  "updatedBy": "Claude Code",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -51,8 +51,8 @@
       "weight": 10,
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
-      "percent": 90,
-      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded.", "official-questions-source.json locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and ordered Galil inventory 1,2,3,4,5,7.", "Pages 42-47 now render official questions 1,2,3,4,5,7 in that order under the required 'שאלות מתוך תוכנית הלימודים' heading, with student workspaces and answer lines; question 6 is not rendered.", "official-source-qa.mjs and official-render-qa.mjs guard source identity, order, key wording/numeric data, Q6 exclusion, rendering markers and work/answer space.", "Exact-head run 37865712779 passed SSOT, workbook, official source, official render, core, volume, surface, progress and browser A4/mobile/print/PDF QA on head 853e9a4266d9c06bd8ebaf1889ca43eaaeaf8c43.", "Artifact 11587249569 contains desktop screenshots for all 47 pages, mobile screenshots for official pages 42-47 and a 47-page A4 PDF; manual review confirms pages 42-47 are readable, unclipped and have usable work areas on desktop and mobile.", "Questions 1, 3 and 4 remain deliberately below final closure because their source-dependent diagrams still require final visual fidelity reconciliation against the canonical source image before a strict 1:1 claim."],
+      "percent": 92,
+      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded.", "official-questions-source.json locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and ordered Galil inventory 1,2,3,4,5,7.", "Pages 42-47 now render official questions 1,2,3,4,5,7 in that order under the required 'שאלות מתוך תוכנית הלימודים' heading, with student workspaces and answer lines; question 6 is not rendered.", "official-source-qa.mjs and official-render-qa.mjs guard source identity, order, key wording/numeric data, Q6 exclusion, rendering markers and work/answer space.", "Exact-head run 37865712779 passed SSOT, workbook, official source, official render, core, volume, surface, progress and browser A4/mobile/print/PDF QA on head 853e9a4266d9c06bd8ebaf1889ca43eaaeaf8c43.", "Artifact 11587249569 contains desktop screenshots for all 47 pages, mobile screenshots for official pages 42-47 and a 47-page A4 PDF; manual review confirms pages 42-47 are readable, unclipped and have usable work areas on desktop and mobile.", "Claude Code visually reconciled the diagram-dependent figures against the canonical source scans (jerusalem2 pages 14-16): Q1 part ב was corrected so ABCD is the axial cross-section with AB the full top-base diameter and DC the bottom diameter (area ABCD = 2r·h ⟹ h = 6), replacing an earlier inset rectangle; Q3 cylinder-in-box and square-box-in-cylinder geometry verified faithful; Q4 extreme protruding-side cases verified (ד shortest = axis height, א longest = diameter-to-height diagonal).", "Residual before strict 1:1 closure: final pixel-level reconciliation of Q4's two middle triangles (ב, ג) against the source scan; tracked under G-10 final fidelity audit."],
       "blockedReason": null
     },
     {
@@ -122,6 +122,6 @@
   "lastProgressReport": {
     "completedPercent": 94,
     "remainingPercent": 6,
-    "summary": "Official curriculum questions 1-5 and 7 are now rendered as pages 42-47, source-locked and machine-verified. Exact-head run 37865712779 is fully green across SSOT/content/official/core/volume/surface/progress/browser/mobile/print/PDF gates; artifact 11587249569 visually confirms the six new pages are readable and unclipped. Remaining work is the final source-diagram fidelity reconciliation for questions 1/3/4 plus G-10, which cannot close while the SSOT explicitly remains open until Yaniv says the specification is finished."
+    "summary": "Official curriculum questions 1-5 and 7 are rendered as pages 42-47, source-locked and machine-verified. Claude Code reconciled the diagram-dependent figures against the canonical jerusalem2 scans and corrected Q1 part ב to the true axial cross-section (AB = top-base diameter), with Q3 geometry and the Q4 shortest/longest cases verified. SSOT §19 continuous-scroll preview is now a binding, itemised requirement and index.html renders all 47 pages in continuous scroll by default; ssot-qa.mjs hardened to enforce a single requirements authority. Remaining work is the final pixel-level reconciliation of Q4's two middle triangles plus G-10, which cannot close while the SSOT explicitly remains open until Yaniv says the specification is finished."
   }
 }
