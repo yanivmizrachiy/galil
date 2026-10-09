@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:20:00+03:00",
+  "updatedAt": "2026-10-09T03:30:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -45,7 +45,7 @@
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
       "percent": 40,
-      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 reserved for cone and explicit source re-verification required.", "The authoritative source was re-opened from yanivmizrachiy/jerusalem2 at blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80; pages 14-19 confirm cylinder questions 1-5 and 7 and cone question 6. Rendering/locking the exact official cylinder questions into the workbook remains open."],
+      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded and explicit source re-verification required.", "The authoritative current source was re-opened from yanivmizrachiy/jerusalem2 at blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80; exact official question rendering/locking in the workbook remains open.", "A separate Ministry of Education indexed source also exposes verbatim cylinder examples 1-5 and 7, but no content is copied into the workbook until it is reconciled against the current canonical source rather than assumed equivalent."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 60,
-      "evidence": ["A dedicated Vercel staging deployment is live and returned HTTP 200 for / and /page-41.html.", "Run 37863003825 passed continuous-reader, Android/iPhone portrait+landscape, print and combined 41-page A4 PDF checks and produced artifact 11586757289.", "Landscape mobile artifact visibly renders page content correctly, but the Android/iPhone portrait reader screenshots are blank inside their fitted iframe areas; this visual evidence deficit must be resolved or explained with stronger render assertions before G-09 is done."],
+      "evidence": ["A dedicated Vercel staging deployment is live and returned HTTP 200 for / and /page-41.html.", "Run 37863003825 passed continuous-reader, Android/iPhone portrait+landscape, print and combined 41-page A4 PDF checks and produced artifact 11586757289.", "Manual artifact review found the portrait reader screenshots blank even though the old fit assertion passed. Commit 8cdc70979a31baae9355edb2457426020c3595c5 fixes the RTL scaling wrapper by anchoring the oversized mobile wrapper LTR while retaining the A4 page RTL. Commit ec560c05b12efb5eec8875ea600e086e7e28a39b strengthens browser QA to require in-viewport scaled coordinates, readable page text and a nontrivially painted first-page screenshot on each mobile orientation. Exact-head CI/artifact evidence is pending before G-09 advances."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 85,
     "remainingPercent": 15,
-    "summary": "Exact-head run 37863003825 is fully green: SSOT, workbook, core concepts, volume, surface, progress coupling and browser A4/mobile/print/PDF all passed. Artifact 11586757289 contains 41 page screenshots plus mobile screenshots and a combined A4 PDF. Full-resolution page 11 and page 41 are clean. Evidence supports closing G-04, G-06, G-07 and G-08. G-09 remains partial because portrait reader screenshots appear blank despite the automated DOM/fit gate passing; G-03 official 1:1 question rendering and G-10 final user closure remain open."
+    "summary": "Moved immediately on the real portrait-reader defect: the mobile scaler now prevents RTL iframe scroll-origin blanking while preserving RTL content, and browser QA now checks visible painted content rather than width alone. Progress remains 85/15 until the repaired exact head is green and its new portrait artifacts are visually reviewed; official 1:1 curriculum rendering and final closure also remain open."
   }
 }
