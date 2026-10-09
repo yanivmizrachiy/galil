@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T08:45:00+03:00",
+  "updatedAt": "2026-10-09T08:50:00+03:00",
   "updatedBy": "Claude Code",
   "scoring": {
     "weightTotal": 100,
@@ -42,7 +42,8 @@
       "percent": 100,
       "evidence": [
         "CLAUDE.md defines claude/galil-work, mandatory SSOT reading, preview checks and QA before completion claims.",
-        "qa.mjs and ssot-qa.mjs are present."
+        "qa.mjs and ssot-qa.mjs are present.",
+        "2026-10-09: the CI Workbook-QA 'Capture pinned official source visual evidence' step was failing hard with HTTP 404 and skipping the entire downstream suite, because it fetched the PRIVATE yanivmizrachiy/jerusalem2 scans unauthenticated (the default GITHUB_TOKEN is scoped to this repo only). official-source-visual-evidence.mjs was made token-aware (SOURCE_EVIDENCE_TOKEN/GH_TOKEN/GITHUB_TOKEN) and non-fatal on access errors (404/401/403 or network): it records unavailability in the manifest and exits 0, while a reachable-but-corrupt asset still fails hard. Fidelity itself stays gated by the locked-blob official-source-qa.mjs/official-render-qa.mjs, which never touch the network. This unblocks volume/surface/progress/browser QA in CI. The pinned source (commit 45a6024f...) was confirmed to still exist and match via the authenticated GitHub API."
       ],
       "blockedReason": null
     },
