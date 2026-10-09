@@ -29,6 +29,8 @@ jobs:
         run: node ssot-qa.mjs
       - name: Run workbook contract QA
         run: node qa.mjs
+      - name: Verify official curriculum question mapping
+        run: node official-source-qa.mjs
       - name: Verify foundational cylinder concepts
         run: node core-qa.mjs
       - name: Verify volume progression and inverse calculations
