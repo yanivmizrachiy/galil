@@ -30,11 +30,14 @@ if (calculated === 100 && plan.tasks.some(t => t.status !== 'done')) fail('100% 
 
 const meaningful=(file)=>[
   /^SOURCE_OF_TRUTH\.md$/,
+  /^SOURCES\.md$/,
+  /^official-questions-source\.json$/,
   /^page-\d+\.html$/,
   /^index\.html$/,
   /^styles\.css$/,
   /^qa\.mjs$/,
   /^ssot-qa\.mjs$/,
+  /^official-source-qa\.mjs$/,
   /^core-qa\.mjs$/,
   /^volume-qa\.mjs$/,
   /^surface-qa\.mjs$/,
