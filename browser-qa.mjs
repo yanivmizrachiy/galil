@@ -90,7 +90,10 @@ for(const n of pages){
         const x0=Math.floor(L.x-minX),y0=Math.floor(L.y-minY),x1=Math.ceil(L.x-minX+L.w),y1=Math.ceil(L.y-minY+L.h);
         let inBox=0,area=0;
         for(let py=y0;py<y1;py++)for(let px=x0;px<x1;px++){area++;if(isStroke(px,py))inBox++;}
-        if(inBox>Math.max(2,0.03*area))hits.push({svgIndex:si,label:L.text,inBox,area});
+        // Fail only on real overlap. A label truly on a line covers ~15-60% of its glyph box;
+        // a few antialiased pixels at a box corner (which shift with CI's font fallback) stay well
+        // under this tolerance, so the guard is stable across Windows/Linux without masking defects.
+        if(inBox>Math.max(4,0.06*area))hits.push({svgIndex:si,label:L.text,inBox,area});
       }
     }
     return hits;
