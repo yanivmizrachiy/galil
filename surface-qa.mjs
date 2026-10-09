@@ -26,7 +26,8 @@ for(const {n,text} of files){
   const algebraCount=[...text.matchAll(/data-qa="algebra"/g)].length;
   ok(numericCount>=12,`page ${n}: expected at least 12 numeric practice items, got ${numericCount}`);
   ok(algebraCount>=4,`page ${n}: expected at least 4 algebra items, got ${algebraCount}`);
-  ok(/class="work h10"/.test(text),`page ${n}: algebra/numeric tasks must include dedicated work areas`);
+  const workAreas=[...text.matchAll(/class="work h\d+"/g)].length;
+  ok(workAreas>=8,`page ${n}: expected at least 8 dedicated work areas, got ${workAreas}`);
   ok(/class="answer"/.test(text),`page ${n}: tasks must include answer lines`);
 }
 
@@ -88,4 +89,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`SURFACE QA PASS: pages 39-41 follow SSOT §27; numeric-before-algebra progression, guided formula gaps, radius/diameter variation, deterministic numeric expectations and algebra result inventory verified.`);
+console.log(`SURFACE QA PASS: pages 39-41 follow SSOT §27; numeric-before-algebra progression, guided formula gaps, radius/diameter variation, dedicated work areas, deterministic numeric expectations and algebra result inventory verified.`);

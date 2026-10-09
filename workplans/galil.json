@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:08:00+03:00",
+  "updatedAt": "2026-10-09T03:15:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -54,7 +54,7 @@
       "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
       "status": "in_progress",
       "percent": 60,
-      "evidence": ["Pages 2-8 visibly cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs turns those SOURCE_OF_TRUTH requirements into deterministic gates.", "Run 37862308225 passed SSOT, workbook and core-concept QA on head b5686acb before the subsequent volume gate stopped the workflow."],
+      "evidence": ["Pages 2-8 visibly cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs turns those SOURCE_OF_TRUTH requirements into deterministic gates.", "Run 37862641069 passed SSOT, workbook, core-concept and volume QA on head 628861 before a surface-QA work-area probe stopped the workflow."],
       "blockedReason": null
     },
     {
@@ -63,7 +63,7 @@
       "title": "שלושה דפי שטח נפרדים: בסיס, מעטפת, פנים",
       "status": "done",
       "percent": 100,
-      "evidence": ["claude/galil-work contains three separate A4 pages: page-39.html 'גליל — חישוב שטח הבסיס', page-40.html 'גליל — חישוב שטח המעטפת', and page-41.html 'גליל — חישוב שטח הפנים'.", "Each page includes dedicated student practice, diameter/radius transitions, work areas, and algebraic-expression practice.", "Draft PR #4 targets main from claude/galil-work and earlier green CI established the three-page implementation; surface-qa.mjs adds deterministic mathematics/progression checks."],
+      "evidence": ["claude/galil-work contains three separate A4 pages: page-39.html 'גליל — חישוב שטח הבסיס', page-40.html 'גליל — חישוב שטח המעטפת', and page-41.html 'גליל — חישוב שטח הפנים'.", "Each page includes dedicated student practice, diameter/radius transitions, work areas, and algebraic-expression practice.", "surface-qa.mjs verifies numeric-before-algebra ordering, guided formula gaps, deterministic numeric expectations and the algebra result inventory."],
       "blockedReason": null
     },
     {
@@ -72,7 +72,7 @@
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
       "status": "in_progress",
       "percent": 65,
-      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks (including d=10→r=5→75π, inverse h=5, inverse r=7, and capacity conversions).", "Run 37862308225 exposed two brittle text probes rather than product defects: page 27 stores the visible value as '7 ס״מ' without an 'r =' token, and page 35 stores 25π/100π inside table cells. The gate is corrected to verify the actual canonical visible values; no content requirement is weakened."],
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37862641069 passed the corrected volume QA on head 628861; completion credit remains held until the full exact-head pipeline including browser/PDF is green."],
       "blockedReason": null
     },
     {
@@ -81,7 +81,7 @@
       "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
       "status": "in_progress",
       "percent": 0,
-      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs adds deterministic gates for numeric-before-algebra ordering, guided formula gaps, numeric expectations and the approved algebra-result inventory.", "Run 37861261022 passed surface mathematics/progression QA before browser QA exposed layout overflows; algebra completion credit remains withheld until the repaired head is green."],
+      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "Run 37862641069 failed only because surface-qa.mjs required the literal class 'work h10' after the page-41 overflow repair intentionally shortened valid dedicated work areas to h8.", "The gate now counts dedicated work areas by semantic class pattern work hN rather than enforcing one height; product content and acceptance criteria are unchanged."],
       "blockedReason": null
     },
     {
@@ -90,7 +90,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "in_progress",
       "percent": 70,
-      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "Run 37861261022 generated screenshots for all 41 pages and exposed internal A4 overflow only on pages 11 and 41; commit 24a21a690236bd71082ece150f9572bf773690dc applies a minimal repair by removing an unnecessary legacy auto-workspace on page 11 and preserving shorter dedicated workspaces on page 41."],
+      "evidence": ["The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.", "Run 37861261022 generated screenshots for all 41 pages and exposed internal A4 overflow only on pages 11 and 41; commit 24a21a690236bd71082ece150f9572bf773690dc applied a minimal repair.", "Browser/PDF revalidation has not yet run past the repaired surface gate, so no percentage is inflated."],
       "blockedReason": null
     },
     {
@@ -99,7 +99,7 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "in_progress",
       "percent": 30,
-      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "Run 37861261022 produced a 46-file galil-visual-qa artifact with all page screenshots, mobile reader screenshots and PDF evidence; it correctly failed only the two internal-overflow pages now repaired.", "A dedicated Vercel staging deployment for branch head b5686acb is READY at galil-ceec8clw0-yanivs-projects-322b2b37.vercel.app; live smoke checks returned HTTP 200 for both / and /page-41.html and showed the 41-page continuous reader plus the repaired surface-area page. Browser CI still must be green before completion credit moves."],
+      "evidence": ["SOURCE_OF_TRUTH.md and CLAUDE.md require ongoing preview plus desktop/mobile/print checks.", "A dedicated Vercel staging deployment is live and returned HTTP 200 for / and /page-41.html.", "Run 37862641069 did not reach browser QA because the semantic work-area gate failed first; mobile/print/PDF completion credit remains pending a full green run."],
       "blockedReason": null
     },
     {
@@ -115,6 +115,6 @@
   "lastProgressReport": {
     "completedPercent": 60,
     "remainingPercent": 40,
-    "summary": "Live staging preview is now verified (root and page 41 HTTP 200). CI run 37862308225 passed SSOT/workbook/core QA and then found two overly literal volume-QA probes rather than content defects; the gate is corrected against the actual visible canonical values. Progress intentionally remains 60/40 until the corrected exact head passes volume, surface, progress and browser/PDF gates."
+    "summary": "Run 37862641069 proved SSOT, workbook, core-concept and volume gates green. It then exposed a brittle surface-QA assertion that demanded exactly h10 workspaces even though the overflow-safe page 41 correctly uses h8. The gate now verifies the presence/count of dedicated work areas independently of their safe height. Progress stays 60/40 until the full browser/mobile/print/PDF run completes green."
   }
 }
