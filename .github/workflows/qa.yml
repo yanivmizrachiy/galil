@@ -31,6 +31,8 @@ jobs:
         run: node qa.mjs
       - name: Verify official curriculum question mapping
         run: node official-source-qa.mjs
+      - name: Verify rendered official curriculum pages
+        run: node official-render-qa.mjs
       - name: Verify foundational cylinder concepts
         run: node core-qa.mjs
       - name: Verify volume progression and inverse calculations
