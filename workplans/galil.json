@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:35:00+03:00",
+  "updatedAt": "2026-10-09T03:31:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 89,
-    "remainingPercent": 11,
+    "overallProgressPercent": 91,
+    "remainingPercent": 9,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -44,8 +44,8 @@
       "weight": 10,
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
-      "percent": 40,
-      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded and explicit source re-verification required.", "The authoritative current source was re-opened from yanivmizrachiy/jerusalem2 at blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80; exact official question rendering/locking in the workbook remains open.", "A separate Ministry of Education indexed source also exposes verbatim cylinder examples 1-5 and 7, but no content is copied into the workbook until it is reconciled against the current canonical source rather than assumed equivalent."],
+      "percent": 60,
+      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded and explicit source re-verification required.", "official-questions-source.json now locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and the ordered Galil inventory 1,2,3,4,5,7.", "official-source-qa.mjs deterministically guards the source repo/path/SHA, question order, key wording/numeric data, question-6 exclusion and the visual-dependency flags; package.json and GitHub Actions execute this gate.", "Questions 1, 3 and 4 remain explicitly diagram-dependent and are not marked final until their source diagrams are visually verified; this prevents fabricated 1:1 claims while preserving verified text."],
       "blockedReason": null
     },
     {
@@ -113,8 +113,8 @@
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 89,
-    "remainingPercent": 11,
-    "summary": "Portrait mobile rendering is now genuinely fixed and visually proven: exact-head run 37863774409 is fully green, artifact 11587611113 shows the Android portrait workbook content correctly, and the latest staging deployment is READY with HTTP 200. G-09 closes at 100%. Remaining work is concentrated in G-03 exact official-question 1:1 reconciliation/rendering and G-10 final audit/user closure."
+    "completedPercent": 91,
+    "remainingPercent": 9,
+    "summary": "The current official curriculum mapping is now locked to the canonical jerusalem2 blob with deterministic QA: Galil questions 1-5 and 7 are fixed in order, question 6 is excluded as the cone item, and exact source text/numeric anchors are guarded. Diagram-dependent questions 1/3/4 remain deliberately open until visual source fidelity is verified; final user closure also remains open."
   }
 }
