@@ -39,6 +39,7 @@ const meaningful=(file)=>[
   /^ssot-qa\.mjs$/,
   /^official-source-qa\.mjs$/,
   /^official-render-qa\.mjs$/,
+  /^official-source-visual-evidence\.mjs$/,
   /^core-qa\.mjs$/,
   /^volume-qa\.mjs$/,
   /^surface-qa\.mjs$/,
