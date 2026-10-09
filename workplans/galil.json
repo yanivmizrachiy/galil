@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T03:30:00+03:00",
+  "updatedAt": "2026-10-09T03:35:00+03:00",
   "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 85,
-    "remainingPercent": 15,
+    "overallProgressPercent": 89,
+    "remainingPercent": 11,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -97,9 +97,9 @@
       "id": "G-09",
       "weight": 10,
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
-      "status": "in_progress",
-      "percent": 60,
-      "evidence": ["A dedicated Vercel staging deployment is live and returned HTTP 200 for / and /page-41.html.", "Run 37863003825 passed continuous-reader, Android/iPhone portrait+landscape, print and combined 41-page A4 PDF checks and produced artifact 11586757289.", "Manual artifact review found the portrait reader screenshots blank even though the old fit assertion passed. Commit 8cdc70979a31baae9355edb2457426020c3595c5 fixes the RTL scaling wrapper by anchoring the oversized mobile wrapper LTR while retaining the A4 page RTL. Commit ec560c05b12efb5eec8875ea600e086e7e28a39b strengthens browser QA to require in-viewport scaled coordinates, readable page text and a nontrivially painted first-page screenshot on each mobile orientation. Exact-head CI/artifact evidence is pending before G-09 advances."],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["Commit 8cdc70979a31baae9355edb2457426020c3595c5 fixes the RTL portrait scaler by anchoring the oversized mobile wrapper LTR while preserving the A4 page RTL; ec560c05b12efb5eec8875ea600e086e7e28a39b adds visible-coordinate, readable-text and painted-screenshot assertions.", "Exact-head run 37863774409 passed SSOT, workbook, core, volume, surface, progress and browser A4/mobile/print/PDF gates on head 515d2baf3c5f380bc193b5d60ed14c2db72f4be5.", "Artifact 11587611113 includes painted first-page screenshots for Android/iPhone portrait+landscape plus the reader views and combined PDF. Manual review of reader-android-portrait.png confirms the A4 content is now visibly rendered rather than blank.", "Latest Vercel staging deployment galil-7wvw8ky7x-yanivs-projects-322b2b37.vercel.app is READY and smoke fetch of / returned HTTP 200 with the repaired scaler code."],
       "blockedReason": null
     },
     {
@@ -113,8 +113,8 @@
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 85,
-    "remainingPercent": 15,
-    "summary": "Moved immediately on the real portrait-reader defect: the mobile scaler now prevents RTL iframe scroll-origin blanking while preserving RTL content, and browser QA now checks visible painted content rather than width alone. Progress remains 85/15 until the repaired exact head is green and its new portrait artifacts are visually reviewed; official 1:1 curriculum rendering and final closure also remain open."
+    "completedPercent": 89,
+    "remainingPercent": 11,
+    "summary": "Portrait mobile rendering is now genuinely fixed and visually proven: exact-head run 37863774409 is fully green, artifact 11587611113 shows the Android portrait workbook content correctly, and the latest staging deployment is READY with HTTP 200. G-09 closes at 100%. Remaining work is concentrated in G-03 exact official-question 1:1 reconciliation/rendering and G-10 final audit/user closure."
   }
 }
