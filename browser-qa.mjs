@@ -81,7 +81,12 @@ for(const [i,p] of combined.getPages().entries()){
 async function inspectReader(width,height,label){
   await page.setViewportSize({width,height});
   await page.goto(base,{waitUntil:'load'});
-  await page.waitForTimeout(500);
+  await page.waitForFunction(()=>{
+    const f=document.querySelector('.sheet-card iframe');
+    const p=f?.contentDocument?.querySelector('.a4-page');
+    return Boolean(p && p.textContent.trim().length>30 && p.getBoundingClientRect().height>100);
+  },null,{timeout:5000});
+  await page.waitForTimeout(250);
   const shell=await page.evaluate(()=>({
     overflow:document.documentElement.scrollWidth>innerWidth+1,
     totalText:document.querySelector('#pageTotal')?.textContent?.trim(),
@@ -98,15 +103,28 @@ async function inspectReader(width,height,label){
   if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
 
   const firstFrame=page.locator('.sheet-card iframe').first();
-  await firstFrame.waitFor({state:'attached'});
-  await page.waitForTimeout(150);
+  await firstFrame.waitFor({state:'visible'});
   const scaled=await firstFrame.evaluate(f=>{
     const p=f.contentDocument?.querySelector('.a4-page');
     if(!p)return null;
     const r=p.getBoundingClientRect();
-    return {w:r.width,frame:f.clientWidth};
+    const body=f.contentDocument?.body;
+    return {
+      w:r.width,left:r.left,right:r.right,frame:f.clientWidth,
+      textLength:(p.textContent||'').trim().length,
+      bodyDirection:body?getComputedStyle(body).direction:'',
+      pageDirection:getComputedStyle(p).direction
+    };
   });
-  if(width<=700)ok(scaled&&scaled.w<=scaled.frame+2,`${label}: scaled A4 wider than mobile iframe (${scaled?.w}/${scaled?.frame})`);
+  if(width<=700){
+    ok(scaled&&scaled.w<=scaled.frame+2,`${label}: scaled A4 wider than mobile iframe (${scaled?.w}/${scaled?.frame})`);
+    ok(scaled&&scaled.left>=-2&&scaled.right<=scaled.frame+2,`${label}: scaled A4 is outside portrait iframe viewport (${scaled?.left}, ${scaled?.right}, frame ${scaled?.frame})`);
+    ok(scaled&&scaled.textLength>30,`${label}: first mobile A4 has no readable content`);
+    ok(scaled&&scaled.bodyDirection==='ltr'&&scaled.pageDirection==='rtl',`${label}: mobile wrapper/page direction contract failed (${scaled?.bodyDirection}/${scaled?.pageDirection})`);
+  }
+  const frameShot=`qa-artifacts/reader-${label}-first-page.png`;
+  await firstFrame.screenshot({path:frameShot});
+  ok(fs.statSync(frameShot).size>25000,`${label}: first-page screenshot is suspiciously blank (${fs.statSync(frameShot).size} bytes)`);
   await page.screenshot({path:`qa-artifacts/reader-${label}.png`,fullPage:false});
 }
 
@@ -123,12 +141,17 @@ for(const n of [39,40,41]){
   await page.fill('#page',String(n));
   await page.locator('#page').evaluate(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
   await page.waitForFunction(expected=>document.querySelector('#sheet')?.getAttribute('src')===`page-${expected}.html`,n);
+  await page.waitForFunction(()=>{
+    const f=document.querySelector('#sheet');
+    const p=f?.contentDocument?.querySelector('.a4-page');
+    return Boolean(p && p.textContent.trim().length>30);
+  });
   await page.waitForTimeout(120);
   const fit=await page.locator('#sheet').evaluate(f=>{
     const p=f.contentDocument?.querySelector('.a4-page'); if(!p)return null;
-    const r=p.getBoundingClientRect(); return {pageW:r.width,frameW:f.clientWidth,src:f.getAttribute('src')};
+    const r=p.getBoundingClientRect(); return {pageW:r.width,left:r.left,right:r.right,frameW:f.clientWidth,src:f.getAttribute('src')};
   });
-  ok(fit&&fit.src===`page-${n}.html`&&fit.pageW<=fit.frameW+2,`mobile single view page ${n}: clipping or wrong source`);
+  ok(fit&&fit.src===`page-${n}.html`&&fit.pageW<=fit.frameW+2&&fit.left>=-2&&fit.right<=fit.frameW+2,`mobile single view page ${n}: clipping or wrong source`);
 }
 
 ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);
@@ -140,4 +163,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape, pages 39-41 mobile single-view fit, no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-41 mobile single-view fit, no horizontal/internal overflow.`);
