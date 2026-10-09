@@ -1,0 +1,59 @@
+name: Galil Workbook QA
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install QA dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify single source of truth
+        run: node ssot-qa.mjs
+      - name: Run workbook contract QA
+        run: node qa.mjs
+      - name: Verify official curriculum question mapping
+        run: node official-source-qa.mjs
+      - name: Verify rendered official curriculum pages
+        run: node official-render-qa.mjs
+      - name: Capture pinned official source visual evidence
+        run: node official-source-visual-evidence.mjs
+      - name: Verify foundational cylinder concepts
+        run: node core-qa.mjs
+      - name: Verify volume progression and inverse calculations
+        run: node volume-qa.mjs
+      - name: Verify surface-area mathematics and progression
+        run: node surface-qa.mjs
+      - name: Enforce progress update on pull request
+        if: github.event_name == 'pull_request'
+        run: node scripts/verify-progress.mjs "${{ github.event.pull_request.base.sha }}" "$GITHUB_SHA"
+      - name: Enforce progress update on push
+        if: github.event_name == 'push'
+        run: node scripts/verify-progress.mjs "${{ github.event.before }}" "$GITHUB_SHA"
+      - name: Run browser A4/mobile/print/PDF QA
+        run: node browser-qa.mjs
+      - name: Upload visual and PDF QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: galil-visual-qa
+          path: qa-artifacts/*
+          if-no-files-found: warn
+          retention-days: 7

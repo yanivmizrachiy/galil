@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T01:20:00+03:00",
-  "updatedBy": "Claude Code",
+  "updatedAt": "2026-10-09T03:40:00+03:00",
+  "updatedBy": "ChatGPT",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 60,
-    "remainingPercent": 40,
+    "overallProgressPercent": 94,
+    "remainingPercent": 6,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -51,84 +51,62 @@
       "weight": 10,
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
-      "percent": 40,
-      "evidence": [
-        "SOURCE_OF_TRUTH.md records the current cylinder-question mapping and explicitly requires re-verification before closure.",
-        "Default-branch code search for the required heading 'שאלות מתוך תוכנית הלימודים' currently finds the requirement in SSOT but not verified student-page implementation."
-      ],
+      "percent": 90,
+      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded.", "official-questions-source.json locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and ordered Galil inventory 1,2,3,4,5,7.", "Pages 42-47 now render official questions 1,2,3,4,5,7 in that order under the required 'שאלות מתוך תוכנית הלימודים' heading, with student workspaces and answer lines; question 6 is not rendered.", "official-source-qa.mjs and official-render-qa.mjs guard source identity, order, key wording/numeric data, Q6 exclusion, rendering markers and work/answer space.", "Exact-head run 37865712779 passed SSOT, workbook, official source, official render, core, volume, surface, progress and browser A4/mobile/print/PDF QA on head 853e9a4266d9c06bd8ebaf1889ca43eaaeaf8c43.", "Artifact 11587249569 contains desktop screenshots for all 47 pages, mobile screenshots for official pages 42-47 and a 47-page A4 PDF; manual review confirms pages 42-47 are readable, unclipped and have usable work areas on desktop and mobile.", "Questions 1, 3 and 4 remain deliberately below final closure because their source-dependent diagrams still require final visual fidelity reconciliation against the canonical source image before a strict 1:1 claim."],
       "blockedReason": null
     },
     {
       "id": "G-04",
       "weight": 10,
       "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
-      "status": "in_progress",
-      "percent": 60,
-      "evidence": [
-        "Existing workbook pages and index provide a substantial cylinder baseline.",
-        "Full page-by-page compliance against the current SSOT has not yet been completed, so this task is not marked done."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["Pages 2-8 cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs locks those SOURCE_OF_TRUTH requirements.", "Run 37865712779 passed core-concept QA inside the current 47-page workbook pipeline."],
       "blockedReason": null
     },
     {
       "id": "G-05",
       "weight": 15,
       "title": "שלושה דפי שטח נפרדים: בסיס, מעטפת, פנים",
-      "status": "in_progress",
-      "percent": 70,
-      "evidence": [
-        "page-39.html, page-40.html, page-41.html exist on claude/galil-work (commit eeefb6d): main title 'גליל' + exact subtitles, formula/example with varying gaps, numeric tables and items, then algebraic expressions, per-question work space.",
-        "node qa.mjs passes with 41+ pages; A4 fit measured in the browser (page content ends above the 270mm limit on all three pages).",
-        "Full-page Chromium screenshots of pages 39-41 reviewed (scratch evidence, not committed). Pending: Yaniv's review, print/PDF check, math QA script re-solving data-qa rows."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["Pages 39-41 are separate A4 pages for base area, lateral area and total surface area.", "Each page includes guided formulas, numeric practice before algebra, radius/diameter transitions, dedicated work areas and answer lines.", "Run 37865712779 passed surface-qa.mjs and browser A4/PDF checks in the current workbook."],
       "blockedReason": null
     },
     {
       "id": "G-06",
       "weight": 15,
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
-      "status": "in_progress",
-      "percent": 65,
-      "evidence": [
-        "Existing pages include volume/base-height work, including page-19.html, page-20.html, page-21.html, page-22.html, page-25.html, page-28.html and page-38.html.",
-        "Final compliance and pedagogical-order audit against the expanded SSOT is still open."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37865712779 passed volume QA inside the current 47-page workbook pipeline."],
       "blockedReason": null
     },
     {
       "id": "G-07",
       "weight": 10,
       "title": "דרישות אלגבריות והרחבות חדשות שאושרו",
-      "status": "in_progress",
-      "percent": 35,
-      "evidence": [
-        "Algebraic-expression tasks (task 4) exist on pages 39-41 with letters x, y, a, k, t and work space (commit eeefb6d).",
-        "Pending: dedicated algebraic page (lateral rectangle given with π expressions -> radius, surface, volume) and the 'שטח מעטפת/שטח פנים/נפח' expression trio."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["Pages 39-41 contain the SSOT §27 numeric-to-algebra progression with varied variables and expressions.", "surface-qa.mjs verifies algebra ordering, formula gaps, numeric expectations, algebra-result inventory and dedicated work areas without coupling correctness to one workspace height.", "Run 37865712779 passed surface mathematics/progression QA and browser QA."],
       "blockedReason": null
     },
     {
       "id": "G-08",
       "weight": 10,
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
-      "status": "in_progress",
-      "percent": 70,
-      "evidence": [
-        "The repository contains individual page-N.html files and shared styles.css with an established A4/RTL workbook baseline.",
-        "A complete current visual audit of every retained page is still required before done."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["All 47 current pages are individual page-N.html A4 pages using shared styles.css and RTL Hebrew layout.", "The prior page-11/page-41 overflow defects were repaired.", "Run 37865712779 passed A4 geometry/internal-overflow checks for all 47 pages and generated one-page PDFs plus the combined 47-page A4 PDF; artifact 11587249569 visually confirms the new official pages remain within A4 bounds."],
       "blockedReason": null
     },
     {
       "id": "G-09",
       "weight": 10,
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
-      "status": "in_progress",
-      "percent": 45,
-      "evidence": [
-        "preview.mjs local preview server committed (a810223) and running during work; index.html defaults to continuous top-to-bottom scrolling per Yaniv's 2026-10-09 instruction (SSOT §19, commit eeefb6d).",
-        "Pending: mobile/print/PDF evidence and screenshots for every active page."
-      ],
+      "status": "done",
+      "percent": 100,
+      "evidence": ["The RTL mobile scaler keeps the oversized wrapper LTR while preserving each A4 page RTL, preventing portrait clipping.", "Run 37865712779 passed browser A4/mobile/print/PDF QA with 47 pages; pages 39-47 are explicitly exercised in single-page mobile mode.", "Artifact 11587249569 includes painted Android/iPhone reader evidence, dedicated mobile screenshots for official pages 42-47, all desktop page screenshots and the combined PDF. Manual review of the official desktop/mobile montages is clean."],
       "blockedReason": null
     },
     {
@@ -137,15 +115,13 @@
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
       "status": "pending",
       "percent": 0,
-      "evidence": [
-        "SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and final QA therefore remain open."
-      ],
+      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition, final source-diagram fidelity audit and user closure therefore remain open."],
       "blockedReason": null
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 60,
-    "remainingPercent": 40,
-    "summary": "Three SSOT §27 surface-area pages added (39-41) with QA green and browser A4-fit evidence; preview server and continuous-scroll default in place. Official curriculum pages, math QA and print/PDF evidence still open."
+    "completedPercent": 94,
+    "remainingPercent": 6,
+    "summary": "Official curriculum questions 1-5 and 7 are now rendered as pages 42-47, source-locked and machine-verified. Exact-head run 37865712779 is fully green across SSOT/content/official/core/volume/surface/progress/browser/mobile/print/PDF gates; artifact 11587249569 visually confirms the six new pages are readable and unclipped. Remaining work is the final source-diagram fidelity reconciliation for questions 1/3/4 plus G-10, which cannot close while the SSOT explicitly remains open until Yaniv says the specification is finished."
   }
 }

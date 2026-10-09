@@ -7,6 +7,10 @@
   <script>MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, chtml: { fontURL: 'vendor/mathjax/tex-font/chtml/woff2' } };</script>
   <script id="MathJax-script" async src="vendor/mathjax/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page 11 ends with a multiple-choice task, so the legacy automatic lined workspace is not pedagogically useful here. */
+    .a4-page .task:last-of-type .task-body::after{display:none!important}
+  </style>
 </head>
 <body>
 <main class="a4-page">

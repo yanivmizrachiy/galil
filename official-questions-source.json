@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Derived evidence snapshot for SOURCE_OF_TRUTH.md §6. This file does not create requirements.",
+  "source": {
+    "repository": "yanivmizrachiy/jerusalem2",
+    "path": "src/content/curriculum-fragments/idkun-geometri-8/idkun-geometri-8-p001-025.json",
+    "blobSha": "64406e6f6615fe798aa5bea3799270b4d8ae5c80",
+    "relevantPages": [14, 15, 16, 19]
+  },
+  "mapping": {
+    "cylinderQuestionsInOrder": [1, 2, 3, 4, 5, 7],
+    "excludedQuestion": 6,
+    "excludedReason": "Question 6 in the current source is the cone question and is outside the Galil-only official-question set."
+  },
+  "questions": [
+    {
+      "id": 1,
+      "sourcePages": [14],
+      "diagramRequired": true,
+      "renderingStatus": "text_locked_diagram_pending",
+      "rawTranscription": "1 חשבו את נפח הגלילים ושטחי המעטפת שלהם על פי הנתונים:. א. 3 ס״מ = r ב. שטח ABCD הוא 60 סמ״ר, 8 ס״מ = h 5 ס״מ = r r r B A C D"
+    },
+    {
+      "id": 2,
+      "sourcePages": [14],
+      "diagramRequired": false,
+      "renderingStatus": "text_locked_no_diagram_dependency",
+      "rawTranscription": "2. נתון כלי בצורת גליל ששטח הבסיס שלו הוא 1000 סמ״ר וגובהו 20 ס״מ. ממלאים את הגליל ב- 4 ליטרים של מים. מה יהיה גובה פני המים לאחר המילוי?"
+    },
+    {
+      "id": 3,
+      "sourcePages": [15],
+      "diagramRequired": true,
+      "renderingStatus": "text_locked_diagram_pending",
+      "rawTranscription": "3. נתונים שני כלים. A B I גליל בתוך תיבה: r 5 ס״מ = r, 12 ס״מ = h D C II תיבה ריבועית בתוך גליל: ABCD ריבוע שאורך צלעו 8 ס״מ 12 ס״מ = h חשבו את נפח הגליל ואת נפח התיבה של כל אחד מהכלים."
+    },
+    {
+      "id": 4,
+      "sourcePages": [15, 16],
+      "diagramRequired": true,
+      "renderingStatus": "text_locked_diagram_pending",
+      "rawTranscription": "4. א. נתונים 4 גלילים שמידותיהם שוות. בתוך הגלילים משולשים שונים. באיזה מהמשטחים של המשולשים הצלע המובלטת היא הקצרה ביותר? הארוכה ביותר? נמקו. ב. נתוני הגליל: 4 ס״מ = r, 10 ס״מ = h חשבו את נפח הגליל; חשבו את שטחי המשולשים, ואת אורך הצלע המובלטת בכל משולש."
+    },
+    {
+      "id": 5,
+      "sourcePages": [16],
+      "diagramRequired": false,
+      "renderingStatus": "text_locked_no_diagram_dependency",
+      "rawTranscription": "5. דרור רצה לקנות צנצנת דבש. בחנות למוצרי טבע שאליה הלך דרור, נמכר דבש בצנצנות שצורתן גליל. דרור מצא שני גדלים של צנצנות. צנצנת אחת הייתה גבוהה פי שניים מהשנייה, אבל קוטר בסיסה היה פי שניים קטן יותר. שתי הצנצנות היו מלאות בדבש. מחירה של הצנצנת הגבוהה הוא 13 שקלים ומחירה של הצנצנת הנמוכה הוא 20 שקלים. איזו צנצנת יבחר דרור, אם רצונו לקנות את הדבש במחיר הנמוך ביותר ליחידת נפח? הסבירו."
+    },
+    {
+      "id": 7,
+      "sourcePages": [19],
+      "diagramRequired": false,
+      "renderingStatus": "text_locked_no_diagram_dependency",
+      "rawTranscription": "אורכו של דף נייר מלבני הוא 30 ס״מ, ורוחבו 21 ס״מ. 7. א מגלגלים את הדף למעטפת גליל, כך שרוחב הדף הוא בסיס הגליל.. מהו רדיוס הבסיס? מהו נפח הגליל? ב מגלגלים את הדף למעטפת גליל, כך שאורך הדף הוא בסיס הגליל.. מהו רדיוס הבסיס? מהו נפח הגליל?"
+    }
+  ],
+  "policy": {
+    "doNotNormalizeSuspectedSourceErrorsWithoutVisualVerification": true,
+    "doNotRenderDiagramDependentQuestionsAsFinalUntilDiagramVerified": true,
+    "question6MustNotAppearInGalilOfficialQuestionSet": true
+  }
+}
