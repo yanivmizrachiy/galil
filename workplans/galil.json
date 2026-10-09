@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T08:30:00+03:00",
+  "updatedAt": "2026-10-09T08:45:00+03:00",
   "updatedBy": "Claude Code",
   "scoring": {
     "weightTotal": 100,
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 95,
-    "remainingPercent": 5,
+    "overallProgressPercent": 96,
+    "remainingPercent": 4,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -79,7 +79,7 @@
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
       "status": "done",
       "percent": 100,
-      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37865712779 passed volume QA inside the current workbook pipeline."],
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37865712779 passed volume QA inside the current workbook pipeline.", "2026-10-09: per SSOT §12 (QA must re-solve rows, not trust hard-coded answers), the completion tables on pages 27/28/30/35/36/37 were tagged data-complete=\"volume\" with per-row data-given (unit-aware inputs only) and data-solve (blank targets); volume-qa.mjs now recomputes all 27 rows from the givens, asserting each is uniquely determined, internally consistent (d=2r, B=r², V=B·h), a clean class-8 integer result, a whole-number radius where r is solved, and that every declared given matches the number printed in the row. A break-and-revert negative test confirmed the re-solver flags non-integer, non-perfect-square and attribute-vs-visible-drift defects."],
       "blockedReason": null
     },
     {
@@ -114,14 +114,14 @@
       "weight": 5,
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
       "status": "in_progress",
-      "percent": 15,
-      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and user closure therefore remain open.", "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed binding didactic gaps. Resolved so far: pages 7/9/41 figure-legibility and work-space (§15/§16); (a) a Pythagoras-in-cylinder teaching page now exists as page-43, teaching the axial-rectangle diagonal via √((2r)²+h²) or √(r²+h²) with exact-vs-≈ discipline, directly preparing official Q4's highlighted-side computation, and page-7's unmarked-diagonal row was reconciled to it; (b) an axial-cross-section teaching page now exists as page-42, establishing that the axial cut is a rectangle of width 2r and height h (distinct from the 2πr net), preparing official Q1ב and Q4.", "Still open before closure: (c) volume-qa.mjs must RE-SOLVE the §12 completion-table rows on pages 27/28/30/35/36/37 (tag rows with data-expect and recompute) instead of relying on hard-coded/absent answers, as §12 requires; the final source-diagram fidelity audit of Q4's two middle triangles; and user closure plus final page disposition."],
+      "percent": 30,
+      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and user closure therefore remain open.", "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed binding didactic gaps, now all implemented: pages 7/9/41 figure-legibility and work-space (§15/§16); (a) a Pythagoras-in-cylinder teaching page now exists as page-43, teaching the axial-rectangle diagonal via √((2r)²+h²) or √(r²+h²) with exact-vs-≈ discipline, directly preparing official Q4's highlighted-side computation, and page-7's unmarked-diagonal row was reconciled to it; (b) an axial-cross-section teaching page now exists as page-42, establishing that the axial cut is a rectangle of width 2r and height h (distinct from the 2πr net), preparing official Q1ב and Q4; (c) the §12 completion tables on pages 27/28/30/35/36/37 are now machine re-solved by volume-qa.mjs from per-row declared inputs (data-given/data-solve), with uniqueness, consistency, clean-integer, whole-number-radius and given-vs-visible-drift assertions and a negative-test proof — no hard-coded answers.", "Still open before closure: the final source-diagram fidelity audit of official Q4's two middle triangles (ב, ג) against the jerusalem2 scan, which needs a visible browser pane for pixel-level zoom; and user closure plus final page disposition, both of which the SSOT reserves for Yaniv."],
       "blockedReason": null
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 95,
-    "remainingPercent": 5,
-    "summary": "Official curriculum questions 1-5 and 7 render as pages 44-49, source-locked and machine-verified, after inserting two didactic prep pages: page-42 (axial cross-section: the axial cut is a rectangle of width 2r and height h, distinguished from the 2πr net) and page-43 (Pythagoras in the cylinder: the axial diagonal via √((2r)²+h²) or √(r²+h²), exact vs ≈). These close two structural didactic gaps the SSOT §7/§13 coverage audit had flagged, and page-7's perspective-discipline row was reconciled so it no longer contradicts the Pythagoras lesson. official-render-qa.mjs, browser-qa.mjs and index.html were reconciled to the 44-49 numbering and the 49-page total. Remaining: refresh the full non-browser and browser/PDF QA at 49 pages this cycle, the volume-qa §12 re-solve, the final pixel-level reconciliation of Q4's two middle triangles, and G-10 closure, which cannot complete while the SSOT explicitly remains open until Yaniv says the specification is finished."
+    "completedPercent": 96,
+    "remainingPercent": 4,
+    "summary": "All three structural didactic gaps from the SSOT-coverage audit are now implemented. Official curriculum questions 1-5 and 7 render as pages 44-49, source-locked and machine-verified, after inserting two didactic prep pages: page-42 (axial cross-section: the axial cut is a rectangle of width 2r and height h, distinguished from the 2πr net) and page-43 (Pythagoras in the cylinder: the axial diagonal via √((2r)²+h²) or √(r²+h²), exact vs ≈); page-7's perspective-discipline row was reconciled so it no longer contradicts the Pythagoras lesson. Per SSOT §12, the completion tables on pages 27/28/30/35/36/37 are now re-solved by volume-qa.mjs from per-row declared inputs (27 rows, uniqueness + consistency + clean-integer + whole-radius + drift guards, negative-test proven) rather than trusting hard-coded answers. index.html/official-render-qa.mjs/browser-qa.mjs are reconciled to 44-49 and the 49-page total; the full non-browser suite is green at 49 pages and all touched pages were re-verified in headless Chromium (RTL, A4 297mm, no clipping, no console errors). Remaining: the final pixel-level reconciliation of official Q4's two middle triangles (needs a visible browser pane) and G-10 closure, which cannot complete while the SSOT explicitly remains open until Yaniv says the specification is finished."
   }
 }

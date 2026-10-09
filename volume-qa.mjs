@@ -33,6 +33,84 @@ ok(150/6===25,'math: V=150π,h=6 must produce B=25π');
 ok(80/16===5,'math: V=80π,B=16π must produce h=5');
 ok(1200-750===450,'math: 1200 cm³ capacity minus 750 ml must leave 450 ml');
 
+// --- §12 completion-table re-solver -------------------------------------------------
+// SOURCE_OF_TRUTH.md §12 requires that every completion-table row be uniquely solvable
+// and that the math QA RE-SOLVE the rows rather than trust hard-coded answers. Each
+// completion table is tagged data-complete="volume"; each data row declares only its
+// INPUTS (data-given, unit-aware) and the blank TARGETS (data-solve) — never the
+// answers. We recompute the full cylinder from the givens, assert it is fully and
+// consistently determined with clean class-8 integer results, and guard the declared
+// givens against drifting away from the numbers actually printed in the row.
+const toCm=(num,unit)=>unit==='mm'?num/10:unit==='m'?num*100:num;
+const LEN=new Set(['r','d','h']);
+const FIELDS=['r','d','h','bc','vc']; // bc = B/π coefficient, vc = V/π coefficient
+function parseGiven(spec){
+  return spec.split(';').map(part=>{
+    const [k,raw]=part.split('=');
+    const m=(raw||'').match(/^(-?\d*\.?\d+)(mm|cm|m)?$/);
+    return m?{k,num:parseFloat(m[1]),unit:m[2]||'',raw:m[1]}:{k,bad:raw};
+  });
+}
+function solveCylinder(given){
+  const v={};
+  for(const g of given){ if(g.bad)return{error:`unparseable given ${g.k}=${g.bad}`}; v[g.k]=LEN.has(g.k)?toCm(g.num,g.unit):g.num; }
+  for(let i=0;i<6;i++){
+    if(v.d!=null&&v.r==null)v.r=v.d/2;
+    if(v.r!=null&&v.d==null)v.d=2*v.r;
+    if(v.r!=null&&v.bc==null)v.bc=v.r*v.r;
+    if(v.bc!=null&&v.r==null)v.r=Math.sqrt(v.bc);
+    if(v.bc!=null&&v.h!=null&&v.vc==null)v.vc=v.bc*v.h;
+    if(v.vc!=null&&v.h!=null&&v.bc==null)v.bc=v.vc/v.h;
+    if(v.vc!=null&&v.bc!=null&&v.h==null)v.h=v.vc/v.bc;
+  }
+  return v;
+}
+const expectedRows={27:6,28:5,30:4,35:4,36:4,37:4};
+const tableSrc='<table\\b[^>]*data-complete="volume"[^>]*>([\\s\\S]*?)</table>';
+const rowSrc='<tr\\b([^>]*)>([\\s\\S]*?)</tr>';
+let solvedRows=0;
+const perPage={};
+for(const [n,html] of pages){
+  let count=0, tm;
+  const tre=new RegExp(tableSrc,'g');
+  while((tm=tre.exec(html))){
+    const rre=new RegExp(rowSrc,'g');
+    let rm;
+    while((rm=rre.exec(tm[1]))){
+      const attrs=rm[1], cells=rm[2];
+      const gMatch=attrs.match(/data-given="([^"]*)"/);
+      if(!gMatch){ if(/data-solve=/.test(attrs)) ok(false,`page ${n}: data-solve without data-given`); continue; }
+      const sMatch=attrs.match(/data-solve="([^"]*)"/);
+      count++; solvedRows++;
+      const tag=gMatch[1];
+      const given=parseGiven(tag);
+      const solve=(sMatch?sMatch[1]:'').split(',').map(s=>s.trim()).filter(Boolean);
+      const v=solveCylinder(given);
+      if(v.error){ ok(false,`page ${n} row [${tag}]: ${v.error}`); continue; }
+      const missing=FIELDS.filter(k=>v[k]==null||!Number.isFinite(v[k]));
+      ok(missing.length===0,`page ${n} row [${tag}]: under-determined, missing ${missing.join(',')}`);
+      if(missing.length)continue;
+      ok(Math.abs(v.d-2*v.r)<1e-9&&Math.abs(v.bc-v.r*v.r)<1e-9&&Math.abs(v.vc-v.bc*v.h)<1e-9,
+        `page ${n} row [${tag}]: relations inconsistent (d=${v.d},r=${v.r},bc=${v.bc},h=${v.h},vc=${v.vc})`);
+      ok(FIELDS.every(k=>Number.isInteger(v[k])),
+        `page ${n} row [${tag}]: non-integer class-8 result (r=${v.r},d=${v.d},h=${v.h},bc=${v.bc},vc=${v.vc})`);
+      for(const t of solve){
+        const key=t==='r2'?'bc':t;
+        ok(FIELDS.includes(key)&&v[key]!=null,`page ${n} row [${tag}]: solve target "${t}" not derivable`);
+      }
+      if(solve.includes('r')||solve.includes('r2'))
+        ok(Number.isInteger(Math.sqrt(v.bc)),`page ${n} row [${tag}]: radius not a whole number (bc=${v.bc})`);
+      for(const g of given)
+        if(!g.bad) ok(cells.includes(g.raw),`page ${n} row [${tag}]: declared given ${g.k}=${g.raw} not visible in row cells`);
+    }
+  }
+  perPage[n]=count;
+}
+for(const [n,exp] of Object.entries(expectedRows))
+  ok(perPage[n]===exp,`page ${n}: expected ${exp} §12 completion rows, found ${perPage[n]||0}`);
+ok(solvedRows===27,`§12 re-solver: expected 27 completion rows total, re-solved ${solvedRows}`);
+// ------------------------------------------------------------------------------------
+
 for(const [n,text] of pages){
   ok(/<html lang="he" dir="rtl">/.test(text),`page ${n}: Hebrew RTL root missing`);
   ok(text.includes(`aria-label="עמוד ${n}"`),`page ${n}: page-number label missing`);
@@ -44,4 +122,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log('VOLUME QA PASS: pages 25-38 verify V=B·h→V=πr²h progression, radius/diameter, decimals, unit conversion, exact/approx π, capacity, direct and inverse height/base/radius calculations, with deterministic arithmetic sanity checks.');
+console.log('VOLUME QA PASS: pages 25-38 verify V=B·h→V=πr²h progression, radius/diameter, decimals, unit conversion, exact/approx π, capacity, direct and inverse height/base/radius calculations; §12 completion tables (27/28/30/35/36/37) are re-solved from declared inputs — 27 rows, each uniquely solvable with clean integer results and givens matched to the printed cells.');
