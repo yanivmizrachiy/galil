@@ -11,6 +11,7 @@ const count = (text, pattern) => (text.match(pattern) || []).length;
 assert(/width:210mm/.test(css) && /height:297mm/.test(css), 'A4 dimensions must be exactly 210×297mm');
 assert(/overflow:hidden/.test(css), 'A4 page must guard against overflow');
 assert(/@page\{size:A4;margin:0\}/.test(css), 'print page contract is missing');
+assert(/print-color-adjust:\s*exact/.test(css), 'print-color-adjust:exact is required so the work-grid ruling and shaded fills survive the default browser Save-as-PDF (background graphics off) — SOURCE_OF_TRUTH.md §16/§4');
 assert(css.includes('יניב רז - מדריך מחוזי חט\\"ב בעיר ירושלים'), 'canonical first credit line is missing');
 assert(css.includes('הדרכה במחוז ירושלים והעיר ירושלים - מנח\\"י, בהובלת איילת קריספין'), 'canonical second credit line is missing');
 assert(/white-space:pre-line/.test(css), 'credit footer must render as two lines');
