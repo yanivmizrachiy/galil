@@ -62,6 +62,42 @@ for(const n of pages){
   ok(audit.h1===1,`page ${n}: expected exactly one h1`);
   ok(audit.dir==='rtl'&&audit.lang==='he',`page ${n}: Hebrew RTL root missing`);
   ok(audit.pageNumber===String(n),`page ${n}: visible page number mismatch (${audit.pageNumber})`);
+  // SOURCE_OF_TRUTH.md §15: no SVG label may sit on a drawing stroke. Rasterize each figure with
+  // its <text> removed and fail if any stroke pixel falls inside a label's glyph bounding box.
+  const labelHits=await page.evaluate(async()=>{
+    const parseVB=svg=>(svg.getAttribute('viewBox')||'').trim().split(/[\s,]+/).map(Number);
+    const hits=[];
+    const svgs=Array.from(document.querySelectorAll('main.a4-page svg'));
+    for(let si=0;si<svgs.length;si++){
+      const svg=svgs[si];const vb=parseVB(svg);if(vb.length!==4)continue;
+      const [minX,minY,vbW,vbH]=vb;
+      const texts=Array.from(svg.querySelectorAll('text'));if(!texts.length)continue;
+      const sm=svg.getScreenCTM();
+      const labels=texts.map(t=>{const b=t.getBBox();let pts=[[b.x,b.y],[b.x+b.width,b.y],[b.x,b.y+b.height],[b.x+b.width,b.y+b.height]];const tm=t.getScreenCTM();if(sm&&tm){const m=sm.inverse().multiply(tm);pts=pts.map(([x,y])=>[m.a*x+m.c*y+m.e,m.b*x+m.d*y+m.f]);}const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const nx=Math.min(...xs),ny=Math.min(...ys);return{text:t.textContent.trim(),x:nx,y:ny,w:Math.max(...xs)-nx,h:Math.max(...ys)-ny};});
+      const clone=svg.cloneNode(true);
+      clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+      clone.setAttribute('width',vbW);clone.setAttribute('height',vbH);
+      Array.from(clone.querySelectorAll('text')).forEach(t=>t.remove());
+      const svgStr=new XMLSerializer().serializeToString(clone);
+      const img=new Image();
+      try{await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svgStr);});}catch(e){continue;}
+      const cv=document.createElement('canvas');
+      cv.width=Math.max(1,Math.round(vbW));cv.height=Math.max(1,Math.round(vbH));
+      const ctx=cv.getContext('2d');ctx.drawImage(img,0,0,cv.width,cv.height);
+      const data=ctx.getImageData(0,0,cv.width,cv.height).data;
+      const isStroke=(px,py)=>{if(px<0||py<0||px>=cv.width||py>=cv.height)return false;const i=(py*cv.width+px)*4;if(data[i+3]<50)return false;const luma=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];return luma<170;};
+      for(const L of labels){
+        const x0=Math.floor(L.x-minX),y0=Math.floor(L.y-minY),x1=Math.ceil(L.x-minX+L.w),y1=Math.ceil(L.y-minY+L.h);
+        let inBox=0,area=0;
+        for(let py=y0;py<y1;py++)for(let px=x0;px<x1;px++){area++;if(isStroke(px,py))inBox++;}
+        if(inBox>Math.max(2,0.03*area))hits.push({svgIndex:si,label:L.text,inBox,area});
+      }
+    }
+    return hits;
+  });
+  for(const hit of labelHits){
+    ok(false,`page ${n}: SVG label "${hit.label}" (svg#${hit.svgIndex}) sits on a drawing line — ${hit.inBox}/${hit.area} stroke px inside its box (SOURCE_OF_TRUTH.md §15)`);
+  }
   await page.locator('.a4-page').screenshot({path:`qa-artifacts/page-${String(n).padStart(2,'0')}.png`});
   const bytes=await page.pdf({format:'A4',printBackground:true,preferCSSPageSize:true,margin:{top:'0',right:'0',bottom:'0',left:'0'}});
   const one=await PDFDocument.load(bytes);
@@ -164,4 +200,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile single-view fit, official pages 44-49 mobile screenshots, no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile single-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);
