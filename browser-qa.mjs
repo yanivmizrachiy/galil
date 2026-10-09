@@ -137,7 +137,7 @@ await inspectReader(844,390,'iphone-landscape');
 await page.setViewportSize({width:390,height:844});
 await page.goto(base,{waitUntil:'load'});
 await page.click('#singleMode');
-for(const n of [39,40,41,42,43,44,45,46,47]){
+for(const n of [39,40,41,42,43,44,45,46,47,48,49]){
   await page.fill('#page',String(n));
   await page.locator('#page').evaluate(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
   await page.waitForFunction(expected=>document.querySelector('#sheet')?.getAttribute('src')===`page-${expected}.html`,n);
@@ -152,7 +152,7 @@ for(const n of [39,40,41,42,43,44,45,46,47]){
     const r=p.getBoundingClientRect(); return {pageW:r.width,left:r.left,right:r.right,frameW:f.clientWidth,src:f.getAttribute('src')};
   });
   ok(fit&&fit.src===`page-${n}.html`&&fit.pageW<=fit.frameW+2&&fit.left>=-2&&fit.right<=fit.frameW+2,`mobile single view page ${n}: clipping or wrong source`);
-  if(n>=42) await page.locator('#sheet').screenshot({path:`qa-artifacts/official-page-${n}-mobile.png`});
+  if(n>=44) await page.locator('#sheet').screenshot({path:`qa-artifacts/official-page-${n}-mobile.png`});
 }
 
 ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);
@@ -164,4 +164,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-47 mobile single-view fit, official pages 42-47 mobile screenshots, no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile single-view fit, official pages 44-49 mobile screenshots, no horizontal/internal overflow.`);

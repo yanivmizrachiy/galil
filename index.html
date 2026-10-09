@@ -38,7 +38,7 @@
     <button id="continuousMode" type="button" aria-pressed="true">גלילה רציפה מלמעלה למטה ↓</button>
     <button id="singleMode" type="button" aria-pressed="false">דף בודד</button>
     <button id="prev" type="button">הקודם</button>
-    <span>עמוד <input id="page" type="number" min="1" max="47" value="1" inputmode="numeric"> מתוך <span id="pageTotal"></span></span>
+    <span>עמוד <input id="page" type="number" min="1" max="49" value="1" inputmode="numeric"> מתוך <span id="pageTotal"></span></span>
     <button id="next" type="button">הבא</button>
     <a id="open" class="link" href="page-1.html" target="_blank" rel="noopener">פתח דף מלא</a>
     <a class="link" href="https://yanivmizrachiy.github.io/razpages/workbooks/index.html">כל החוברות</a>
@@ -50,7 +50,7 @@
   <main id="continuousView" aria-label="חוברת הגליל — צפייה רציפה"></main>
 
   <script>
-    const total=47;
+    const total=49;
     const input=document.getElementById('page');
     input.max=total;
     document.getElementById('pageTotal').textContent=total;

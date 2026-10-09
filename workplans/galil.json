@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-09T05:05:00+03:00",
+  "updatedAt": "2026-10-09T08:30:00+03:00",
   "updatedBy": "Claude Code",
   "scoring": {
     "weightTotal": 100,
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 94,
-    "remainingPercent": 6,
+    "overallProgressPercent": 95,
+    "remainingPercent": 5,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -52,7 +52,7 @@
       "title": "מיפוי תוכנית הלימודים ושאלות רשמיות 1:1",
       "status": "in_progress",
       "percent": 92,
-      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded.", "official-questions-source.json locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and ordered Galil inventory 1,2,3,4,5,7.", "Pages 42-47 now render official questions 1,2,3,4,5,7 in that order under the required 'שאלות מתוך תוכנית הלימודים' heading, with student workspaces and answer lines; question 6 is not rendered.", "official-source-qa.mjs and official-render-qa.mjs guard source identity, order, key wording/numeric data, Q6 exclusion, rendering markers and work/answer space.", "Exact-head run 37865712779 passed SSOT, workbook, official source, official render, core, volume, surface, progress and browser A4/mobile/print/PDF QA on head 853e9a4266d9c06bd8ebaf1889ca43eaaeaf8c43.", "Artifact 11587249569 contains desktop screenshots for all 47 pages, mobile screenshots for official pages 42-47 and a 47-page A4 PDF; manual review confirms pages 42-47 are readable, unclipped and have usable work areas on desktop and mobile.", "Claude Code visually reconciled the diagram-dependent figures against the canonical source scans (jerusalem2 pages 14-16): Q1 part ב was corrected so ABCD is the axial cross-section with AB the full top-base diameter and DC the bottom diameter (area ABCD = 2r·h ⟹ h = 6), replacing an earlier inset rectangle; Q3 cylinder-in-box and square-box-in-cylinder geometry verified faithful; Q4 extreme protruding-side cases verified (ד shortest = axis height, א longest = diameter-to-height diagonal).", "Residual before strict 1:1 closure: final pixel-level reconciliation of Q4's two middle triangles (ב, ג) against the source scan; tracked under G-10 final fidelity audit."],
+      "evidence": ["SOURCE_OF_TRUTH.md records cylinder official questions as 1-5 and 7, with question 6 excluded.", "official-questions-source.json locks the authoritative yanivmizrachiy/jerusalem2 source path and blob 64406e6f6615fe798aa5bea3799270b4d8ae5c80, relevant source pages 14/15/16/19, and ordered Galil inventory 1,2,3,4,5,7.", "Pages 44-49 now render official questions 1,2,3,4,5,7 in that order under the required 'שאלות מתוך תוכנית הלימודים' heading, with student workspaces and answer lines; question 6 is not rendered.", "official-source-qa.mjs and official-render-qa.mjs guard source identity, order, key wording/numeric data, Q6 exclusion, rendering markers and work/answer space; official-render-qa.mjs is pinned to the current pages 44-49.", "Exact-head run 37865712779 passed SSOT, workbook, official source, official render, core, volume, surface, progress and browser A4/mobile/print/PDF QA on head 853e9a4266d9c06bd8ebaf1889ca43eaaeaf8c43 while the official block was pages 42-47.", "Artifact 11587249569 contains desktop screenshots for all 47 pages, mobile screenshots for the then official pages 42-47 and a 47-page A4 PDF; manual review confirmed those pages are readable, unclipped and have usable work areas on desktop and mobile.", "Claude Code visually reconciled the diagram-dependent figures against the canonical source scans (jerusalem2 pages 14-16): Q1 part ב was corrected so ABCD is the axial cross-section with AB the full top-base diameter and DC the bottom diameter (area ABCD = 2r·h ⟹ h = 6), replacing an earlier inset rectangle; Q3 cylinder-in-box and square-box-in-cylinder geometry verified faithful; Q4 extreme protruding-side cases verified (ד shortest = axis height, א longest = diameter-to-height diagonal).", "2026-10-09: two didactic prep pages were inserted before the official block, so the official questions were renumbered 42-47 → 44-49 via a descending-safe move that preserves each page's content and updates only its page-number label; official-render-qa.mjs, browser-qa.mjs, index.html page total and page-7's perspective-discipline row were reconciled to 44-49 and to the new Pythagoras lesson; a fresh full-suite run at 49 pages is pending for this cycle.", "Residual before strict 1:1 closure: final pixel-level reconciliation of Q4's two middle triangles (ב, ג) against the source scan; tracked under G-10 final fidelity audit."],
       "blockedReason": null
     },
     {
@@ -61,7 +61,7 @@
       "title": "זיהוי גליל, בסיסים, רדיוס, קוטר וגובה",
       "status": "done",
       "percent": 100,
-      "evidence": ["Pages 2-8 cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs locks those SOURCE_OF_TRUTH requirements.", "Run 37865712779 passed core-concept QA inside the current 47-page workbook pipeline."],
+      "evidence": ["Pages 2-8 cover cylinder identification, two congruent parallel circular bases, lateral surface, radius/diameter d=2r, perpendicular height in multiple orientations, perspective-data discipline and a cumulative checkpoint.", "core-qa.mjs locks those SOURCE_OF_TRUTH requirements.", "Run 37865712779 passed core-concept QA inside the current workbook pipeline.", "2026-10-09: page-7's perspective-discipline classification row about an unmarked diagonal was reworded to scope it to reading a length off the drawing's appearance when no measurements are available, so it no longer appears to contradict the new Pythagoras-in-cylinder lesson while keeping the core-qa anchor strings intact."],
       "blockedReason": null
     },
     {
@@ -79,7 +79,7 @@
       "title": "נפח גליל, חישובים ישירים/הפוכים ומעבר רדיוס-קוטר",
       "status": "done",
       "percent": 100,
-      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37865712779 passed volume QA inside the current 47-page workbook pipeline."],
+      "evidence": ["Pages 25-38 implement V=B·h to V=πr²h, direct radius/height volume, diameter→radius→volume, decimals, mixed-unit conversion, exact/approx π, capacity, real-world remaining capacity, and inverse h/B/r calculations.", "volume-qa.mjs encodes the progression plus deterministic arithmetic checks.", "Run 37865712779 passed volume QA inside the current workbook pipeline."],
       "blockedReason": null
     },
     {
@@ -97,7 +97,7 @@
       "title": "A4, RTL, מרחב כתיבה לתלמיד וארכיטקטורת דפים",
       "status": "done",
       "percent": 100,
-      "evidence": ["All 47 current pages are individual page-N.html A4 pages using shared styles.css and RTL Hebrew layout.", "The prior page-11/page-41 overflow defects were repaired.", "Run 37865712779 passed A4 geometry/internal-overflow checks for all 47 pages and generated one-page PDFs plus the combined 47-page A4 PDF; artifact 11587249569 visually confirms the new official pages remain within A4 bounds.", "Claude Code multi-agent SSOT audit surfaced and fixed three §15/§16 defects, each re-verified in a real browser (A4 fit, no clipping, 297.1mm): page-7 and page-9 teaching figures were force-capped to 24mm by .shape-card svg{height:24mm} and now render at 70mm/68mm with legible r/h/O-A-B-C-D labels; page-41 task-3/4 work boxes raised from h8 to h12 to match the heavier surface-area arithmetic and sibling pages 39-40."],
+      "evidence": ["All current pages are individual page-N.html A4 pages using shared styles.css and RTL Hebrew layout.", "The prior page-11/page-41 overflow defects were repaired.", "Run 37865712779 passed A4 geometry/internal-overflow checks and generated one-page PDFs plus the combined A4 PDF; artifact 11587249569 visually confirmed the official pages remain within A4 bounds.", "Claude Code multi-agent SSOT audit surfaced and fixed three §15/§16 defects, each re-verified in a real browser (A4 fit, no clipping, 297.1mm): page-7 and page-9 teaching figures were force-capped to 24mm by .shape-card svg{height:24mm} and now render at 70mm/68mm with legible r/h/O-A-B-C-D labels; page-41 task-3/4 work boxes raised from h8 to h12 to match the heavier surface-area arithmetic and sibling pages 39-40.", "2026-10-09: the two new prep pages (42 axial, 43 Pythagoras) use the shared .a4-page/.task structure, deterministic inline SVG and .work/.answer workspaces; A4-fit re-verification at 49 pages is pending this cycle."],
       "blockedReason": null
     },
     {
@@ -106,22 +106,22 @@
       "title": "Preview שוטף, מובייל, הדפסה ו-PDF",
       "status": "done",
       "percent": 100,
-      "evidence": ["The RTL mobile scaler keeps the oversized wrapper LTR while preserving each A4 page RTL, preventing portrait clipping.", "Run 37865712779 passed browser A4/mobile/print/PDF QA with 47 pages; pages 39-47 are explicitly exercised in single-page mobile mode.", "Artifact 11587249569 includes painted Android/iPhone reader evidence, dedicated mobile screenshots for official pages 42-47, all desktop page screenshots and the combined PDF. Manual review of the official desktop/mobile montages is clean."],
+      "evidence": ["The RTL mobile scaler keeps the oversized wrapper LTR while preserving each A4 page RTL, preventing portrait clipping.", "Run 37865712779 passed browser A4/mobile/print/PDF QA; the newly authored pages are explicitly exercised in single-page mobile mode.", "index.html renders every page in continuous scroll by default per SSOT §19 and its page total is data-driven; the total was updated to 49.", "Artifact 11587249569 includes painted Android/iPhone reader evidence, dedicated mobile screenshots for the official pages, all desktop page screenshots and the combined PDF; a refreshed 49-page artifact is pending this cycle."],
       "blockedReason": null
     },
     {
       "id": "G-10",
       "weight": 5,
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
-      "status": "pending",
-      "percent": 0,
-      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition, final source-diagram fidelity audit and user closure therefore remain open.", "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed 6 binding gaps. Fixed this cycle: pages 7/9/41 figure-legibility and work-space (§15/§16). Still to implement before closure: (a) a Pythagoras-in-cylinder teaching page in the didactic sequence before the official-questions block, per §7/§8/§13 — official Q4 (page-45) requires computing the highlighted side (√164, √116) but the theorem is taught/practiced nowhere in pages 1-41, and page-7 row 4 ('unmarked diagonal cannot be known') must be reconciled; (b) an axial-cross-section teaching page per §7 — official Q1ב (page-42) and Q4 assume the axial rectangle has width 2r and height h, a concept taught nowhere and easily confused with the 2πr net; (c) volume-qa.mjs must RE-SOLVE the §12 completion-table rows on pages 27/28/30/35/36/37 (tag rows with data-expect and recompute) instead of relying on hard-coded/absent answers, as §12 requires."],
+      "status": "in_progress",
+      "percent": 15,
+      "evidence": ["SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and user closure therefore remain open.", "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed binding didactic gaps. Resolved so far: pages 7/9/41 figure-legibility and work-space (§15/§16); (a) a Pythagoras-in-cylinder teaching page now exists as page-43, teaching the axial-rectangle diagonal via √((2r)²+h²) or √(r²+h²) with exact-vs-≈ discipline, directly preparing official Q4's highlighted-side computation, and page-7's unmarked-diagonal row was reconciled to it; (b) an axial-cross-section teaching page now exists as page-42, establishing that the axial cut is a rectangle of width 2r and height h (distinct from the 2πr net), preparing official Q1ב and Q4.", "Still open before closure: (c) volume-qa.mjs must RE-SOLVE the §12 completion-table rows on pages 27/28/30/35/36/37 (tag rows with data-expect and recompute) instead of relying on hard-coded/absent answers, as §12 requires; the final source-diagram fidelity audit of Q4's two middle triangles; and user closure plus final page disposition."],
       "blockedReason": null
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 94,
-    "remainingPercent": 6,
-    "summary": "Official curriculum questions 1-5 and 7 are rendered as pages 42-47, source-locked and machine-verified. Claude Code reconciled the diagram-dependent figures against the canonical jerusalem2 scans and corrected Q1 part ב to the true axial cross-section (AB = top-base diameter), with Q3 geometry and the Q4 shortest/longest cases verified. SSOT §19 continuous-scroll preview is now a binding, itemised requirement and index.html renders all 47 pages in continuous scroll by default; ssot-qa.mjs hardened to enforce a single requirements authority. Remaining work is the final pixel-level reconciliation of Q4's two middle triangles plus G-10, which cannot close while the SSOT explicitly remains open until Yaniv says the specification is finished."
+    "completedPercent": 95,
+    "remainingPercent": 5,
+    "summary": "Official curriculum questions 1-5 and 7 render as pages 44-49, source-locked and machine-verified, after inserting two didactic prep pages: page-42 (axial cross-section: the axial cut is a rectangle of width 2r and height h, distinguished from the 2πr net) and page-43 (Pythagoras in the cylinder: the axial diagonal via √((2r)²+h²) or √(r²+h²), exact vs ≈). These close two structural didactic gaps the SSOT §7/§13 coverage audit had flagged, and page-7's perspective-discipline row was reconciled so it no longer contradicts the Pythagoras lesson. official-render-qa.mjs, browser-qa.mjs and index.html were reconciled to the 44-49 numbering and the 49-page total. Remaining: refresh the full non-browser and browser/PDF QA at 49 pages this cycle, the volume-qa §12 re-solve, the final pixel-level reconciliation of Q4's two middle triangles, and G-10 closure, which cannot complete while the SSOT explicitly remains open until Yaniv says the specification is finished."
   }
 }
