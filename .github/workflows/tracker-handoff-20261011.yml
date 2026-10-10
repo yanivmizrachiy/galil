@@ -1,0 +1,44 @@
+name: One-shot Galil tracker handoff 2026-10-11
+
+on:
+  push:
+    branches:
+      - chatgpt/galil-workspace-grid
+    paths:
+      - .github/workflows/tracker-handoff-20261011.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update-tracker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt/galil-workspace-grid
+          fetch-depth: 0
+      - name: Record handoff in tracker and remove one-shot workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('workplans/galil.json')
+          s=p.read_text(encoding='utf-8')
+          if '"handoff20261011"' not in s:
+              marker='  "canonicalProgressTracker": true,\n'
+              insert=marker+'  "handoff20261011": "PR #5 records Yaniv’s clarification that computational workspaces are 5x5mm square grids rather than ruled lines; it preserves Claude’s computational-page scoping and adds SSOT §28 plus dedicated QA. Prior Galil Workbook QA run #54 passed before this docs/tracker-only handoff.",\n'
+              if marker not in s:
+                  raise SystemExit('tracker marker not found')
+              s=s.replace(marker,insert,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+          rm -f .github/workflows/tracker-handoff-20261011.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add workplans/galil.json .github/workflows/tracker-handoff-20261011.yml
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs(progress): record Claude-ChatGPT handoff'
+            git push origin HEAD:chatgpt/galil-workspace-grid
+          fi
