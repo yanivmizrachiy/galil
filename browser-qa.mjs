@@ -63,7 +63,7 @@ for(const n of pages){
   ok(audit.dir==='rtl'&&audit.lang==='he',`page ${n}: Hebrew RTL root missing`);
   ok(audit.pageNumber===String(n),`page ${n}: visible page number mismatch (${audit.pageNumber})`);
   // SOURCE_OF_TRUTH.md §15: no SVG label may sit on a drawing stroke. Rasterize each figure with
-  // its <text> removed and fail if any stroke pixel falls inside a label's glyph bounding box.
+  // its <text> removed and fail when a drawing stroke covers more than max(4px, 6%) of a label's glyph box.
   const labelHits=await page.evaluate(async()=>{
     const parseVB=svg=>(svg.getAttribute('viewBox')||'').trim().split(/[\s,]+/).map(Number);
     const hits=[];

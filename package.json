@@ -2,7 +2,7 @@
   "name": "galil-hadash-workbook",
   "private": true,
   "scripts": {
-    "qa": "node qa.mjs && node official-source-qa.mjs && node official-render-qa.mjs && node core-qa.mjs && node volume-qa.mjs && node surface-qa.mjs && node scripts/verify-progress.mjs",
+    "qa": "node ssot-qa.mjs && node qa.mjs && node official-source-qa.mjs && node official-render-qa.mjs && node core-qa.mjs && node volume-qa.mjs && node surface-qa.mjs && node scripts/verify-progress.mjs",
     "qa:official": "node official-source-qa.mjs && node official-render-qa.mjs",
     "qa:browser": "node browser-qa.mjs"
   },

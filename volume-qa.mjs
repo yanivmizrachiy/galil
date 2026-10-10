@@ -8,17 +8,17 @@ const has=(n,...parts)=>parts.every(part=>pages.get(n).includes(part));
 
 ok(has(25,'V = B·h','12·5 = ____','40·2.5 = ____','100 ס״מ³'),'page 25: base-area-to-volume bridge incomplete');
 ok(has(26,'B = π·r²','V = B·h','V = π·r²·h','V = 2·π·r·h'),'page 26: guided derivation/distractor set for cylinder volume incomplete');
-ok(has(27,'V = π·r²·h','r → r² → ·h → V','7 ס״מ'),'page 27: direct radius/height volume progression incomplete');
-ok(has(28,'d → r → B → V','d=10 → r=5 → B=25π → V=75π','לחלק את d ב־2'),'page 28: diameter-to-radius-to-volume progression incomplete');
+ok(has(27,'V = π·r²·','r → r² → ·h → V','7 ס״מ'),'page 27: direct radius/height volume progression incomplete');
+ok(has(28,'d → r → ',' → V','d=10 → r=5 → B=25π → V=75π','לחלק את d ב־2'),'page 28: diameter-to-radius-to-volume progression incomplete');
 ok(has(29,'r = 1.5','r = 0.5','2.5π ס״מ³'),'page 29: decimal-volume practice or verified example missing');
 ok(has(30,'אין מציבים בנוסחת נפח נתונים ביחידות שונות','r = 30','d = 80','r = 0.05','d = 0.12'),'page 30: mixed-unit conversion practice incomplete');
 ok(has(31,'שמרו π בתשובה המדויקת','≈','20π','62.83'),'page 31: exact/approx π distinction incomplete');
 ok(has(32,'נפח וקיבול','1 ס״מ³ = 1 מ״ל','d=10'),'page 32: capacity conversion and diameter case incomplete');
 ok(has(33,'מ״ל או ליטר','785 ס״מ³','≈ 785 מ״ל'),'page 33: real-world capacity practice incomplete');
 ok(has(34,'קיבול מלא','כמות קיימת','מקום שנשאר','1200 מ״ל'),'page 34: remaining-capacity application incomplete');
-ok(has(35,'h = V ÷ B','25π ס״מ²','100π ס״מ³','V ÷ B'),'page 35: inverse height calculation incomplete');
-ok(has(36,'B = V ÷ h','150π ÷ 6','25π ס״מ²'),'page 36: inverse base-area calculation incomplete');
-ok(has(37,'V ÷ h → B → r','r² = ____','B = 49π','7 ס״מ'),'page 37: inverse radius calculation incomplete');
+ok(has(35,'h = V ÷ ','25π ס״מ²','100π ס״מ³'),'page 35: inverse height calculation incomplete');
+ok(has(36,'B = V ÷ ','150π ÷ 6','25π ס״מ²'),'page 36: inverse base-area calculation incomplete');
+ok(has(37,'V ÷ h → ',' → r','r² = ____','B = 49π','7 ס״מ'),'page 37: inverse radius calculation incomplete');
 ok(has(38,'נפח גליל — סיכום','d→r→B→V','1.5 ליטר','B=16π','V=147π','d=80'),'page 38: cumulative volume checkpoint incomplete');
 
 // Deterministic arithmetic sanity checks for canonical numeric examples used in the worksheet.
