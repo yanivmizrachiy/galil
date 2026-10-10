@@ -4,6 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
+  "handoff20261011": "PR #5 records Yaniv’s clarification that computational workspaces are 5x5mm square grids rather than ruled lines; it preserves Claude’s computational-page scoping and adds SSOT §28 plus dedicated QA. Prior Galil Workbook QA run #54 passed before this docs/tracker-only handoff.",
   "updatedAt": "2026-10-10T20:30:00+03:00",
   "updatedBy": "Claude Code",
   "scoring": {
