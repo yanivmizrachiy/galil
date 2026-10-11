@@ -108,11 +108,24 @@ try {
     tracker.progress.remainingPercent = 0;
     tracker.progress.blockedCount = 0;
   };
-  trackerMutation(allDone, () => reject('scripts/verify-progress.mjs', /100% requires recorded specification closure/));
-  trackerMutation(tracker => { allDone(tracker); tracker.closure.specificationClosed = true; }, () =>
-    reject('scripts/verify-progress.mjs', /100% requires approved final page disposition/));
-  trackerMutation(tracker => { allDone(tracker); tracker.closure.specificationClosed = true; tracker.closure.finalDispositionApproved = true; }, () =>
-    reject('scripts/verify-progress.mjs', /100% requires closure evidence/));
+  trackerMutation(tracker => {
+    allDone(tracker);
+    tracker.closure ||= {};
+    delete tracker.closure.specificationClosed;
+  }, () => reject('scripts/verify-progress.mjs', /100% requires recorded specification closure/));
+  trackerMutation(tracker => {
+    allDone(tracker);
+    tracker.closure ||= {};
+    tracker.closure.specificationClosed = true;
+    delete tracker.closure.finalDispositionApproved;
+  }, () => reject('scripts/verify-progress.mjs', /100% requires approved final page disposition/));
+  trackerMutation(tracker => {
+    allDone(tracker);
+    tracker.closure ||= {};
+    tracker.closure.specificationClosed = true;
+    tracker.closure.finalDispositionApproved = true;
+    delete tracker.closure.evidence;
+  }, () => reject('scripts/verify-progress.mjs', /100% requires closure evidence/));
   trackerMutation(tracker => {
     allDone(tracker);
     tracker.closure.specificationClosed = true;

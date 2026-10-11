@@ -47,6 +47,8 @@ jobs:
         run: node surface-qa.mjs
       - name: Verify workspace grid contract
         run: node workspace-grid-qa.mjs
+      - name: Run cover contract QA
+        run: node cover-qa.mjs
       - name: Verify public reader contract and static PDF staleness
         run: node reader-qa.mjs
       - name: Enforce progress update on pull request
