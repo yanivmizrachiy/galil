@@ -37,3 +37,7 @@
 .a4-page.dense .q-grid{gap:2mm 4mm}
 .a4-page.dense .instruction{margin-bottom:1.5mm}
 .a4-page.dense .formula{margin:1mm 0}
+
+/* SSOT 2026-10-11: student questions use a prominent blue marker instead of a visible number. The original number remains in the DOM/source for traceability and QA. */
+.a4-page .task-row>.task-num{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8}
+.a4-page .task-row>.task-num::after{content:"";width:2.3mm;height:2.3mm;border-radius:50%;background:#fff}
