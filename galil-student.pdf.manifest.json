@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "Deterministic staleness gate for the static public PDF (SOURCE_OF_TRUTH.md §19). Derived file — regenerate with node scripts/build-pdf.mjs.",
-  "builtAt": "2026-10-11T07:40:10.761Z",
+  "builtAt": "2026-10-11T10:35:28.406Z",
   "pageCount": 49,
   "inputs": {
     "page-1.html": "39aabe8018a4e555205591387d1f37d4034983727f9a81cc6a2845d547a5a6f1",
@@ -53,7 +53,7 @@
     "page-47.html": "a74ae08e54baa7e8f982398fdcb0a57e7ae0f46afd34f70d190267fe1f6fc22a",
     "page-48.html": "bbc62cf4fe8859dd5c0b43077a0875c6dca7df882068a0d600413c15af4d9169",
     "page-49.html": "f94acf29257524d59d910b62538761808ad28672eafb93c92d67c067a73355de",
-    "styles.css": "2a9629a87917b0b2fb37c7f007bbac8f8c5171ce473f788b9b0ae3835cc05ed2",
+    "styles.css": "9414fceb8b1b5df2d23b2b483c7460543d423218a5bb6047f4b9b843878b9d7d",
     "vendor/mathjax/sre/mathmaps/af.json": "b906ca6e91517ac8d6f87c304223839c9998daf2d29ac8d79ce5fa967c23dc77",
     "vendor/mathjax/sre/mathmaps/base.json": "72558700556d997a95e9281044e330eba9a472dda43642a9b5cc0483294d875f",
     "vendor/mathjax/sre/mathmaps/ca.json": "750a034984f3b5966a2a391eb5ad0c7b50bfa02eb576a82656a0bf43ebe34ee7",
@@ -97,6 +97,6 @@
     "vendor/mathjax/tex-font/chtml/woff2/mjx-tex-zero.woff2": "2c146f72c9a345aa282398a752d03af71d83a011f3d067297b533a31f0c5f5cb",
     "vendor/mathjax/tex-mml-chtml.js": "b4ee932e3dddcbaa59bf6097793e951257d651c85d235086dc295b5f7b71b185"
   },
-  "sourceDigest": "44b8fef2890d6e7e862004ce8ad72654bcf43aa65353bef4719ccaf85dc2d001",
-  "pdfSha256": "76e0365501b9970b931116e1582194ce91ff51e8a808013a13801dcd7d194044"
+  "sourceDigest": "4e95f5948ff63bcf9429ebca98f6c63f522977d67ccb42b54b8d629b9c2fe8d1",
+  "pdfSha256": "29d292f18b6614857e917df05eebe70df0cb8325a43d9dd4d71cc93541833229"
 }

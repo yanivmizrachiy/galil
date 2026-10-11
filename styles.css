@@ -41,3 +41,6 @@
 /* SSOT 2026-10-11: student questions use a prominent blue marker instead of a visible number. The original number remains in the DOM/source for traceability and QA. */
 .a4-page .task-row>.task-num{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8}
 .a4-page .task-row>.task-num::after{content:"";width:2.3mm;height:2.3mm;border-radius:50%;background:#fff}
+/* SSOT 2026-10-11: sub-sections use a smaller blue marker instead of a visible letter/number. The original label stays in the DOM/source for traceability and QA. */
+.a4-page .q-item .q-num{font-size:0;line-height:0;display:inline-grid;place-items:center;vertical-align:middle;min-width:0;width:4.2mm;height:4.2mm;margin-inline-end:1.5mm;border-radius:50%;background:#1d4ed8}
+.a4-page .q-item .q-num::after{content:"";width:1.5mm;height:1.5mm;border-radius:50%;background:#fff}

@@ -17,6 +17,12 @@ assert(css.includes('הדרכה במחוז ירושלים והעיר ירושל�
 assert(/white-space:pre-line/.test(css), 'credit footer must render as two lines');
 assert(/\.a4-page::after\{[^}]*right:0;left:0;[^}]*border-top:\s*2px solid #1e3a8a/.test(css), 'district footer must have a full-width blue rule above the footer text');
 
+// SOURCE_OF_TRUTH.md „סימון שאלות וסעיפים” (2026-10-11): display-level blue markers — big for questions, smaller for
+// sub-sections — while the original numbers/letters stay in the DOM (page numbers remain visible digits).
+assert(/\.a4-page \.task-row>\.task-num\{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8\}/.test(css) && /\.a4-page \.task-row>\.task-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'question markers must render as prominent blue circles without visible digits (CSS only)');
+assert(/\.a4-page \.q-item \.q-num\{font-size:0;line-height:0;[^}]*border-radius:50%;background:#1d4ed8\}/.test(css) && /\.a4-page \.q-item \.q-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'sub-section markers must render as smaller blue circles without visible letters (CSS only)');
+assert(!/\.page-number\{[^}]*font-size:0/.test(css), 'page numbers must remain visible digits');
+
 const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));
 assert(answerFiles.length === 0, `separate answer-key files are forbidden: ${answerFiles.join(', ')}`);
 
