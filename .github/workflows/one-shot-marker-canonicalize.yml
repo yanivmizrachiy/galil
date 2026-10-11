@@ -1,0 +1,40 @@
+name: One-shot Galil marker canonicalization
+
+on:
+  push:
+    branches:
+      - chatgpt/question-marker-guard
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: chatgpt/question-marker-guard
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Canonicalize marker rule
+        run: python scripts/canonicalize-question-marker-rule.py
+      - name: Run complete static QA
+        run: npm run qa
+      - name: Run browser QA
+        run: npm run qa:browser
+      - name: Commit verified governance repair
+        run: |
+          rm -f .github/workflows/one-shot-marker-canonicalize.yml
+          rm -f scripts/canonicalize-question-marker-rule.py
+          git config user.name "chatgpt-repo-agent"
+          git config user.email "noreply@openai.com"
+          git add -A
+          git commit -m "docs(ssot): canonically lock blue question markers"
+          git push origin HEAD:chatgpt/question-marker-guard
