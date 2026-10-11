@@ -65,7 +65,7 @@ jobs:
           qa.write_text(q, encoding='utf-8')
           PY
       - name: Install
-        run: npm ci
+        run: npm install --no-audit --no-fund
       - name: Verify
         run: npm run qa
       - name: Commit verified hotfix
