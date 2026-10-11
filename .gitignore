@@ -1,0 +1,5 @@
+.vercel
+.env*
+.claude/
+node_modules/
+qa-artifacts/

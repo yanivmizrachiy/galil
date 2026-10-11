@@ -6,213 +6,165 @@
   <title>חוברת הגליל</title>
   <style>
     *{box-sizing:border-box}
-    html,body{max-width:100%;overflow-x:hidden}
-    body{margin:0;background:#f4f7fb;font-family:Arial,sans-serif;color:#172033}
-    .bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #d9e2ef;padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
-    .title{font-weight:800;font-size:18px;margin-inline-end:12px}.sub{font-size:13px;color:#52627a}
-    button,a,input{font:inherit}
-    button,.link{border:1px solid #b9c8da;background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;text-decoration:none;color:#172033}
-    button:hover,.link:hover{background:#eef4fb}
-    button[aria-pressed="true"]{background:#172033;color:#fff;border-color:#172033}
-    input{width:72px;border:1px solid #b9c8da;border-radius:9px;padding:8px;text-align:center}
-    .frame-wrap{max-width:1050px;margin:14px auto;padding:0 10px}
-    iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;box-shadow:0 8px 30px rgba(42,61,89,.08)}
-    #singleView iframe{height:calc(100vh - 92px);min-height:760px}
-    #continuousView{display:none;max-width:1050px;margin:14px auto;padding:0 10px 32px}
-    .sheet-card{margin:0 0 18px;scroll-margin-top:92px;max-width:100%;overflow:hidden}
-    .sheet-label{font-weight:700;text-align:center;margin:0 0 7px;color:#52627a}
-    .sheet-card iframe{min-height:760px;height:1120px}
+    :root{--bar-h:52px}
+    html{scroll-snap-type:y proximity;scroll-behavior:smooth;overflow-x:clip}
+    html,body{max-width:100%}
+    body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
+
+    /* Sticky top bar: title + non-button page counter + the single action (PDF download). */
+    .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
+         box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;gap:12px;padding:8px 16px}
+    .title{font-weight:800;font-size:18px;white-space:nowrap}
+    /* Page counter — a sticky read-out, NOT a button and not interactive. */
+    .counter{margin-inline-start:auto;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
+             background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 12px;user-select:none}
+    /* The one and only action button. Static same-origin download — no client-side PDF generation. */
+    .download{display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
+              background:#1d4ed8;color:#fff;border:1px solid #1d4ed8;border-radius:10px;padding:8px 15px;white-space:nowrap}
+    .download:hover{background:#1744b8;border-color:#1744b8}
+    .download:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
+    .download svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    /* Continuous reader — every student page as a full A4, clearly separated. */
+    #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
+    .sheet-card{margin:0 0 26px;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card:last-child{margin-bottom:0}
+    .sheet-label{font-weight:700;text-align:center;margin:0 0 9px;color:#52627a;font-size:14px;
+                 display:flex;align-items:center;justify-content:center;gap:12px}
+    .sheet-label::before,.sheet-label::after{content:"";flex:1;max-width:120px;height:1px;background:#d2dbe8}
+    iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
+           box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
+
     @media(max-width:700px){
-      .bar{padding:8px 6px;gap:6px}
-      .title{width:100%;text-align:center;margin-inline-end:0}.sub{display:none}
-      button,.link{padding:7px 9px}
-      .frame-wrap,#continuousView{width:100%;max-width:100%;padding-left:4px;padding-right:4px;margin-top:8px}
-      #singleView iframe,.sheet-card iframe{min-height:0;height:150px;border-radius:8px}
-      .sheet-card{scroll-margin-top:142px;margin-bottom:10px}
+      :root{--bar-h:48px}
+      .bar{padding:7px 10px;gap:8px}
+      .title{font-size:16px}
+      .counter{font-size:13px;padding:4px 10px}
+      .download{padding:7px 12px}
+      #reader{padding:10px 6px 32px}
+      .sheet-card{margin-bottom:16px}
+      /* Reserve the A4 aspect-ratio before load so lazy iframes do not resize-jump (§19). */
+      iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
     }
+    @media print{ .bar{display:none} body{background:#fff} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
-  <nav class="bar" aria-label="ניווט בחוברת">
-    <span class="title">חוברת הגליל</span><span class="sub">38 דפי A4</span>
-    <button id="singleMode" type="button" aria-pressed="true">דף בודד</button>
-    <button id="continuousMode" type="button" aria-pressed="false">דפדוף מלמעלה למטה ↓</button>
-    <button id="prev" type="button">הקודם</button>
-    <span>עמוד <input id="page" type="number" min="1" max="38" value="1" inputmode="numeric"> מתוך 38</span>
-    <button id="next" type="button">הבא</button>
-    <a id="open" class="link" href="page-1.html" target="_blank" rel="noopener">פתח דף מלא</a>
-    <a class="link" href="https://yanivmizrachiy.github.io/razpages/workbooks/index.html">כל החוברות</a>
-  </nav>
+  <header class="bar">
+    <span class="title">חוברת הגליל</span>
+    <div class="counter" id="counter" role="status" aria-live="polite">עמוד 1 מתוך 49</div>
+    <a class="download" id="download" href="galil-student.pdf" download="גליל-חדש.pdf" aria-label="הורדת החוברת כקובץ PDF">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+      הורדת PDF
+    </a>
+  </header>
 
-  <div id="singleView" class="frame-wrap">
-    <iframe id="sheet" title="חוברת הגליל — עמוד 1" src="page-1.html"></iframe>
-  </div>
-  <main id="continuousView" aria-label="חוברת הגליל — צפייה רציפה"></main>
+  <main id="reader" aria-label="חוברת הגליל — גלילה רציפה של כל הדפים"></main>
 
   <script>
-    const total=38;
-    const input=document.getElementById('page');
-    const frame=document.getElementById('sheet');
-    const open=document.getElementById('open');
-    const singleView=document.getElementById('singleView');
-    const continuousView=document.getElementById('continuousView');
-    const singleMode=document.getElementById('singleMode');
-    const continuousMode=document.getElementById('continuousMode');
-    const mobileQuery=window.matchMedia('(max-width:700px)');
-    let mode='single';
-    let continuousBuilt=false;
+    const total = 49;
+    const reader = document.getElementById('reader');
+    const counter = document.getElementById('counter');
+    const mobileQuery = window.matchMedia('(max-width:700px)');
+    let current = 1;
 
-    function clampPage(n){return Math.max(1,Math.min(total,Number(n)||1));}
-
-    function updateCurrent(n,updateHash=true){
-      n=clampPage(n);
-      input.value=n;
-      open.href=`page-${n}.html`;
-      if(updateHash) history.replaceState(null,'',`#page=${n}`);
-      return n;
+    function setCounter(n){
+      n = Math.max(1, Math.min(total, n));
+      if(n === current) return;
+      current = n;
+      counter.textContent = `עמוד ${n} מתוך ${total}`;
+      history.replaceState(null, '', `#page=${n}`);
     }
 
-    function go(n){
-      n=updateCurrent(n);
-      if(mode==='continuous'){
-        const card=document.getElementById(`sheet-${n}`);
-        if(card) card.scrollIntoView({behavior:'smooth',block:'start'});
-        return;
-      }
-      const u=`page-${n}.html`;
-      frame.src=u;
-      frame.title=`חוברת הגליל — עמוד ${n}`;
-    }
-
+    // Fit each page iframe: natural A4 height on desktop; scaled-to-width A4 (RTL-safe) on mobile.
     function fitFrame(iframe){
       try{
-        const doc=iframe.contentDocument;
-        if(!doc||!doc.body) return;
-        const page=doc.querySelector('.a4-page');
+        const doc = iframe.contentDocument;
+        if(!doc || !doc.body) return;
+        const page = doc.querySelector('.a4-page');
         if(!page) return;
+        const html = doc.documentElement, body = doc.body;
+        const pageWidth = page.offsetWidth, pageHeight = page.offsetHeight;
+        const available = Math.max(1, iframe.clientWidth - 2);
+        const fitMobile = mobileQuery.matches && available < pageWidth;
 
-        const html=doc.documentElement;
-        const body=doc.body;
-        const pageWidth=page.offsetWidth;
-        const pageHeight=page.offsetHeight;
-        const available=Math.max(1,iframe.clientWidth-2);
-        const fitMobile=mobileQuery.matches && available<pageWidth;
-
-        html.style.overflowX='hidden';
-        body.style.overflowX='hidden';
+        html.style.overflowX = 'hidden';
+        body.style.overflowX = 'hidden';
 
         if(fitMobile){
-          const scale=Math.min(1,available/pageWidth);
-          html.style.overflow='hidden';
-          body.style.overflow='hidden';
-          body.style.width=`${pageWidth}px`;
-          body.style.maxWidth='none';
-          body.style.margin='0';
-          page.style.margin='0';
-          page.style.transformOrigin='top left';
-          page.style.transform=`scale(${scale})`;
-          iframe.style.height=`${Math.ceil(pageHeight*scale)+2}px`;
+          const scale = Math.min(1, available / pageWidth);
+          html.style.overflow = 'hidden';  html.style.direction = 'ltr';
+          body.style.overflow = 'hidden';  body.style.direction = 'ltr';
+          body.style.width = `${pageWidth}px`;  body.style.maxWidth = 'none';  body.style.margin = '0';
+          page.style.direction = 'rtl';  page.style.margin = '0';
+          page.style.transformOrigin = 'top left';  page.style.transform = `scale(${scale})`;
+          page.style.position = 'relative';  page.style.left = '0';
+          html.scrollLeft = 0;  body.scrollLeft = 0;  doc.defaultView.scrollTo(0,0);
+          iframe.style.height = `${Math.ceil(pageHeight*scale)+2}px`;
           iframe.setAttribute('scrolling','no');
         }else{
-          html.style.overflow='';
-          body.style.overflow='';
-          body.style.overflowX='hidden';
-          body.style.width='';
-          body.style.maxWidth='';
-          body.style.margin='';
-          page.style.margin='0 auto';
-          page.style.transform='';
-          page.style.transformOrigin='';
+          html.style.overflow = '';  html.style.direction = '';
+          body.style.overflow = '';  body.style.overflowX = 'hidden';  body.style.direction = '';
+          body.style.width = '';  body.style.maxWidth = '';  body.style.margin = '';
+          page.style.direction = '';  page.style.margin = '0 auto';
+          page.style.position = '';  page.style.left = '';
+          page.style.transform = '';  page.style.transformOrigin = '';
           iframe.removeAttribute('scrolling');
-          const h=Math.max(html.scrollHeight,body.scrollHeight,pageHeight);
-          if(h>300) iframe.style.height=`${h+2}px`;
+          const h = Math.max(html.scrollHeight, body.scrollHeight, pageHeight);
+          if(h > 300) iframe.style.height = `${h+2}px`;
         }
       }catch(e){}
     }
 
-    function fitVisibleFrames(){
-      if(!singleView.hidden && singleView.style.display!=='none') fitFrame(frame);
-      if(continuousBuilt) continuousView.querySelectorAll('iframe').forEach(fitFrame);
-    }
+    function fitAll(){ reader.querySelectorAll('iframe').forEach(fitFrame); }
 
-    function buildContinuous(){
-      if(continuousBuilt) return;
-      const frag=document.createDocumentFragment();
-      for(let n=1;n<=total;n++){
-        const card=document.createElement('section');
-        card.className='sheet-card';
-        card.id=`sheet-${n}`;
-        card.dataset.page=n;
+    function build(){
+      const frag = document.createDocumentFragment();
+      for(let n=1; n<=total; n++){
+        const card = document.createElement('section');
+        card.className = 'sheet-card';
+        card.id = `sheet-${n}`;
+        card.dataset.page = n;
 
-        const label=document.createElement('div');
-        label.className='sheet-label';
-        label.textContent=`עמוד ${n} מתוך ${total}`;
+        const label = document.createElement('div');
+        label.className = 'sheet-label';
+        label.textContent = `עמוד ${n} מתוך ${total}`;
 
-        const iframe=document.createElement('iframe');
-        iframe.src=`page-${n}.html`;
-        iframe.title=`חוברת הגליל — עמוד ${n}`;
-        iframe.loading=n<=2?'eager':'lazy';
-        iframe.addEventListener('load',()=>fitFrame(iframe));
+        const iframe = document.createElement('iframe');
+        iframe.src = `page-${n}.html`;
+        iframe.title = `חוברת הגליל — עמוד ${n}`;
+        iframe.loading = n <= 2 ? 'eager' : 'lazy';
+        iframe.addEventListener('load', () => fitFrame(iframe));
 
-        card.append(label,iframe);
+        card.append(label, iframe);
         frag.appendChild(card);
       }
-      continuousView.appendChild(frag);
-      continuousBuilt=true;
+      reader.appendChild(frag);
     }
 
-    function setMode(nextMode){
-      mode=nextMode==='continuous'?'continuous':'single';
-      const continuous=mode==='continuous';
-      singleView.style.display=continuous?'none':'block';
-      continuousView.style.display=continuous?'block':'none';
-      singleMode.setAttribute('aria-pressed',String(!continuous));
-      continuousMode.setAttribute('aria-pressed',String(continuous));
+    build();
 
-      const n=clampPage(input.value);
-      if(continuous){
-        buildContinuous();
-        requestAnimationFrame(()=>{
-          fitVisibleFrames();
-          const card=document.getElementById(`sheet-${n}`);
-          if(card) card.scrollIntoView({block:'start'});
-        });
-      }else{
-        frame.src=`page-${n}.html`;
-        frame.title=`חוברת הגליל — עמוד ${n}`;
-        window.scrollTo({top:0,behavior:'smooth'});
-      }
+    // Sticky counter tracks the page nearest the top of the viewport while scrolling.
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting)
+                             .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if(visible) setCounter(Number(visible.target.dataset.page));
+    }, { rootMargin: '-15% 0px -60% 0px', threshold: [0,.25,.5,.75,1] });
+    document.querySelectorAll('.sheet-card').forEach(card => observer.observe(card));
+
+    // Optional deep link #page=N scrolls to that page on open (no visible control).
+    const m = location.hash.match(/page=(\d+)/);
+    if(m){
+      const n = Math.max(1, Math.min(total, Number(m[1])));
+      requestAnimationFrame(() => {
+        const card = document.getElementById(`sheet-${n}`);
+        if(card){ card.scrollIntoView({block:'start',behavior:'instant'}); setCounter(n); }
+      });
     }
-
-    frame.addEventListener('load',()=>fitFrame(frame));
-    document.getElementById('prev').onclick=()=>go(Number(input.value)-1);
-    document.getElementById('next').onclick=()=>go(Number(input.value)+1);
-    input.onchange=()=>go(input.value);
-    singleMode.onclick=()=>setMode('single');
-    continuousMode.onclick=()=>setMode('continuous');
-
-    const observer=new IntersectionObserver(entries=>{
-      if(mode!=='continuous') return;
-      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(visible) updateCurrent(visible.target.dataset.page,false);
-    },{rootMargin:'-20% 0px -55% 0px',threshold:[0,.25,.5,.75,1]});
-
-    const originalBuild=buildContinuous;
-    buildContinuous=function(){
-      if(continuousBuilt) return;
-      originalBuild();
-      document.querySelectorAll('.sheet-card').forEach(card=>observer.observe(card));
-    };
 
     let resizeTimer;
-    window.addEventListener('resize',()=>{
-      clearTimeout(resizeTimer);
-      resizeTimer=setTimeout(fitVisibleFrames,120);
-    });
-    window.addEventListener('orientationchange',()=>setTimeout(fitVisibleFrames,180));
-
-    const m=location.hash.match(/page=(\d+)/);
-    if(m) go(m[1]);
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitAll, 120); });
+    window.addEventListener('orientationchange', () => setTimeout(fitAll, 180));
   </script>
 </body>
 </html>

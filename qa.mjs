@@ -11,6 +11,7 @@ const count = (text, pattern) => (text.match(pattern) || []).length;
 assert(/width:210mm/.test(css) && /height:297mm/.test(css), 'A4 dimensions must be exactly 210×297mm');
 assert(/overflow:hidden/.test(css), 'A4 page must guard against overflow');
 assert(/@page\{size:A4;margin:0\}/.test(css), 'print page contract is missing');
+assert(/print-color-adjust:\s*exact/.test(css), 'print-color-adjust:exact is required so the work-grid ruling and shaded fills survive the default browser Save-as-PDF (background graphics off) — SOURCE_OF_TRUTH.md §16/§4');
 assert(css.includes('יניב רז - מדריך מחוזי חט\\"ב בעיר ירושלים'), 'canonical first credit line is missing');
 assert(css.includes('הדרכה במחוז ירושלים והעיר ירושלים - מנח\\"י, בהובלת איילת קריספין'), 'canonical second credit line is missing');
 assert(/white-space:pre-line/.test(css), 'credit footer must render as two lines');
@@ -30,6 +31,11 @@ assert(pages.length > 0, 'at least one student page must exist');
 assert(new Set(pages).size === pages.length, 'page numbers must be unique');
 pages.forEach((page, index) => assert(page === index + 1, `student sequence must be continuous from 1; found page ${page} at position ${index + 1}`));
 
+// index.html navigation must always match the real number of student pages (SOURCE_OF_TRUTH.md §19).
+const indexHtml = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+const indexTotal = Number((indexHtml.match(/const total\s*=\s*(\d+)/) || [])[1]);
+assert(indexTotal === pages.length, `index.html total (${indexTotal}) must equal the number of student pages (${pages.length})`);
+
 for (const page of pages) {
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
     .replace(/\\[()]/g, '').replace(/\\pi\b/g, 'π').replace(/\\approx/g, '≈');
@@ -37,7 +43,9 @@ for (const page of pages) {
   assert(count(html, /<h1\b/g) === 1, `page ${page}: exactly one visible page heading is required`);
   assert(count(html, /<h[23]\b/g) === 0, `page ${page}: question-level headings are forbidden`);
   assert(new RegExp(`aria-label="עמוד ${page}"[^>]*>${page}<\\/div>`).test(html), `page ${page}: visible page number mismatch`);
-  assert(/<footer class="footer">/.test(html), `page ${page}: name/date footer is required`);
+  // The canonical district footer is rendered by styles.css (.a4-page::after, asserted above);
+  // the legacy name/date <footer> was removed in fe9d26d, so pages must only link the shared stylesheet.
+  assert(/<link rel="stylesheet" href="styles.css">/.test(html), `page ${page}: shared styles.css (canonical district footer) is required`);
   assert(!/[×]/.test(html), `page ${page}: multiplication sign × is forbidden`);
   assert(!/\d\s*[xX]\s*\d/.test(html), `page ${page}: x/X must not be used as a numeric multiplication sign`);
   if (page === 11) {
@@ -48,7 +56,10 @@ for (const page of pages) {
     assert(!/π\s*=\s*3(?:[.,])14/.test(html), `page ${page}: π must never be written as exactly 3.14 outside the page-11 error-detection task`);
   }
   assert(!/demo|placeholder/i.test(html), `page ${page}: demo/placeholder text is forbidden`);
-  assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
+  // SOURCE_OF_TRUTH.md §6: official curriculum questions keep their wording 1:1, so pages marked
+  // data-official="curriculum" are exempt from the open-response wording guard.
+  const official = /data-official="curriculum"/.test(html);
+  if (!official) assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
   if (page === 1) assert(/<h1[^>]*>מושגים בסיסיים<\/h1>/.test(html), 'page 1: canonical opening title must be מושגים בסיסיים');
   if (page < 19) assert(!/V\s*=/.test(html), `page ${page}: volume formula is forbidden before page 19`);
 
@@ -58,15 +69,15 @@ for (const page of pages) {
   // the still-open specification; this legacy integrity QA must not contradict it.
 
   if (page === 20) {
-    assert(/<th>V לפני<\/th><th>V אחרי<\/th>[\s\S]*____ ס״מ³<\/td><td>____ ס״מ³/.test(html), 'page 20: before/after volume answers must carry cubic-centimeter units');
+    assert(/<th>נפח לפני<\/th><th>נפח אחרי<\/th>[\s\S]*____ סמ״ק<\/td><td>____ סמ״ק/.test(html), 'page 20: before/after volume answers must carry cubic-centimeter units');
   }
 
   if (page === 38) {
     assert(/r=4<\/span> ס״מ, <span dir="ltr">h=5<\/span> ס״מ/.test(html), 'page 38: direct-volume data must include length units');
-    assert(/d=10<\/span> ס״מ, <span dir="ltr">h=3<\/span> ס״מ[\s\S]*r=____<\/span> ס״מ, <span dir="ltr">V=____π<\/span> ס״מ³/.test(html), 'page 38: diameter-to-volume item must preserve radius and volume units');
-    assert(/20π<\/span> ס״מ³ ___ <span dir="ltr">62\.83<\/span> ס״מ³/.test(html), 'page 38: approximation comparison must carry equal volume units on both sides');
-    assert(/B=16π<\/span> ס״מ², <span dir="ltr">V=80π<\/span> ס״מ³[\s\S]*h=____<\/span> ס״מ/.test(html), 'page 38: reverse-height item must preserve area, volume, and height units');
-    assert(/V=147π<\/span> ס״מ³, <span dir="ltr">h=3<\/span> ס״מ[\s\S]*r=____<\/span> ס״מ/.test(html), 'page 38: reverse-radius item must preserve volume, height, and radius units');
+    assert(/d=10<\/span> ס״מ, <span dir="ltr">h=3<\/span> ס״מ[\s\S]*r=____<\/span> ס״מ, <span dir="rtl">נפח=____π<\/span> סמ״ק/.test(html), 'page 38: diameter-to-volume item must preserve radius and volume units');
+    assert(/20π<\/span> סמ״ק ___ <span dir="ltr">62\.83<\/span> סמ״ק/.test(html), 'page 38: approximation comparison must carry equal volume units on both sides');
+    assert(/שטח הבסיס=16π<\/span> סמ״ר, <span dir="rtl">נפח=80π<\/span> סמ״ק[\s\S]*h=____<\/span> ס״מ/.test(html), 'page 38: reverse-height item must preserve area, volume, and height units');
+    assert(/נפח=147π<\/span> סמ״ק, <span dir="ltr">h=3<\/span> ס״מ[\s\S]*r=____<\/span> ס״מ/.test(html), 'page 38: reverse-radius item must preserve volume, height, and radius units');
   }
 }
 
