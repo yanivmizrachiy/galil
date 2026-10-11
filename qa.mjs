@@ -21,6 +21,8 @@ assert(/\.a4-page::after\{[^}]*right:0;left:0;[^}]*border-top:\s*2px solid #1e3a
 // sub-sections — while the original numbers/letters stay in the DOM (page numbers remain visible digits).
 assert(/\.a4-page \.task-row>\.task-num\{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8\}/.test(css) && /\.a4-page \.task-row>\.task-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'question markers must render as prominent blue circles without visible digits (CSS only)');
 assert(/\.a4-page \.q-item \.q-num\{font-size:0;line-height:0;[^}]*border-radius:50%;background:#1d4ed8\}/.test(css) && /\.a4-page \.q-item \.q-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'sub-section markers must render as smaller blue circles without visible letters (CSS only)');
+assert(/\.a4-page\.official-page \.official-q>p>b:first-child\{[^}]*border-radius:50%;background:#1d4ed8;color:transparent;font-size:0/.test(css) && /\.a4-page\.official-page \.q-item \.q-text>b:first-child\{[^}]*width:4\.2mm/.test(css), 'official pages 44-49 must also use display-level blue markers (big question / small sub-section) without altering the locked wording');
+assert(/\.official-q>p:has\(>b:first-child\)~p>b:first-child,[^{]*\.official-q~\.official-q>p>b:first-child\{width:4\.2mm/.test(css), 'official later parts (a <p> after the question marker, or a following .official-q section — pages 47/49 part ב) must get the small sub-section marker');
 assert(!/\.page-number\{[^}]*font-size:0/.test(css), 'page numbers must remain visible digits');
 
 const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));

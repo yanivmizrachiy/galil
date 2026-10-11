@@ -50,3 +50,6 @@
 .a4-page.official-page .official-q>p>b:first-child::after{content:"";width:2.3mm;height:2.3mm;border-radius:50%;background:#fff}
 .a4-page.official-page .q-item .q-text>b:first-child{display:inline-grid;place-items:center;vertical-align:middle;width:4.2mm;height:4.2mm;margin-inline-end:1.5mm;border-radius:50%;background:#1d4ed8;color:transparent;font-size:0;line-height:0}
 .a4-page.official-page .q-item .q-text>b:first-child::after{content:"";width:1.5mm;height:1.5mm;border-radius:50%;background:#fff}
+/* Official pages: only the first marker of the question is the big one; later parts (a <p> after a marker <p>, or a following .official-q section — pages 47/49 part ב) are sub-sections → smaller marker. */
+.a4-page.official-page .official-q>p:has(>b:first-child)~p>b:first-child,.a4-page.official-page .official-q~.official-q>p>b:first-child{width:4.2mm;height:4.2mm;margin-inline-end:1.5mm}
+.a4-page.official-page .official-q>p:has(>b:first-child)~p>b:first-child::after,.a4-page.official-page .official-q~.official-q>p>b:first-child::after{width:1.5mm;height:1.5mm}
