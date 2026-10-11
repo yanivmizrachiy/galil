@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const css = fs.readFileSync(path.join(dir, 'styles.css'), 'utf8');
+const ssot = fs.readFileSync(path.join(dir, 'SOURCE_OF_TRUTH.md'), 'utf8');
 const assert = (condition, message) => { if (!condition) throw new Error(`Cylinder QA failed: ${message}`); };
 const count = (text, pattern) => (text.match(pattern) || []).length;
 
@@ -24,6 +25,9 @@ assert(/\.a4-page \.q-item \.q-num\{font-size:0;line-height:0;[^}]*border-radius
 assert(/\.a4-page\.official-page \.official-q>p>b:first-child\{[^}]*border-radius:50%;background:#1d4ed8;color:transparent;font-size:0/.test(css) && /\.a4-page\.official-page \.q-item \.q-text>b:first-child\{[^}]*width:4\.2mm/.test(css), 'official pages 44-49 must also use display-level blue markers (big question / small sub-section) without altering the locked wording');
 assert(/\.official-q>p:has\(>b:first-child\)~p>b:first-child,[^{]*\.official-q~\.official-q>p>b:first-child\{width:4\.2mm/.test(css), 'official later parts (a <p> after the question marker, or a following .official-q section — pages 47/49 part ב) must get the small sub-section marker');
 assert(!/\.page-number\{[^}]*font-size:0/.test(css), 'page numbers must remain visible digits');
+// SSOT canonical marker governance guard (Yaniv 2026-10-11).
+assert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול בולט') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must canonically require blue question markers instead of visible question numbering while preserving page numbers');
+
 
 const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));
 assert(answerFiles.length === 0, `separate answer-key files are forbidden: ${answerFiles.join(', ')}`);
