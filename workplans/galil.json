@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T16:29:54.898574+00:00",
-  "updatedBy": "Codex — permanent governance and traceability audit",
+  "updatedAt": "2026-10-11T17:30:09.718Z",
+  "updatedBy": "Claude Code (GALIL_AGENT) — closure integration of #12 + #13 on claude/galil-closure-20261011",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -330,7 +330,8 @@
         "2026-10-11 (Reader redesign — adversarial review follow-up, 22-agent run, all 3 confirmed findings fixed; overall stays 98%): a 4-dimension adversarial review (requirements+SSOT / reader-behavior / pdf-download / qa-adequacy) with per-finding adversarial verify confirmed 3 real issues (2 medium, 1 low) out of 22 raw; all fixed non-destructively. (1) reader-behavior: the sticky page counter could never reach עמוד 49 מתוך 49 at the very bottom on phones — the IntersectionObserver band sat in the upper third (rootMargin -15%/-60%) and every mobile A4 card is shorter than the viewport, so the last card could not out-cover the card above it (measured 47/48 at max scroll on 390x844 / 360x800). Fixed in index.html by moving to a centred detection band (rootMargin -45% 0 -45%) so the page crossing the viewport centre wins, plus a passive bottom-of-scroll listener that pins the counter to the final page independent of card geometry; both agree at max scroll so there is no flicker. (2) pdf-download: .github/workflows/qa.yml ran QA scripts as individual steps and never invoked reader-qa.mjs or workspace-grid-qa.mjs, so the reader contract gate and its static-PDF staleness check (page-count/A4, no window.print, no client-side PDF libs, no PDF preload) were dead on GitHub; added both as explicit CI steps after surface-qa. (3) qa-adequacy: reader-qa.mjs asserted stickiness via a free-floating /position:sticky/ substring not bound to the bar — rebound it to the extracted `.bar{…}` rule, and added a runtime assertion in browser-qa.mjs that the bar is computed position:sticky and stays pinned near the viewport top while scrolled. browser-qa.mjs also now scrolls to the absolute bottom on 390x844 and 360x800 and asserts the counter reads עמוד 49 מתוך 49. npm run qa green (10 checks) and npm run qa:browser green; preview-verified. Closure items remain reserved to Yaniv.",
         "2026-10-11: Codex adversarial review on 5921d6f (3 findings) triaged and resolved with evidence: P1 page-43 √(r²+h²) vs √((2r)²+h²) (fixed + §13 + QA), P2 PDF staleness gate (deterministic manifest), P1 official diagram metadata (verified against pinned scans; Q4 ג/ד figures corrected). G-10 stays at 60% — §25 closure items (Yaniv's explicit finished sign-off, final A/B/C/D disposition, rename, teacher pages) remain reserved; overall held at 98%.",
         "2026-10-11 audit validated: npm run qa and npm run qa:browser pass; all 49 A4 pages rendered to screenshots and a combined 49-page PDF, no label/line intersection, and boundary/intermediate 700/701/740/768/800px widths pass without clipping or extra separator gaps. Three competing Hebrew authority headings rejected, ordinary reference allowed. Static PDF rebuilt and fingerprint verified. This audit fixes confirmed defects; formal closure/merge remains paused per Yaniv.",
-        "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged."
+        "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
+        "2026-10-11 closure integration (Claude Code, claude/galil-closure-20261011 from d50dafe = PR #13 head, which already contains PR #12 9f93611 and main bd3cbbc): single-source governance audit — the binding 5×5 mm calculation-grid refinement (Yaniv, 2026-10-11) existed only in unmerged commit 65c2bde on chatgpt/galil-workspace-grid (PR #5, closed); its implementation and workspace-grid-qa.mjs were already live but SOURCE_OF_TRUTH.md did not state it. Merged into §16 per §26 (without the stale handoff/process notes) and workspace-grid-qa.mjs now asserts the SSOT carries the rule it enforces; §16 coverage digest re-reviewed. PROVENANCE.md heading 'Canonical rule' renamed to 'Relation to SOURCE_OF_TRUTH.md' so no derived document presents itself as canonical. ssot-qa, coverage-qa and workspace-grid-qa green."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -355,11 +356,11 @@
   "lastProgressReport": {
     "completedPercent": 98,
     "remainingPercent": 2,
-    "summary": "2026-10-11: permanent governance checks pass 40 positive/negative cases; all 27 source sections and all 10 task acceptance references map to existing files. Source/section fingerprints expose stale mappings. Authenticated Preview application HTML and manifest match the tested base; the downloaded 49-page PDF is byte-identical. Manual review, an approved visual comparison baseline and reserved closure remain open. Weighted progress stays 98%; it is not a completion certificate and does not authorize merge."
+    "summary": "2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 now records the 5×5 mm calculation-grid rule that was only in an unmerged PR #5 handoff commit. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "777e34c589a8418a979f0fe1f810e6bd34d822a901ec76def113843bb763937c",
+    "sourceSha256": "699c19ec21bf49df188dd6fe7a8393c7d40bdbd493de59453da2dbd8f918dab6",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -649,7 +650,7 @@
       {
         "section": 16,
         "sourceHeading": "A4, מקום עבודה וכתיבה ביד",
-        "sourceSha256": "ab8292b7516c88e1399cd8a4cdf7cff90c1fefcc42b1654989aaf3db28e7efb2",
+        "sourceSha256": "81bf820f13e07af7a2be68dd7f8e4b36252600d9ef064be6caad9c703280703b",
         "coverage": "partial",
         "implementation": [
           "styles.css",
@@ -863,23 +864,31 @@
     ]
   },
   "executionContext": {
-    "owner": "Codex",
-    "workingBranch": "codex/galil-audit-20261011",
-    "baseCommit": "0eb0b37ba9b99b0f7b7c58c0fbf435694dcf2cd4",
-    "integrationTarget": "claude/galil-work",
-    "integrationTargetCommit": "9f9361129548253efa26dc3ffc13375e76b3c938",
+    "owner": "Claude Code (GALIL_AGENT)",
+    "workingBranch": "claude/galil-closure-20261011",
+    "baseCommit": "d50dafef1b0133c56302218bd2339bdead882d3b",
+    "integrationTarget": "main",
+    "integrationTargetCommit": "bd3cbbc250a6ce23046f208de734a924a81b4c20",
     "mainCommitAtStart": "bd3cbbc250a6ce23046f208de734a924a81b4c20",
-    "scope": "Governance, traceability and authenticated preview verification; no student-page edits or merge.",
+    "integrates": [
+      "PR #12 claude/galil-work @ 9f9361129548253efa26dc3ffc13375e76b3c938",
+      "PR #13 codex/galil-audit-20261011 @ d50dafef1b0133c56302218bd2339bdead882d3b"
+    ],
+    "scope": "Single integration path to main (#12 + #13 + verified closure fixes). Governance, proven SSOT gaps, test-coverage hardening and QA evidence; no merge, no page disposition.",
     "ownedPaths": [
       "SOURCE_OF_TRUTH.md",
+      "PROVENANCE.md",
       "workplans/galil.json",
-      "coverage-qa.mjs",
-      "governance-qa.mjs",
-      "scripts/verify-progress.mjs",
-      "package.json",
-      ".github/workflows/qa.yml"
+      "workspace-grid-qa.mjs",
+      "browser-qa.mjs",
+      "qa.mjs",
+      "official-render-qa.mjs",
+      "scripts/build-pdf.mjs",
+      "page-49.html",
+      "galil-student.pdf",
+      "galil-student.pdf.manifest.json"
     ],
-    "status": "validated_pending_review"
+    "status": "in_progress"
   },
   "closure": {
     "sourceSection": 25,

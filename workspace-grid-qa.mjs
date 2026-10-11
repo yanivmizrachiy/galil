@@ -11,6 +11,7 @@ const ok=(condition,message)=>{if(!condition)failures.push(message)};
 // question logic, page structure and official-source locks untouched.
 ok(ssot.includes('שאלה → מקום עבודה/משבצות → תשובה'),'SSOT §16 preferred question → workspace/grid → answer structure missing');
 ok(ssot.includes('משבצות עבודה צריכות להיות קריאות ולהישמר גם ב־PDF'),'SSOT §16 grid-preservation requirement missing');
+ok(ssot.includes('רשת חישוב 5×5 מ״מ')&&ssot.includes('דו־צירית עדינה של **5×5 מ״מ**'),'SSOT §16 must state the 5×5 mm two-axis calculation grid that this gate enforces');
 ok((css.match(/background-size:5mm 5mm/g)||[]).length>=2,'both explicit and automatic calculation workspaces must use a 5×5 mm grid');
 ok(css.includes('.work{')&&css.includes('linear-gradient(to right')&&css.includes('linear-gradient(to bottom'),'shared .work component must render a two-axis square grid');
 ok(css.includes('.task:last-of-type .task-body::after')&&css.includes('background-image:linear-gradient(to right'),'automatic A4-filling computational workspace must render the same square grid');
