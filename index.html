@@ -38,6 +38,9 @@
            min-height:0;height:auto;aspect-ratio:210/297;max-height:297mm}
     /* Pre-load size = the fitted A4 size (width-scaled, never taller than A4), so lazy frames do not jump when they load (§19). */
 
+    .cover-preview{max-width:1050px;margin:0 auto;padding:16px 12px 0}
+    .cover-preview iframe{display:block;width:100%;max-width:210mm;aspect-ratio:210/297;margin:0 auto;border:0;background:#fff;box-shadow:0 8px 30px rgba(42,61,89,.12)}
+
     .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
     .intro-video-title{margin:0;font-size:19px;font-weight:800;color:#172033}
     .intro-video-by{margin:3px 0 12px;font-size:14px;font-weight:600;color:#41526b}
@@ -61,7 +64,7 @@
       .intro-video-title{font-size:17px}
       .video-play svg{width:68px}
     }
-    @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
+    @media print{ .bar,.intro-video,.cover-preview{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
@@ -73,6 +76,10 @@
       הורדת PDF
     </a>
   </header>
+
+  <section class="cover-preview" aria-label="שער החוברת — גליל לחטיבת הביניים">
+    <iframe src="cover.html" title="גליל לחטיבת הביניים — שער" loading="eager"></iframe>
+  </section>
 
   <section class="intro-video" aria-labelledby="intro-video-title">
     <h2 class="intro-video-title" id="intro-video-title">סרטון המחשה — גליל</h2>
