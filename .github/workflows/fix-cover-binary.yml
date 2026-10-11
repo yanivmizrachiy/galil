@@ -6,8 +6,6 @@ on:
       - claude/galil-closure-20261011
     paths:
       - .github/workflows/fix-cover-binary.yml
-      - scripts/finalize-cover.py
-      - scripts/fix-closure-fixtures.py
 
 permissions:
   contents: write
@@ -40,12 +38,12 @@ jobs:
         run: npm run qa
       - name: Run browser A4 mobile print PDF QA
         run: node browser-qa.mjs
-      - name: Remove one-shot closure machinery
+      - name: Prepare pushable validated state
         run: |
-          rm -f .github/workflows/fix-cover-binary.yml
           rm -f scripts/finalize-cover.py scripts/fix-closure-fixtures.py
           rm -f assets/cover-note.txt assets/cover-image-readme.md assets/cover-bg.b64
-      - name: Commit only the validated final state
+          git checkout HEAD -- .github/workflows/qa.yml
+      - name: Commit and push validated product state
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
