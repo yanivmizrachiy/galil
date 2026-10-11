@@ -1,3 +1,4 @@
+# Triggered after workflow registration so the one-shot run executes.
 name: One-shot scroll marker cache fix
 on:
   push:
