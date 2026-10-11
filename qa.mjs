@@ -20,13 +20,14 @@ assert(/\.a4-page::after\{[^}]*right:0;left:0;[^}]*border-top:\s*2px solid #1e3a
 
 // SOURCE_OF_TRUTH.md „סימון שאלות וסעיפים” (2026-10-11): display-level blue markers — big for questions, smaller for
 // sub-sections — while the original numbers/letters stay in the DOM (page numbers remain visible digits).
-assert(/\.a4-page \.task-row>\.task-num\{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8\}/.test(css) && /\.a4-page \.task-row>\.task-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'question markers must render as prominent blue circles without visible digits (CSS only)');
-assert(/\.a4-page \.q-item \.q-num\{font-size:0;line-height:0;[^}]*border-radius:50%;background:#1d4ed8\}/.test(css) && /\.a4-page \.q-item \.q-num::after\{content:"";[^}]*border-radius:50%/.test(css), 'sub-section markers must render as smaller blue circles without visible letters (CSS only)');
-assert(/\.a4-page\.official-page \.official-q>p>b:first-child\{[^}]*border-radius:50%;background:#1d4ed8;color:transparent;font-size:0/.test(css) && /\.a4-page\.official-page \.q-item \.q-text>b:first-child\{[^}]*width:4\.2mm/.test(css), 'official pages 44-49 must also use display-level blue markers (big question / small sub-section) without altering the locked wording');
-assert(/\.official-q>p:has\(>b:first-child\)~p>b:first-child,[^{]*\.official-q~\.official-q>p>b:first-child\{width:4\.2mm/.test(css), 'official later parts (a <p> after the question marker, or a following .official-q section — pages 47/49 part ב) must get the small sub-section marker');
+assert(/\.a4-page \.task-row>\.task-num\{font-size:0;line-height:0;flex:0 0 4\.2mm;width:4\.2mm;height:4\.2mm[^}]*background:#1d4ed8/.test(css), 'question markers must render as compact single solid blue dots without visible digits');
+assert(/\.a4-page \.q-item \.q-num\{font-size:0;line-height:0;[^}]*width:3\.2mm;height:3\.2mm[^}]*border-radius:50%;background:#1d4ed8\}/.test(css), 'sub-section markers must render as smaller single solid blue dots without visible letters');
+assert(/\.a4-page\.official-page \.official-q>p>b:first-child\{[^}]*width:4\.2mm;height:4\.2mm[^}]*background:#1d4ed8/.test(css) && /\.a4-page\.official-page \.q-item \.q-text>b:first-child\{[^}]*width:3\.2mm;height:3\.2mm/.test(css), 'official pages 44-49 must use compact single solid blue markers without altering locked wording');
+assert(/\.official-q>p:has\(>b:first-child\)~p>b:first-child,[^{]*\.official-q~\.official-q>p>b:first-child\{width:3\.2mm/.test(css), 'official later parts must get the small compact marker');
+assert(!/\.task-num::after|\.q-num::after|official-q>p>b:first-child::after|q-text>b:first-child::after/.test(css), 'nested/inner marker circles are forbidden');
 assert(!/\.page-number\{[^}]*font-size:0/.test(css), 'page numbers must remain visible digits');
 // SSOT canonical marker governance guard (Yaniv 2026-10-11).
-assert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול בולט') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must canonically require blue question markers instead of visible question numbering while preserving page numbers');
+assert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול יחיד, מלא וקטן') && ssot.includes('ללא עיגול פנימי/חור לבן') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must require compact single solid blue markers and preserve page numbers');
 
 
 const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));
