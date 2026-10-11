@@ -198,6 +198,15 @@ const counterNow=await page.$eval('#counter',el=>el.textContent.trim());
 const counterNum=Number((counterNow.match(/עמוד\s*(\d+)/)||[])[1]||0);
 ok(counterNum>1,`sticky counter did not update on scroll (still "${counterNow}")`);
 
+// The bar holding the counter stays pinned near the top of the viewport while scrolled (R4 / §19).
+const pinned=await page.evaluate(()=>{
+  const bar=document.querySelector('.bar');const c=document.getElementById('counter');
+  const bs=getComputedStyle(bar);const r=c.getBoundingClientRect();
+  return {pos:bs.position, top:r.top, h:bar.getBoundingClientRect().height};
+});
+ok(pinned.pos==='sticky','bar must be position:sticky at runtime');
+ok(pinned.top>=-1&&pinned.top<=pinned.h+2,`sticky counter must stay pinned near the top while scrolled (got top=${pinned.top})`);
+
 // The one action downloads a real static same-origin PDF (not generated on click).
 const dl=await page.evaluate(async()=>{
   const a=document.querySelector('#download'); if(!a)return null;
@@ -229,6 +238,26 @@ for(const n of [39,40,41,42,43,44,45,46,47,48,49]){
   });
   ok(fit&&fit.pageW<=fit.frameW+2&&fit.left>=-2&&fit.right<=fit.frameW+2,`mobile continuous page ${n}: clipping (${JSON.stringify(fit)})`);
   if(n>=44) await page.locator(`#sheet-${n} iframe`).screenshot({path:`qa-artifacts/official-page-${n}-mobile.png`});
+}
+
+// The sticky counter must reach the final page at the very bottom of the scroll on phones (§19 / R4),
+// where every A4 card is shorter than the viewport. Defeat scroll-behavior:smooth and lazy-load
+// height shifts by jumping to the end repeatedly (instant) until the viewport is truly pinned there.
+for(const [w,h] of [[390,844],[360,800]]){
+  await page.setViewportSize({width:w,height:h});
+  await page.goto(base,{waitUntil:'load'});
+  await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
+  const reached=await page.evaluate(async()=>{
+    document.documentElement.style.scrollBehavior='auto';
+    const atBottom=()=>window.scrollY+window.innerHeight>=document.documentElement.scrollHeight-2;
+    for(let i=0;i<80 && !atBottom();i++){ window.scrollTo(0,document.documentElement.scrollHeight); await new Promise(r=>setTimeout(r,80)); }
+    return atBottom();
+  });
+  await page.waitForTimeout(300);
+  ok(reached,`${w}x${h}: test could not reach the bottom of the reader scroll`);
+  const last=await page.$eval('#counter',el=>el.textContent.trim());
+  ok(new RegExp(`עמוד\\s*${total}\\s*מתוך\\s*${total}`).test(last),
+     `${w}x${h}: counter must reach "עמוד ${total} מתוך ${total}" at the bottom of the scroll (got "${last}")`);
 }
 
 ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);

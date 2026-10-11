@@ -47,7 +47,8 @@ if(counter){
   ok(!/^(?:button|a|input)$/i.test(counter[1]), `page counter must not be a button/link/input (is <${counter[1]}>)`);
   ok(!/onclick=|href=/i.test(counter[2]+counter[3]), 'page counter must not be interactive (no onclick/href)');
 }
-ok(/position:sticky/.test(html), 'the top bar/counter must be sticky');
+const barRule = (html.match(/\.bar\s*\{[^}]*\}/) || [])[0] || '';
+ok(/position:\s*sticky/.test(barRule), 'the .bar (holding #counter) must be position:sticky');
 
 // 5. Gentle scroll-snap + continuous build of every page.
 ok(/scroll-snap-type:\s*y\s+proximity/.test(html), 'reader must use gentle scroll-snap (y proximity)');
