@@ -7,40 +7,29 @@
   <style>
     *{box-sizing:border-box}
     :root{--bar-h:52px}
-    html{scroll-snap-type:y proximity;scroll-behavior:smooth;overflow-x:clip}
+    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:clip}
     html,body{max-width:100%}
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
 
-    /* Sticky top bar: title + non-button page counter + the single action (PDF download). */
-    /* flex-wrap + a shrinkable title guarantee the bar never overflows horizontally,
-       independent of font metrics (CI's Linux fallback fonts are wider than Windows). */
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
          box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:8px 16px}
     .title{font-weight:800;font-size:18px;white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
-    /* Compact page selector — a <select> showing "עמוד X מתוך N". NOT a button; it is the one navigation
-       control allowed by §19: choosing a page jumps straight there (short fade, no long smooth-scroll). */
     .counter{flex:0 0 auto;margin-inline-start:auto;font:inherit;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
              background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 30px 5px 12px;min-height:34px;cursor:pointer;
              -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2341526b' stroke-width='2' stroke-linecap='round'/></svg>");
              background-repeat:no-repeat;background-position:right 11px center}
     .counter:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
-    /* Page jump: fade-out → instant scroll to the target → fade-in (§19: no long smooth-scroll through all pages). */
     #reader{transition:opacity 180ms ease}
     #reader.fading{opacity:0}
-    /* The one and only action button. Static same-origin download — no client-side PDF generation. */
     .download{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
               background:#1d4ed8;color:#fff;border:1px solid #1d4ed8;border-radius:10px;padding:8px 15px;white-space:nowrap}
     .download:hover{background:#1744b8;border-color:#1744b8}
     .download:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
     .download svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-    /* Continuous reader — every student page as a full A4, clearly separated. */
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
-    .sheet-card{margin:0 0 26px;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
-    .sheet-card:last-child{margin-bottom:0}
-    .sheet-label{font-weight:700;text-align:center;margin:0 0 9px;color:#52627a;font-size:14px;
-                 display:flex;align-items:center;justify-content:center;gap:12px}
-    .sheet-label::before,.sheet-label::after{content:"";flex:1;max-width:120px;height:1px;background:#d2dbe8}
+    .sheet-card{margin:0;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card + .sheet-card{border-top:3px solid #1d4ed8;padding-top:18px;margin-top:18px}
     iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
            box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
 
@@ -51,11 +40,10 @@
       .counter{font-size:13px;padding:4px 26px 4px 10px;background-position:right 9px center}
       .download{padding:7px 12px}
       #reader{padding:10px 6px 32px}
-      .sheet-card{margin-bottom:16px}
-      /* Reserve the A4 aspect-ratio before load so lazy iframes do not resize-jump (§19). */
+      .sheet-card + .sheet-card{padding-top:12px;margin-top:12px;border-top-width:3px}
       iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
     }
-    @media print{ .bar{display:none} body{background:#fff} iframe{box-shadow:none;border:none} }
+    @media print{ .bar{display:none} body{background:#fff} .sheet-card + .sheet-card{border-top:0;padding-top:0;margin-top:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
@@ -92,8 +80,6 @@
       history.replaceState(null, '', `#page=${n}`);
     }
 
-    // Selector jump (§19): fade the pages out, jump INSTANTLY to the chosen page (no smooth scroll
-    // through every page in between), then fade back in. Manual scrolling stays continuous.
     let jumping = false;
     function jumpTo(n){
       const card = document.getElementById(`sheet-${n}`);
@@ -111,7 +97,6 @@
     }
     counter.addEventListener('change', () => jumpTo(Number(counter.value)));
 
-    // Fit each page iframe: natural A4 height on desktop; scaled-to-width A4 (RTL-safe) on mobile.
     function fitFrame(iframe){
       try{
         const doc = iframe.contentDocument;
@@ -161,17 +146,13 @@
         card.id = `sheet-${n}`;
         card.dataset.page = n;
 
-        const label = document.createElement('div');
-        label.className = 'sheet-label';
-        label.textContent = `עמוד ${n} מתוך ${total}`;
-
         const iframe = document.createElement('iframe');
         iframe.src = `page-${n}.html`;
         iframe.title = `חוברת הגליל — עמוד ${n}`;
         iframe.loading = n <= 2 ? 'eager' : 'lazy';
         iframe.addEventListener('load', () => fitFrame(iframe));
 
-        card.append(label, iframe);
+        card.appendChild(iframe);
         frag.appendChild(card);
       }
       reader.appendChild(frag);
@@ -179,9 +160,6 @@
 
     build();
 
-    // Sticky counter tracks the page crossing the viewport centre while scrolling. A centred
-    // detection band lets the final page win even on phones, where every A4 card is shorter than
-    // the viewport and an upper band could never let the last card out-cover the one above it.
     const observer = new IntersectionObserver(entries => {
       const visible = entries.filter(e => e.isIntersecting)
                              .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -189,14 +167,11 @@
     }, { rootMargin: '-45% 0px -45% 0px', threshold: [0,.25,.5,.75,1] });
     document.querySelectorAll('.sheet-card').forEach(card => observer.observe(card));
 
-    // Guarantee the last page is reachable: at the very bottom of the scroll show the final page,
-    // independent of card geometry (SOURCE_OF_TRUTH.md §19 — the counter reflects the focused page).
     window.addEventListener('scroll', () => {
       const el = document.documentElement;
       if(window.scrollY + window.innerHeight >= el.scrollHeight - 2) setCounter(total);
     }, { passive: true });
 
-    // Optional deep link #page=N scrolls to that page on open (no visible control).
     const m = location.hash.match(/page=(\d+)/);
     if(m){
       const n = Math.max(1, Math.min(total, Number(m[1])));
