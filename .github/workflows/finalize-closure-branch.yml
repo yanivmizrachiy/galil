@@ -1,0 +1,38 @@
+name: Finalize Galil closure branch
+
+on:
+  push:
+    branches:
+      - chatgpt/finalize-galil-closure-2
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Apply final canonical closure
+        run: python scripts/finalize-closure.py
+      - name: Run canonical QA
+        run: npm run qa
+      - name: Commit verified closure and remove temporary helpers
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm scripts/finalize-closure.py .github/workflows/finalize-closure-branch.yml .github/workflows/finalize-galil-closure.yml
+          git add SOURCE_OF_TRUTH.md workplans/galil.json
+          git diff --cached --check
+          git commit -m 'chore: finalize Galil workbook closure at 100%'
+          git push origin HEAD:chatgpt/finalize-galil-closure-2
