@@ -60,6 +60,14 @@ ok(/IntersectionObserver/.test(html) && /setCounter\(Number\(visible\.target\.da
 const barRule = (html.match(/\.bar\s*\{[^}]*\}/) || [])[0] || '';
 ok(/position:\s*sticky/.test(barRule), 'the .bar (holding the selector) must be position:sticky');
 
+// 4b. §19 mobile vertical-only: no horizontal scrolling — shell + pages clip overflow-x, pan-y + pinch-zoom only.
+const htmlRule = (html.match(/\n\s*html\{[^}]*\}/) || [])[0] || '';
+ok(/overflow-x:\s*clip/.test(htmlRule) && /touch-action:\s*pan-y pinch-zoom/.test(htmlRule) && /overscroll-behavior-x:\s*none/.test(htmlRule), 'html must declare overflow-x:clip, touch-action:pan-y pinch-zoom and overscroll-behavior-x:none (§19 vertical-only)');
+ok(/html,body\{[^}]*max-width:100%[^}]*overflow-x:\s*clip/.test(html), 'html,body must be max-width:100% with overflow-x:clip');
+ok(/\.bar,#reader\{[^}]*max-width:100%[^}]*overflow-x:\s*clip/.test(html), 'the sticky bar and #reader must be max-width:100% with overflow-x:clip');
+ok(/iframe\{[^}]*width:100%[^}]*max-width:100%/.test(html), 'page iframes must fit the width (width:100%;max-width:100%) so no A4 creates extra layout width');
+ok(!/overflow-x:\s*(auto|scroll)/.test(html), 'reader must never enable horizontal scrolling (overflow-x:auto/scroll)');
+
 // 5. Gentle scroll-snap + continuous build of every page.
 ok(/scroll-snap-type:\s*y\s+proximity/.test(html), 'reader must use gentle scroll-snap (y proximity)');
 ok(/scroll-snap-align/.test(html), 'each page card must declare scroll-snap-align');
@@ -100,4 +108,4 @@ if(fail.length){
   fail.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${total}-page A4 PDF, download attr, no client-side generation/preload), a sticky compact page selector (select, not a button) with an instant fade-jump, gentle scroll-snap proximity, and no print/prev/next/single-page/all-workbooks controls.`);
+console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${total}-page A4 PDF, download attr, no client-side generation/preload), a sticky compact page selector (select, not a button) with an instant fade-jump, gentle scroll-snap proximity, mobile vertical-only (overflow-x clipped, pan-y + pinch-zoom), and no print/prev/next/single-page/all-workbooks controls.`);
