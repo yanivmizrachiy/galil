@@ -22,7 +22,15 @@ for(const id of [1,2,3,4,5,7]){
   const q=byId.get(id);
   ok(Boolean(q),`question ${id}: missing source snapshot`);
   ok(typeof q?.rawTranscription==='string'&&q.rawTranscription.trim().length>40,`question ${id}: raw transcription missing/too short`);
-  ok(['text_locked_diagram_pending','text_locked_no_diagram_dependency'].includes(q?.renderingStatus),`question ${id}: invalid rendering status`);
+  ok(['text_locked_diagram_pending','text_locked_diagram_verified','text_locked_no_diagram_dependency'].includes(q?.renderingStatus),`question ${id}: invalid rendering status`);
+  // A diagram-dependent question may only be marked verified when real, pinned visual evidence is recorded.
+  if(q?.renderingStatus==='text_locked_diagram_verified'){
+    const ev=snapshot?.diagramEvidence;
+    ok(q.diagramRequired===true,`question ${id}: only diagram-dependent questions can be diagram_verified`);
+    ok(ev?.scanSource?.commit==='45a6024f2448417f42114caa866006d1942cb714',`question ${id}: diagram evidence must be pinned to the jerusalem2 scan commit`);
+    ok(/^[0-9a-f]{64}$/.test(ev?.scanSha256?.['page-014.webp']||'')&&/^[0-9a-f]{64}$/.test(ev?.scanSha256?.['page-015.webp']||'')&&/^[0-9a-f]{64}$/.test(ev?.scanSha256?.['page-016.webp']||''),`question ${id}: diagram evidence must record the sha256 of the pinned source scans`);
+    ok(typeof ev?.findings?.[String(id)]==='string'&&ev.findings[String(id)].length>40,`question ${id}: diagram evidence must record a per-question finding`);
+  }
 }
 
 ok(byId.get(1)?.diagramRequired===true,'question 1: source diagram dependency must remain explicit');
@@ -48,4 +56,5 @@ if(failures.length){
   process.exit(1);
 }
 
-console.log('OFFICIAL SOURCE QA PASS: canonical jerusalem2 blob locked; Galil questions 1-5 and 7 mapped in order; cone question 6 excluded; diagram-dependent items remain explicitly pending visual verification.');
+const pending=questions.filter(q=>q.renderingStatus==='text_locked_diagram_pending').map(q=>q.id);
+console.log(`OFFICIAL SOURCE QA PASS: canonical jerusalem2 blob locked; Galil questions 1-5 and 7 mapped in order; cone question 6 excluded; diagram-dependent items ${pending.length?`still pending visual verification: ${pending.join(',')}`:'all visually verified against the pinned jerusalem2 scans (evidence recorded in official-questions-source.json)'}.`);

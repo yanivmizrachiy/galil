@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sourceDigest, pdfDigest, MANIFEST } from './pdf-fingerprint.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'galil-student.pdf');
@@ -52,6 +53,18 @@ try{
   }
   if(combined.getPageCount()!==pages.length) throw new Error(`combined ${combined.getPageCount()} != ${pages.length}`);
   fs.writeFileSync(out, await combined.save());
+  // Staleness manifest (SOURCE_OF_TRUTH.md §19): fingerprint of every rendering input + the produced PDF.
+  // reader-qa.mjs recomputes both and fails when galil-student.pdf no longer matches the current pages.
+  const src = sourceDigest(root);
+  fs.writeFileSync(path.join(root, MANIFEST), JSON.stringify({
+    schemaVersion: 1,
+    purpose: 'Deterministic staleness gate for the static public PDF (SOURCE_OF_TRUTH.md §19). Derived file — regenerate with node scripts/build-pdf.mjs.',
+    builtAt: new Date().toISOString(),
+    pageCount: combined.getPageCount(),
+    inputs: src.files,
+    sourceDigest: src.digest,
+    pdfSha256: pdfDigest(out)
+  }, null, 2) + '\n');
   console.log(`build-pdf: wrote ${path.basename(out)} — ${combined.getPageCount()} A4 pages (${(fs.statSync(out).size/1024).toFixed(0)} KB)`);
 }finally{
   if(browser) await browser.close();

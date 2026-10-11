@@ -72,6 +72,16 @@ for (const page of pages) {
     assert(/<th>נפח לפני<\/th><th>נפח אחרי<\/th>[\s\S]*____ סמ״ק<\/td><td>____ סמ״ק/.test(html), 'page 20: before/after volume answers must carry cubic-centimeter units');
   }
 
+  if (page === 43) {
+    // SOURCE_OF_TRUTH.md §13: the axial-section rectangle (width 2r) has diagonal √((2r)²+h²);
+    // √(r²+h²) belongs to the half-section triangle (legs r,h) and must never be called the rectangle diagonal.
+    assert(/אלכסון המלבן[^<]*<span dir="ltr">= √\(\(2r\)² \+ h²\)<\/span>/.test(html), 'page 43: rectangle diagonal must be taught as √((2r)² + h²)');
+    assert(/חצי־חתך<\/b>[\s\S]*ניצביו <span dir="ltr">r<\/span> ו־<span dir="ltr">h<\/span>[\s\S]*√\(r² \+ h²\)/.test(html), 'page 43: √(r² + h²) must be attributed to the half-section triangle (legs r, h)');
+    assert(/ואינו אלכסון המלבן/.test(html), 'page 43: the half-section segment must be explicitly distinguished from the rectangle diagonal');
+    assert(!/כשהבסיס הוא הרדיוס, ל־|הבסיס הוא הרדיוס/.test(html), 'page 43: √(r² + h²) must not be presented as the rectangle diagonal "when the base is the radius"');
+    assert(count(html, /x1="115" y1="155" x2="190" y2="25"/g) === 1 && count(html, /x1="40" y1="155" x2="190" y2="25"/g) === 1, 'page 43: figure must draw both the rectangle diagonal and the half-section segment');
+    assert(count(html, /אלכסון המלבן\.<\/p>/g) === 2 && count(html, /חצי־חתך\.<\/p>/g) === 2, 'page 43: every exercise must state which segment is computed');
+  }
   if (page === 38) {
     assert(/r=4<\/span> ס״מ, <span dir="ltr">h=5<\/span> ס״מ/.test(html), 'page 38: direct-volume data must include length units');
     assert(/d=10<\/span> ס״מ, <span dir="ltr">h=3<\/span> ס״מ[\s\S]*r=____<\/span> ס״מ, <span dir="rtl">נפח=____π<\/span> סמ״ק/.test(html), 'page 38: diameter-to-volume item must preserve radius and volume units');

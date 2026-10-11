@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PDFDocument } from 'pdf-lib';
+import { MANIFEST, sourceDigest, pdfDigest } from './scripts/pdf-fingerprint.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -65,6 +66,23 @@ if(fs.existsSync(pdfPath)){
     ok(Math.abs(width-595.28)<1.5 && Math.abs(height-841.89)<1.5, `static PDF page ${i+1} is not A4 (${width}x${height})`);
   }
 }else ok(false, 'static PDF galil-student.pdf is missing (run: node scripts/build-pdf.mjs)');
+
+// 7. Deterministic staleness gate: the committed PDF must have been built from the CURRENT pages.
+//    scripts/build-pdf.mjs writes a manifest with the sha256 fingerprint of every rendering input
+//    (page-*.html, styles.css, vendor/) and of the PDF itself; both are recomputed here, so any edit
+//    to a page without rebuilding — or any PDF swapped in by hand — fails the gate. No print exposure.
+const manifestPath = path.join(root, MANIFEST);
+if(fs.existsSync(manifestPath) && fs.existsSync(pdfPath)){
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const current = sourceDigest(root);
+  const changed = Object.keys({...current.files, ...(manifest.inputs||{})})
+    .filter(f => current.files[f] !== (manifest.inputs||{})[f]);
+  ok(manifest.sourceDigest === current.digest,
+     `static PDF is STALE: rendering inputs changed since galil-student.pdf was built (${changed.slice(0,8).join(', ')}${changed.length>8?', …':''}) — run: node scripts/build-pdf.mjs and commit the PDF + manifest`);
+  ok(manifest.pdfSha256 === pdfDigest(pdfPath),
+     'galil-student.pdf does not match the manifest it was built with — run: node scripts/build-pdf.mjs and commit both');
+  ok(manifest.pageCount === total, `manifest pageCount ${manifest.pageCount} != ${total} student pages`);
+}else ok(false, `${MANIFEST} is missing — run: node scripts/build-pdf.mjs and commit the PDF + manifest`);
 
 if(fail.length){
   console.error(`READER QA FAILED (${fail.length})`);
