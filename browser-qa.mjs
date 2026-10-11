@@ -140,7 +140,9 @@ async function inspectReader(width,height,label){
       dlDownload:dl?dl.hasAttribute('download'):false,
       dlHref:dl?dl.getAttribute('href'):null,
       counterTag:counter?counter.tagName.toLowerCase():null,
-      counterText:counter?counter.textContent.trim():null,
+      counterText:counter?(counter.tagName==='SELECT'?counter.options[counter.selectedIndex]?.textContent.trim():counter.textContent.trim()):null,
+      counterIsSelect:counter?.tagName==='SELECT',
+      counterVisible:counter?getComputedStyle(counter).display!=='none'&&counter.getBoundingClientRect().height>0:false,
       snap:card?getComputedStyle(card).scrollSnapAlign:'',
       firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})()
     };
@@ -152,7 +154,7 @@ async function inspectReader(width,height,label){
   ok(shell.barActions===1,`${label}: visible bar must have exactly one action, found ${shell.barActions}`);
   ok(shell.dlText&&shell.dlText.includes('הורדת PDF'),`${label}: the one action must read "הורדת PDF" (got "${shell.dlText}")`);
   ok(shell.dlDownload&&/\.pdf$/i.test(shell.dlHref||''),`${label}: action must be a static .pdf download link (download=${shell.dlDownload}, href=${shell.dlHref})`);
-  ok(shell.counterTag&&!['button','a','input'].includes(shell.counterTag),`${label}: page counter must not be button/link/input (is <${shell.counterTag}>)`);
+  ok(shell.counterIsSelect&&shell.counterVisible,`${label}: page selector must be a visible <select> (tag=${shell.counterTag}, visible=${shell.counterVisible})`);
   ok(/עמוד\s*1\s*מתוך\s*49/.test(shell.counterText||''),`${label}: counter should start at "עמוד 1 מתוך 49" (got "${shell.counterText}")`);
   ok(shell.snap==='start',`${label}: cards must use scroll-snap-align:start (got "${shell.snap}")`);
   if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
@@ -194,9 +196,32 @@ await page.goto(base,{waitUntil:'load'});
 await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
 await page.evaluate(()=>document.getElementById('sheet-12').scrollIntoView());
 await page.waitForTimeout(450);
-const counterNow=await page.$eval('#counter',el=>el.textContent.trim());
+const counterNow=await page.$eval('#counter',el=>el.options[el.selectedIndex].textContent.trim());
 const counterNum=Number((counterNow.match(/עמוד\s*(\d+)/)||[])[1]||0);
 ok(counterNum>1,`sticky counter did not update on scroll (still "${counterNow}")`);
+
+// §19 page selector: choosing a page jumps straight there with a short fade — no smooth scroll through all pages.
+await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+await page.waitForTimeout(200);
+const jumpTarget=Math.min(total,30);
+const t0=Date.now();
+await page.selectOption('#counter',String(jumpTarget));
+const fadingSeen=await page.waitForFunction(()=>document.getElementById('reader').classList.contains('fading'),null,{timeout:1000}).then(()=>true).catch(()=>false);
+ok(fadingSeen,'selecting a page must add the #reader.fading class (fade-out) before the jump');
+await page.waitForFunction(()=>!document.getElementById('reader').classList.contains('fading'),null,{timeout:2000});
+const jumpMs=Date.now()-t0;
+const after=await page.evaluate((n)=>{const c=document.getElementById(`sheet-${n}`).getBoundingClientRect();const bar=document.querySelector('.bar').getBoundingClientRect();
+  return {top:c.top-bar.bottom,sel:Number(document.getElementById('counter').value),hash:location.hash,transition:getComputedStyle(document.getElementById('reader')).transitionDuration};},jumpTarget);
+ok(after.top>-2&&after.top<40,`selector jump must land page ${jumpTarget} directly under the sticky bar (offset ${Math.round(after.top)}px)`);
+ok(after.sel===jumpTarget&&after.hash===`#page=${jumpTarget}`,`selector/hash must reflect the jumped page (sel=${after.sel}, hash=${after.hash})`);
+ok(jumpMs<900,`page jump must be a short fade-jump, not a long smooth scroll (${jumpMs}ms)`);
+const tr=parseFloat(after.transition)*(/ms$/.test(after.transition)?1:1000);
+ok(tr>=150&&tr<=220,`#reader fade transition must be 150–220ms (got ${after.transition})`);
+await page.waitForTimeout(300);
+const stillSel=await page.$eval('#counter',el=>Number(el.value));
+ok(stillSel===jumpTarget,`selector must stay on page ${jumpTarget} after the jump settles (got ${stillSel})`);
+await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+await page.waitForTimeout(400);
 
 // The bar holding the counter stays pinned near the top of the viewport while scrolled (R4 / §19).
 const pinned=await page.evaluate(()=>{
@@ -255,7 +280,7 @@ for(const [w,h] of [[390,844],[360,800]]){
   });
   await page.waitForTimeout(300);
   ok(reached,`${w}x${h}: test could not reach the bottom of the reader scroll`);
-  const last=await page.$eval('#counter',el=>el.textContent.trim());
+  const last=await page.$eval('#counter',el=>el.options[el.selectedIndex].textContent.trim());
   ok(new RegExp(`עמוד\\s*${total}\\s*מתוך\\s*${total}`).test(last),
      `${w}x${h}: counter must reach "עמוד ${total} מתוך ${total}" at the bottom of the scroll (got "${last}")`);
 }
@@ -269,4 +294,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky non-button counter that updates on scroll, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky compact page selector (select, not a button) that follows the scroll and fade-jumps on change, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);

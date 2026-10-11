@@ -18,7 +18,7 @@ const ok = (cond, msg) => { if(!cond) fail.push(msg); };
 
 // 1. Exactly one visible action — no other buttons or removed navigation controls.
 ok(!/<button[\s>]/i.test(html), 'reader must expose no <button>; the only action is the PDF download link');
-for(const f of ['singleMode','continuousMode','id="prev"','id="next"','id="page"','כל החוברות','פתח דף','דף בודד'])
+for(const f of ['singleMode','continuousMode','id="prev"','id="next"','id="page"','כל החוברות','פתח דף','דף בודד','הקודם','הבא</','גלילה רציפה</','הדפסה'])
   ok(!html.includes(f), `reader must not contain the removed control "${f}"`);
 ok(!/window\.print\s*\(/.test(html), 'reader must not trigger print (print/PDF are kept for QA only)');
 ok(!/\b(jspdf|html2pdf|html2canvas|pdf-lib|pdfmake)\b/i.test(html), 'reader must not generate a PDF client-side');
@@ -41,15 +41,24 @@ if(a){
 ok(!/rel="(?:preload|prefetch)"[^>]*\.pdf|\.pdf[^>]*rel="(?:preload|prefetch)"/i.test(html),
    'reader must not preload/prefetch the PDF (download starts only on click)');
 
-// 4. Sticky, non-button page counter.
+// 4. Sticky compact page selector (§19): a <select> showing "עמוד X מתוך N" — not a button — whose change
+//    jumps straight to the page with a short fade (no smooth scroll through every page).
 const counter = html.match(/<(\w+)\b([^>]*)\bid="counter"([^>]*)>/i);
-ok(Boolean(counter), 'reader must have a page counter (id="counter")');
+ok(Boolean(counter), 'reader must have the page selector (id="counter")');
 if(counter){
-  ok(!/^(?:button|a|input)$/i.test(counter[1]), `page counter must not be a button/link/input (is <${counter[1]}>)`);
-  ok(!/onclick=|href=/i.test(counter[2]+counter[3]), 'page counter must not be interactive (no onclick/href)');
+  ok(/^select$/i.test(counter[1]), `page selector must be a <select> (is <${counter[1]}>)`);
+  ok(!/onclick=|href=/i.test(counter[2]+counter[3]), 'page selector must not carry onclick/href');
 }
+ok(/o\.textContent\s*=\s*`עמוד \$\{n\} מתוך \$\{total\}`/.test(html), 'selector options must read "עמוד X מתוך N"');
+ok(/counter\.addEventListener\('change'/.test(html), 'selecting a page must trigger the jump (change handler)');
+ok(/scrollIntoView\(\{[^}]*behavior:\s*'instant'/.test(html), 'page jump must scroll instantly (behavior:\'instant\'), not smooth-scroll through all pages');
+ok(!/scrollIntoView\(\{[^}]*behavior:\s*'smooth'/.test(html), 'page jump must not use behavior:\'smooth\'');
+const fadeMs = Number((html.match(/#reader\{transition:opacity\s*(\d+)ms/)||[])[1]);
+ok(fadeMs>=150 && fadeMs<=220, `page jump fade must be a short 150–220ms opacity transition on #reader (got ${fadeMs||'none'})`);
+ok(/#reader\.fading\{opacity:0\}/.test(html) && /classList\.add\('fading'\)/.test(html) && /classList\.remove\('fading'\)/.test(html), 'page jump must fade out (#reader.fading) → jump → fade in');
+ok(/IntersectionObserver/.test(html) && /setCounter\(Number\(visible\.target\.dataset\.page\)\)/.test(html), 'selector must follow manual scrolling (IntersectionObserver → setCounter)');
 const barRule = (html.match(/\.bar\s*\{[^}]*\}/) || [])[0] || '';
-ok(/position:\s*sticky/.test(barRule), 'the .bar (holding #counter) must be position:sticky');
+ok(/position:\s*sticky/.test(barRule), 'the .bar (holding the selector) must be position:sticky');
 
 // 5. Gentle scroll-snap + continuous build of every page.
 ok(/scroll-snap-type:\s*y\s+proximity/.test(html), 'reader must use gentle scroll-snap (y proximity)');
@@ -89,4 +98,4 @@ if(fail.length){
   fail.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${total}-page A4 PDF, download attr, no client-side generation/preload), a sticky non-button page counter, gentle scroll-snap proximity, and no print/prev/next/single-page/all-workbooks controls.`);
+console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${total}-page A4 PDF, download attr, no client-side generation/preload), a sticky compact page selector (select, not a button) with an instant fade-jump, gentle scroll-snap proximity, and no print/prev/next/single-page/all-workbooks controls.`);

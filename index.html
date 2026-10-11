@@ -17,9 +17,16 @@
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
          box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:8px 16px}
     .title{font-weight:800;font-size:18px;white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
-    /* Page counter — a sticky read-out, NOT a button and not interactive. */
-    .counter{flex:0 0 auto;margin-inline-start:auto;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
-             background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 12px;user-select:none}
+    /* Compact page selector — a <select> showing "עמוד X מתוך N". NOT a button; it is the one navigation
+       control allowed by §19: choosing a page jumps straight there (short fade, no long smooth-scroll). */
+    .counter{flex:0 0 auto;margin-inline-start:auto;font:inherit;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
+             background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 30px 5px 12px;min-height:34px;cursor:pointer;
+             -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2341526b' stroke-width='2' stroke-linecap='round'/></svg>");
+             background-repeat:no-repeat;background-position:right 11px center}
+    .counter:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
+    /* Page jump: fade-out → instant scroll to the target → fade-in (§19: no long smooth-scroll through all pages). */
+    #reader{transition:opacity 180ms ease}
+    #reader.fading{opacity:0}
     /* The one and only action button. Static same-origin download — no client-side PDF generation. */
     .download{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
               background:#1d4ed8;color:#fff;border:1px solid #1d4ed8;border-radius:10px;padding:8px 15px;white-space:nowrap}
@@ -41,7 +48,7 @@
       :root{--bar-h:48px}
       .bar{padding:7px 10px;gap:8px}
       .title{font-size:16px}
-      .counter{font-size:13px;padding:4px 10px}
+      .counter{font-size:13px;padding:4px 26px 4px 10px;background-position:right 9px center}
       .download{padding:7px 12px}
       #reader{padding:10px 6px 32px}
       .sheet-card{margin-bottom:16px}
@@ -54,7 +61,7 @@
 <body>
   <header class="bar">
     <span class="title">חוברת הגליל</span>
-    <div class="counter" id="counter" role="status" aria-live="polite">עמוד 1 מתוך 49</div>
+    <select class="counter" id="counter" aria-label="בחירת עמוד — עמוד נוכחי מתוך 49"></select>
     <a class="download" id="download" href="galil-student.pdf" download="גליל-חדש.pdf" aria-label="הורדת החוברת כקובץ PDF">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
       הורדת PDF
@@ -70,13 +77,39 @@
     const mobileQuery = window.matchMedia('(max-width:700px)');
     let current = 1;
 
+    for(let n=1; n<=total; n++){
+      const o = document.createElement('option');
+      o.value = n; o.textContent = `עמוד ${n} מתוך ${total}`;
+      counter.appendChild(o);
+    }
+    counter.value = '1';
+
     function setCounter(n){
       n = Math.max(1, Math.min(total, n));
       if(n === current) return;
       current = n;
-      counter.textContent = `עמוד ${n} מתוך ${total}`;
+      counter.value = String(n);
       history.replaceState(null, '', `#page=${n}`);
     }
+
+    // Selector jump (§19): fade the pages out, jump INSTANTLY to the chosen page (no smooth scroll
+    // through every page in between), then fade back in. Manual scrolling stays continuous.
+    let jumping = false;
+    function jumpTo(n){
+      const card = document.getElementById(`sheet-${n}`);
+      if(!card) return;
+      jumping = true;
+      reader.classList.add('fading');
+      setTimeout(() => {
+        card.scrollIntoView({block:'start', behavior:'instant'});
+        setCounter(n);
+        requestAnimationFrame(() => {
+          reader.classList.remove('fading');
+          setTimeout(() => { jumping = false; }, 200);
+        });
+      }, 180);
+    }
+    counter.addEventListener('change', () => jumpTo(Number(counter.value)));
 
     // Fit each page iframe: natural A4 height on desktop; scaled-to-width A4 (RTL-safe) on mobile.
     function fitFrame(iframe){
@@ -152,7 +185,7 @@
     const observer = new IntersectionObserver(entries => {
       const visible = entries.filter(e => e.isIntersecting)
                              .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if(visible) setCounter(Number(visible.target.dataset.page));
+      if(visible && !jumping) setCounter(Number(visible.target.dataset.page));
     }, { rootMargin: '-45% 0px -45% 0px', threshold: [0,.25,.5,.75,1] });
     document.querySelectorAll('.sheet-card').forEach(card => observer.observe(card));
 
