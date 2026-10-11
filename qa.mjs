@@ -30,15 +30,12 @@ assert(!/\.page-number\{[^}]*font-size:0/.test(css), 'page numbers must remain v
 assert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול יחיד, מלא וקטן') && ssot.includes('ללא עיגול פנימי/חור לבן') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must require compact single solid blue markers and preserve page numbers');
 
 
-const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));
-assert(answerFiles.length === 0, `separate answer-key files are forbidden: ${answerFiles.join(', ')}`);
-
 const pages = fs.readdirSync(dir)
   .filter(name => /^page-\d+\.html$/.test(name))
   .map(name => Number(name.match(/\d+/)[0]))
   .sort((a,b) => a-b);
 
-// The historical workbook currently has 38 pages, but SOURCE_OF_TRUTH.md explicitly
+// The historical snapshot had 38 pages, but SOURCE_OF_TRUTH.md explicitly
 // says 38 is not a target. QA therefore protects structural integrity without freezing
 // the new Galil workbook to the legacy page count while the specification is still open.
 assert(pages.length > 0, 'at least one student page must exist');
@@ -49,6 +46,10 @@ pages.forEach((page, index) => assert(page === index + 1, `student sequence must
 const indexHtml = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const indexTotal = Number((indexHtml.match(/const total\s*=\s*(\d+)/) || [])[1]);
 assert(indexTotal === pages.length, `index.html total (${indexTotal}) must equal the number of student pages (${pages.length})`);
+// The page count is not a target (§9), but SOURCE_OF_TRUTH.md states the current count (§19 and „מצב נוכחי”);
+// pages and SSOT must not drift apart silently — a page change must update the SSOT per §26 in the same change.
+const declaredCounts = [...ssot.matchAll(/את מספר הדפים \((\d+)\)|יש (\d+) דפי תלמיד/g)].map(m => Number(m[1] || m[2]));
+assert(declaredCounts.length === 2 && declaredCounts.every(n => n === pages.length), `SOURCE_OF_TRUTH.md states ${JSON.stringify(declaredCounts)} student pages but ${pages.length} exist — update the SSOT (§26) or restore the pages`);
 
 for (const page of pages) {
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
@@ -60,6 +61,9 @@ for (const page of pages) {
   // The canonical district footer is rendered by styles.css (.a4-page::after, asserted above);
   // the legacy name/date <footer> was removed in fe9d26d, so pages must only link the shared stylesheet.
   assert(/<link rel="stylesheet" href="styles.css">/.test(html), `page ${page}: shared styles.css (canonical district footer) is required`);
+  // SOURCE_OF_TRUTH.md §17: question/sub-section numbers or letters are never typed visibly at the start of a block;
+  // they live in the marker element (.task-num / .q-num / official <b>) that CSS renders as a blue dot.
+  assert(!/class="(?:q-text|instruction)"[^>]*>\s*(?:\(?[1-9]\d?\s*[.)]|[א-י]['׳]?\s*[.)—–]|\([א-י]\))\s/.test(html), `page ${page}: visible question/sub-section number or letter typed at the start of a block (§17) — put it in the marker element`);
   assert(!/[×]/.test(html), `page ${page}: multiplication sign × is forbidden`);
   assert(!/\d\s*[xX]\s*\d/.test(html), `page ${page}: x/X must not be used as a numeric multiplication sign`);
   if (page === 11) {
@@ -70,10 +74,8 @@ for (const page of pages) {
     assert(!/π\s*=\s*3(?:[.,])14/.test(html), `page ${page}: π must never be written as exactly 3.14 outside the page-11 error-detection task`);
   }
   assert(!/demo|placeholder/i.test(html), `page ${page}: demo/placeholder text is forbidden`);
-  // SOURCE_OF_TRUTH.md §6: official curriculum questions keep their wording 1:1, so pages marked
-  // data-official="curriculum" are exempt from the open-response wording guard.
-  const official = /data-official="curriculum"/.test(html);
-  if (!official) assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
+  // SOURCE_OF_TRUTH.md §14 permits student explanations and generalizations.
+  // Internal answer data for mathematical QA is also permitted by §22.
   if (page === 1) {
     // SOURCE_OF_TRUTH.md §17: page 1 opens with the big title „גליל” and the smaller subtitle „מושגים בסיסיים”.
     assert(/<div class="page-titles"><h1 class="page-title">גליל<\/h1><p class="page-subtitle">מושגים בסיסיים<\/p><\/div>/.test(html), 'page 1: header must be h1 „גליל” with subtitle „מושגים בסיסיים” inside .page-titles');
@@ -81,10 +83,7 @@ for (const page of pages) {
   }
   if (page < 19) assert(!/V\s*=/.test(html), `page ${page}: volume formula is forbidden before page 19`);
 
-  // Surface-area work is no longer forbidden here. SOURCE_OF_TRUTH.md now explicitly
-  // requires separate base-area, lateral-area and total-surface-area student pages.
-  // Their implementation/completeness gates will be added only after Yaniv finishes
-  // the still-open specification; this legacy integrity QA must not contradict it.
+  // Surface-area requirements are checked by surface-qa.mjs against §27.
 
   if (page === 20) {
     assert(/<th>נפח לפני<\/th><th>נפח אחרי<\/th>[\s\S]*____ סמ״ק<\/td><td>____ סמ״ק/.test(html), 'page 20: before/after volume answers must carry cubic-centimeter units');
@@ -109,4 +108,4 @@ for (const page of pages) {
   }
 }
 
-console.log(`Cylinder QA: PASS (${pages.length} current student pages checked; page count remains open per SOURCE_OF_TRUTH.md; math-notation/unit guards active; intentional page-11 error-detection exception locked; no separate answer keys; surface-area requirements are no longer blocked by legacy QA)`);
+console.log(`Cylinder QA: PASS (${pages.length} current student pages checked; page count remains open per SOURCE_OF_TRUTH.md; math-notation/unit guards active; intentional page-11 error-detection exception locked)`);

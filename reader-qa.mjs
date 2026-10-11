@@ -103,6 +103,17 @@ if(fs.existsSync(manifestPath) && fs.existsSync(pdfPath)){
   ok(manifest.pageCount === total, `manifest pageCount ${manifest.pageCount} != ${total} student pages`);
 }else ok(false, `${MANIFEST} is missing — run: node scripts/build-pdf.mjs and commit the PDF + manifest`);
 
+// 8. Intro illustration video (§19, Yaniv 2026-10-11): sits above the pages, credits Ayelet Krispin,
+//    loads only on click via youtube-nocookie, and is hidden in print (the PDF stays worksheets-only).
+const introIdx = html.indexOf('class="intro-video"');
+ok(introIdx !== -1, 'reader must contain the intro illustration video block (.intro-video)');
+ok(introIdx !== -1 && introIdx < html.indexOf('id="reader"'), 'the intro video must sit above the student pages (before #reader)');
+ok(/data-id="l4vvuHCY1QI"/.test(html), 'intro video must reference the Galil illustration video (l4vvuHCY1QI)');
+ok(/youtube-nocookie\.com\/embed\//.test(html), 'intro video must embed via youtube-nocookie');
+ok(!/<iframe[^>]*youtube/i.test(html) && /facade\.replaceWith\(/.test(html), 'intro video must be click-to-load (iframe created on click, not hardcoded)');
+ok(/איילת קריספין · מתכללת תחום המתמטיקה במחוז ירושלים והעיר ירושלים/.test(html), 'intro video must credit Ayelet Krispin with her role');
+ok(/\.intro-video\{display:none\}/.test(html), 'intro video must be hidden in print');
+
 if(fail.length){
   console.error(`READER QA FAILED (${fail.length})`);
   fail.forEach((f,i)=>console.error(`${i+1}. ${f}`));

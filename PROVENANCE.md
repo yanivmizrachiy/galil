@@ -17,6 +17,6 @@ Pages 1–10 and 15–38 are identical in both sources.
 - `index.html`: link "כל החוברות" `../index.html` → https://yanivmizrachiy.github.io/razpages/workbooks/index.html
 - `qa.mjs`: normalizes TeX (`\(\pi\)`, `\approx`) before the π notation checks. The QA predates the MathJax fix and failed on razpages main; page content is unchanged.
 
-## Canonical rule
+## Relation to SOURCE_OF_TRUTH.md
 
 Historical provenance explains where the existing implementation came from. It does **not** freeze the historical 38-page structure and it must never override newer requirements in `SOURCE_OF_TRUTH.md`.

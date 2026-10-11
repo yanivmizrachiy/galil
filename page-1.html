@@ -1,9 +1,19 @@
 <!doctype html>
 <html lang="he" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>גליל — מושגים בסיסיים</title><link rel="stylesheet" href="styles.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>גליל — מושגים בסיסיים</title><link rel="stylesheet" href="styles.css"><style>
+/* page-1: spread tasks 2-3 evenly across the lower area; drop the faint sentence rules */
+.a4-page{display:flex;flex-direction:column}
+.sentence{border-bottom:none}
+.lower{flex:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7mm;align-items:stretch;margin-top:5mm}
+.lower .task{margin:0;display:flex;flex-direction:column}
+.lower .task-row{flex:1;display:flex;min-height:0;align-items:stretch}
+.lower .task-body{flex:1;display:flex;flex-direction:column;min-height:0}
+.lower .sentence-list{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:0}
+.lower .instruction{margin-bottom:2mm}
+.lower .word-bank{margin:1mm 0 2mm}
+</style></head>
 <body><main class="a4-page">
 <header class="page-header"><div class="page-titles"><h1 class="page-title">גליל</h1><p class="page-subtitle">מושגים בסיסיים</p></div><div class="page-number" aria-label="עמוד 1">1</div></header>
-<div class="anchor" style="margin:3mm 0 3mm;padding:2mm 3mm">צורה מישורית מתוארת במישור. גוף תלת־ממדי תופס מקום ב<span class="gap"></span>.</div>
 <section class="task" style="margin:2mm 0"><div class="task-row"><div class="task-num">1</div><div class="task-body">
 <p class="instruction" style="margin-bottom:1.5mm">סמנו בטבלה אם כל איור הוא צורה מישורית או גוף תלת־ממדי.</p>
 <div class="shape-grid" style="grid-template-columns:repeat(6,minmax(0,1fr));gap:1.5mm">
@@ -23,9 +33,9 @@
 <table class="classify-table" aria-label="טבלת מיון" style="margin-top:2mm"><thead><tr><th>איור</th><th>מישורית</th><th>תלת־ממדית</th><th>איור</th><th>מישורית</th><th>תלת־ממדית</th></tr></thead><tbody>
 <tr><td>א</td><td>□</td><td>□</td><td>ז</td><td>□</td><td>□</td></tr><tr><td>ב</td><td>□</td><td>□</td><td>ח</td><td>□</td><td>□</td></tr><tr><td>ג</td><td>□</td><td>□</td><td>ט</td><td>□</td><td>□</td></tr><tr><td>ד</td><td>□</td><td>□</td><td>י</td><td>□</td><td>□</td></tr><tr><td>ה</td><td>□</td><td>□</td><td>יא</td><td>□</td><td>□</td></tr><tr><td>ו</td><td>□</td><td>□</td><td>יב</td><td>□</td><td>□</td></tr>
 </tbody></table></div></div></section>
-<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4mm;align-items:start">
+<div class="lower">
 <section class="task" style="margin:2mm 0"><div class="task-row"><div class="task-num">2</div><div class="task-body"><p class="instruction" style="margin-bottom:1mm">השלימו בעזרת המחסן.</p><div class="word-bank" style="gap:1.5mm;margin:1mm 0;padding:1.5mm 2mm"><span class="word">צורה מישורית</span><span class="word">גוף תלת־ממדי</span></div><div class="sentence-list" style="gap:1mm"><div class="sentence" style="padding:1mm 0">משולש הוא <span class="blank" style="min-width:20mm"></span>.</div><div class="sentence" style="padding:1mm 0">גליל הוא <span class="blank" style="min-width:20mm"></span>.</div><div class="sentence" style="padding:1mm 0">ריבוע הוא <span class="blank" style="min-width:20mm"></span>.</div><div class="sentence" style="padding:1mm 0">כדור הוא <span class="blank" style="min-width:20mm"></span>.</div></div></div></div></section>
-<section class="task" style="margin:2mm 0"><div class="task-row"><div class="task-num">3</div><div class="task-body"><p class="instruction" style="margin-bottom:1mm">כתבו את אות האיור המתאים ליד כל שם.</p><div class="sentence-list" style="gap:1mm"><div class="sentence" style="padding:1mm 0">גליל: ____ · חרוט: ____ · כדור: ____</div><div class="sentence" style="padding:1mm 0">קובייה: ____ · מלבן: ____ · משולש: ____</div></div></div></div></section>
+<section class="task" style="margin:2mm 0"><div class="task-row"><div class="task-num">3</div><div class="task-body"><p class="instruction" style="margin-bottom:1mm">כתבו את אות האיור המתאים ליד כל שם.</p><div class="sentence-list" style="gap:1mm"><div class="sentence" style="padding:1mm 0">גליל: <span class="gap" style="min-width:8mm"></span> · חרוט: <span class="gap" style="min-width:8mm"></span> · כדור: <span class="gap" style="min-width:8mm"></span></div><div class="sentence" style="padding:1mm 0">קובייה: <span class="gap" style="min-width:8mm"></span> · מלבן: <span class="gap" style="min-width:8mm"></span> · משולש: <span class="gap" style="min-width:8mm"></span></div></div></div></div></section>
 </div>
 
 </main></body></html>

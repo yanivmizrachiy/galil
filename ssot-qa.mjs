@@ -23,7 +23,8 @@ for (const file of markdown) {
   const rel = path.relative(root, file).replaceAll('\\','/');
   if (rel === SSOT) continue;
   const text = fs.readFileSync(file, 'utf8');
-  if (/^#\s+מקור האמת היחיד\b/m.test(text)) fail(`${rel} declares a competing source of truth`);
+  // JavaScript's \b is ASCII-only and cannot delimit a Hebrew heading.
+  if (/^#{1,6}\s+מקור האמת היחיד(?:\s|$)/m.test(text)) fail(`${rel} declares a competing source of truth`);
   if (/זהו קובץ ההוראות והדרישות המחייב היחיד/.test(text)) fail(`${rel} declares competing requirements authority`);
   if (/\bSSOT:ONLY-AUTHORITY\b/.test(text)) fail(`${rel} contains the authority marker reserved for ${SSOT}`);
 }

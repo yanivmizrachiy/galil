@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>גליל לחטיבת הביניים</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif}
+.a4-cover{width:210mm;height:297mm;margin:0 auto;background:#fff;overflow:hidden;position:relative;display:flex;flex-direction:column;padding:18mm 16mm 16mm;color:#172033}
+.a4-cover::before{content:"";position:absolute;inset:0 0 auto 0;height:10mm;background:#1d4ed8}
+.cover-title{margin:16mm 0 10mm;text-align:center;font-size:12mm;line-height:1.08;font-weight:900;color:#173b86;letter-spacing:-.4mm}
+.cover-rule{width:42mm;height:1.3mm;border-radius:999px;background:#f59e0b;margin:0 auto 12mm}
+.cover-image-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.cover-image{display:block;width:100%;height:auto;max-height:170mm;object-fit:contain;border-radius:5mm;box-shadow:0 4mm 12mm rgba(23,59,134,.16);border:1.2mm solid #e8eef8}
+.cover-footer{height:14mm;display:flex;align-items:flex-end;justify-content:center;color:#36527f;font-size:4.1mm;font-weight:700}
+@page{size:A4;margin:0}
+@media print{html,body{background:#fff}.a4-cover{margin:0;box-shadow:none}}
+</style>
+</head>
+<body>
+<main class="a4-cover" aria-label="שער החוברת גליל לחטיבת הביניים">
+  <h1 class="cover-title">גליל לחטיבת הביניים</h1>
+  <div class="cover-rule" aria-hidden="true"></div>
+  <div class="cover-image-wrap">
+    <img class="cover-image" src="assets/cover-bg.jpg" alt="תלמידים בירושלים חוקרים גלילים וחרוטים במרחב גאומטרי">
+  </div>
+  <div class="cover-footer">דפי עבודה במתמטיקה</div>
+</main>
+</body>
+</html>

@@ -17,6 +17,7 @@ for (const task of plan.tasks) {
   if (!['pending', 'in_progress', 'blocked', 'done'].includes(task.status)) fail(`${task.id}: invalid status`);
   if (task.percent > 0 && (!Array.isArray(task.evidence) || task.evidence.length === 0)) fail(`${task.id}: progress without evidence`);
   if (task.status === 'done' && task.percent !== 100) fail(`${task.id}: done must equal 100`);
+  if (task.status === 'done' && (!Array.isArray(task.acceptanceCriteria) || task.acceptanceCriteria.length === 0)) fail(`${task.id}: done requires acceptance criteria linked to SOURCE_OF_TRUTH.md`);
   if (task.status === 'pending' && task.percent !== 0) fail(`${task.id}: pending must equal 0`);
 }
 
@@ -26,27 +27,27 @@ if (plan.progress.remainingPercent !== 100 - calculated) fail(`remainingPercent 
 if (plan.progress.totalTasks !== plan.tasks.length) fail('totalTasks mismatch');
 const blocked = plan.tasks.filter(t => t.status === 'blocked').length;
 if (plan.progress.blockedCount !== blocked) fail('blockedCount mismatch');
-if (calculated === 100 && plan.tasks.some(t => t.status !== 'done')) fail('100% requires every task done');
+if (calculated === 100 && (plan.tasks.some(t => t.status !== 'done') || blocked > 0)) fail('100% requires every task done and no blocked task');
+if (calculated === 100) {
+  if (plan.closure?.specificationClosed !== true) fail('100% requires recorded specification closure (SOURCE_OF_TRUTH.md §25.1)');
+  if (plan.closure?.finalDispositionApproved !== true) fail('100% requires approved final page disposition (SOURCE_OF_TRUTH.md §9/§25.3)');
+  if (!Array.isArray(plan.closure?.evidence) || plan.closure.evidence.length === 0) fail('100% requires closure evidence; task percentages alone are insufficient');
+}
 
 const meaningful=(file)=>[
-  /^SOURCE_OF_TRUTH\.md$/,
-  /^SOURCES\.md$/,
+  /^(SOURCE_OF_TRUTH|SOURCES|README|CLAUDE|PROVENANCE)\.md$/,
   /^official-questions-source\.json$/,
   /^page-\d+\.html$/,
   /^index\.html$/,
   /^styles\.css$/,
   /^qa\.mjs$/,
-  /^ssot-qa\.mjs$/,
-  /^official-source-qa\.mjs$/,
-  /^official-render-qa\.mjs$/,
+  /^[\w-]+-qa\.mjs$/,
   /^official-source-visual-evidence\.mjs$/,
-  /^core-qa\.mjs$/,
-  /^volume-qa\.mjs$/,
-  /^surface-qa\.mjs$/,
-  /^browser-qa\.mjs$/,
+  /^galil-student\.pdf(?:\.manifest\.json)?$/,
   /^package(?:-lock)?\.json$/,
-  /^\.github\/workflows\/qa\.yml$/,
-  /^scripts\/(?!verify-progress\.mjs$)/,
+  /^\.github\/workflows\/[^/]+\.ya?ml$/,
+  /^scripts\//,
+  /^vendor\//,
   /^assets\//,
   /^provenance\//
 ].some(rx=>rx.test(file));

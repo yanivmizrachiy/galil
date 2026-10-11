@@ -9,41 +9,46 @@
     :root{--bar-h:52px}
     /* §19 mobile vertical-only: no horizontal scroll anywhere — shell and pages clip overflow-x,
        touch gestures are pan-y + pinch-zoom only, and no element may create extra layout width. */
-    html{scroll-snap-type:y proximity;scroll-behavior:smooth;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
     html,body{max-width:100%;overflow-x:clip}
     body{overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
     .bar,#reader{max-width:100%;overflow-x:clip}
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
 
-    /* Sticky top bar: title + non-button page counter + the single action (PDF download). */
-    /* flex-wrap + a shrinkable title guarantee the bar never overflows horizontally,
-       independent of font metrics (CI's Linux fallback fonts are wider than Windows). */
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
          box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:8px 16px}
     .title{font-weight:800;font-size:18px;white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
-    /* Compact page selector — a <select> showing "עמוד X מתוך N". NOT a button; it is the one navigation
-       control allowed by §19: choosing a page jumps straight there (short fade, no long smooth-scroll). */
     .counter{flex:0 0 auto;margin-inline-start:auto;font:inherit;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
              background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 30px 5px 12px;min-height:34px;cursor:pointer;
              -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2341526b' stroke-width='2' stroke-linecap='round'/></svg>");
              background-repeat:no-repeat;background-position:right 11px center}
     .counter:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
-    /* Page jump: fade-out → instant scroll to the target → fade-in (§19: no long smooth-scroll through all pages). */
     #reader{transition:opacity 180ms ease}
     #reader.fading{opacity:0}
-    /* The one and only action button. Static same-origin download — no client-side PDF generation. */
     .download{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
               background:#1d4ed8;color:#fff;border:1px solid #1d4ed8;border-radius:10px;padding:8px 15px;white-space:nowrap}
     .download:hover{background:#1744b8;border-color:#1744b8}
     .download:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
     .download svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-    /* Continuous reader — every student page as a full A4, clearly separated. */
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
-    .sheet-card{margin:0 0 26px;padding-bottom:20px;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card{margin:0;padding-bottom:0;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
     .sheet-card:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
-    iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
-           box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
+    .sheet-card iframe{display:block;width:100%;max-width:100%;border:0;border-radius:0;background:#fff;
+           min-height:0;height:auto;aspect-ratio:210/297;max-height:297mm}
+    /* Pre-load size = the fitted A4 size (width-scaled, never taller than A4), so lazy frames do not jump when they load (§19). */
+
+    .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
+    .intro-video-title{margin:0;font-size:19px;font-weight:800;color:#172033}
+    .intro-video-by{margin:3px 0 12px;font-size:14px;font-weight:600;color:#41526b}
+    .video-facade,.video-frame{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:14px;box-shadow:0 10px 34px rgba(42,61,89,.14)}
+    .video-facade{position:relative;cursor:pointer;overflow:hidden;outline:0;background:radial-gradient(130% 130% at 50% 0%,#2b4a9e 0%,#16244a 72%)}
+    .video-facade::after{content:"לחצו להפעלת הסרטון";position:absolute;inset-inline:0;bottom:12px;text-align:center;color:#dbe6ff;font-size:14px;font-weight:600}
+    .video-facade:focus-visible{outline:3px solid #93b4ff;outline-offset:3px}
+    .video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .video-play svg{width:92px;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));transition:transform .15s ease}
+    .video-play-bg{fill:#ff2d2d}
+    .video-facade:hover .video-play svg{transform:scale(1.07)}
 
     @media(max-width:700px){
       :root{--bar-h:48px}
@@ -52,11 +57,11 @@
       .counter{font-size:13px;padding:4px 26px 4px 10px;background-position:right 9px center}
       .download{padding:7px 12px}
       #reader{padding:10px 6px 32px}
-      .sheet-card{margin-bottom:16px}
-      /* Reserve the A4 aspect-ratio before load so lazy iframes do not resize-jump (§19). */
-      iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
+      .intro-video{padding:12px 6px 0}
+      .intro-video-title{font-size:17px}
+      .video-play svg{width:68px}
     }
-    @media print{ .bar{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
+    @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
@@ -69,14 +74,47 @@
     </a>
   </header>
 
+  <section class="intro-video" aria-labelledby="intro-video-title">
+    <h2 class="intro-video-title" id="intro-video-title">סרטון המחשה — גליל</h2>
+    <p class="intro-video-by">איילת קריספין · מתכללת תחום המתמטיקה במחוז ירושלים והעיר ירושלים</p>
+    <div class="video-facade" id="videoFacade" role="button" tabindex="0" data-id="l4vvuHCY1QI"
+         aria-label="הפעלת סרטון ההמחשה „המחשה לגליל” מאת איילת קריספין">
+      <span class="video-play" aria-hidden="true">
+        <svg viewBox="0 0 68 48"><path class="video-play-bg" d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.3.5 34 .5 34 .5S12.7.5 7.4 1.7C4.5 2.5 2.3 4.8 1.5 7.7.3 13 .3 24 .3 24s0 11 1.2 16.3c.8 2.9 3 5.2 5.9 6C12.7 47.5 34 47.5 34 47.5s21.3 0 26.6-1.2c2.9-.8 5.1-3.1 5.9-6C67.7 35 67.7 24 67.7 24s0-11-1.2-16.3z"/><path d="M27 34V14l18 10z" fill="#fff"/></svg>
+      </span>
+    </div>
+  </section>
+
   <main id="reader" aria-label="חוברת הגליל — גלילה רציפה של כל הדפים"></main>
 
   <script>
     const total = 49;
     const reader = document.getElementById('reader');
     const counter = document.getElementById('counter');
-    const mobileQuery = window.matchMedia('(max-width:700px)');
     let current = 1;
+
+    // The sticky bar wraps to two rows on phones; scroll-margin-top must follow its real height so a
+    // selected/deep-linked page lands fully below the bar instead of under it.
+    const bar = document.querySelector('.bar');
+    const syncBar = () => document.documentElement.style.setProperty('--bar-h', `${Math.ceil(bar.getBoundingClientRect().height)}px`);
+    syncBar();
+    if('ResizeObserver' in window) new ResizeObserver(syncBar).observe(bar);
+
+    // Keep a jump/deep-link target aligned while the frames around it finish loading and resizing;
+    // any user gesture (in the shell or inside a page frame) releases it immediately.
+    let pinTarget = null, pinUntil = 0;
+    const pin = n => { pinTarget = n; pinUntil = performance.now() + 2500; };
+    const unpin = () => { pinTarget = null; };
+    const gestures = ['wheel','touchstart','keydown','pointerdown'];
+    const watchGestures = win => gestures.forEach(t => win.addEventListener(t, unpin, {passive:true}));
+    function realign(){
+      if(pinTarget === null) return;
+      if(performance.now() > pinUntil){ pinTarget = null; return; }
+      document.getElementById(`sheet-${pinTarget}`)?.scrollIntoView({block:'start', behavior:'instant'});
+    }
+    watchGestures(window);
+    // The hash (kept in sync with scrolling) is the single source of the reading position on reload.
+    if('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
     for(let n=1; n<=total; n++){
       const o = document.createElement('option');
@@ -93,8 +131,6 @@
       history.replaceState(null, '', `#page=${n}`);
     }
 
-    // Selector jump (§19): fade the pages out, jump INSTANTLY to the chosen page (no smooth scroll
-    // through every page in between), then fade back in. Manual scrolling stays continuous.
     let jumping = false;
     function jumpTo(n){
       const card = document.getElementById(`sheet-${n}`);
@@ -104,6 +140,7 @@
       setTimeout(() => {
         card.scrollIntoView({block:'start', behavior:'instant'});
         setCounter(n);
+        pin(n);
         requestAnimationFrame(() => {
           reader.classList.remove('fading');
           setTimeout(() => { jumping = false; }, 200);
@@ -112,7 +149,6 @@
     }
     counter.addEventListener('change', () => jumpTo(Number(counter.value)));
 
-    // Fit each page iframe: natural A4 height on desktop; scaled-to-width A4 (RTL-safe) on mobile.
     function fitFrame(iframe){
       try{
         const doc = iframe.contentDocument;
@@ -121,13 +157,13 @@
         if(!page) return;
         const html = doc.documentElement, body = doc.body;
         const pageWidth = page.offsetWidth, pageHeight = page.offsetHeight;
-        const available = Math.max(1, iframe.clientWidth - 2);
-        const fitMobile = mobileQuery.matches && available < pageWidth;
+        const available = Math.max(1, iframe.clientWidth);
+        const needsFit = available < pageWidth;
 
         html.style.overflowX = 'hidden';
         body.style.overflowX = 'hidden';
 
-        if(fitMobile){
+        if(needsFit){
           const scale = Math.min(1, available / pageWidth);
           html.style.overflow = 'hidden';  html.style.direction = 'ltr';
           body.style.overflow = 'hidden';  body.style.direction = 'ltr';
@@ -136,7 +172,7 @@
           page.style.transformOrigin = 'top left';  page.style.transform = `scale(${scale})`;
           page.style.position = 'relative';  page.style.left = '0';
           html.scrollLeft = 0;  body.scrollLeft = 0;  doc.defaultView.scrollTo(0,0);
-          iframe.style.height = `${Math.ceil(pageHeight*scale)+2}px`;
+          iframe.style.height = `${Math.ceil(pageHeight*scale)}px`;
           iframe.setAttribute('scrolling','no');
         }else{
           html.style.overflow = '';  html.style.direction = '';
@@ -147,7 +183,7 @@
           page.style.transform = '';  page.style.transformOrigin = '';
           iframe.removeAttribute('scrolling');
           const h = Math.max(html.scrollHeight, body.scrollHeight, pageHeight);
-          if(h > 300) iframe.style.height = `${h+2}px`;
+          if(h > 300){ iframe.style.maxHeight = 'none'; iframe.style.height = `${h}px`; }
         }
       }catch(e){}
     }
@@ -166,19 +202,22 @@
         iframe.src = `page-${n}.html`;
         iframe.title = `חוברת הגליל — עמוד ${n}`;
         iframe.loading = n <= 2 ? 'eager' : 'lazy';
-        iframe.addEventListener('load', () => fitFrame(iframe));
+        iframe.addEventListener('load', () => {
+          fitFrame(iframe);
+          try{ watchGestures(iframe.contentWindow); }catch(e){}
+          realign();
+        });
 
-        card.append(iframe);
+        card.appendChild(iframe);
         frag.appendChild(card);
       }
       reader.appendChild(frag);
+      // Frames that have not loaded yet still receive gestures in their initial blank document.
+      reader.querySelectorAll('iframe').forEach(f => { try{ watchGestures(f.contentWindow); }catch(e){} });
     }
 
     build();
 
-    // Sticky counter tracks the page crossing the viewport centre while scrolling. A centred
-    // detection band lets the final page win even on phones, where every A4 card is shorter than
-    // the viewport and an upper band could never let the last card out-cover the one above it.
     const observer = new IntersectionObserver(entries => {
       const visible = entries.filter(e => e.isIntersecting)
                              .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -186,26 +225,40 @@
     }, { rootMargin: '-45% 0px -45% 0px', threshold: [0,.25,.5,.75,1] });
     document.querySelectorAll('.sheet-card').forEach(card => observer.observe(card));
 
-    // Guarantee the last page is reachable: at the very bottom of the scroll show the final page,
-    // independent of card geometry (SOURCE_OF_TRUTH.md §19 — the counter reflects the focused page).
     window.addEventListener('scroll', () => {
       const el = document.documentElement;
       if(window.scrollY + window.innerHeight >= el.scrollHeight - 2) setCounter(total);
     }, { passive: true });
 
-    // Optional deep link #page=N scrolls to that page on open (no visible control).
     const m = location.hash.match(/page=(\d+)/);
     if(m){
       const n = Math.max(1, Math.min(total, Number(m[1])));
       requestAnimationFrame(() => {
         const card = document.getElementById(`sheet-${n}`);
-        if(card){ card.scrollIntoView({block:'start',behavior:'instant'}); setCounter(n); }
+        if(card){ card.scrollIntoView({block:'start',behavior:'instant'}); setCounter(n); pin(n); }
       });
     }
 
     let resizeTimer;
     window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitAll, 120); });
     window.addEventListener('orientationchange', () => setTimeout(fitAll, 180));
+
+    // Illustration video (Ayelet Krispin): click-to-load via youtube-nocookie, so nothing external loads on open.
+    const facade = document.getElementById('videoFacade');
+    if(facade){
+      const loadVideo = () => {
+        const frame = document.createElement('iframe');
+        frame.className = 'video-frame';
+        frame.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.id}?autoplay=1&rel=0`;
+        frame.title = 'סרטון המחשה — גליל — איילת קריספין';
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.setAttribute('allowfullscreen', '');
+        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        facade.replaceWith(frame);
+      };
+      facade.addEventListener('click', loadVideo);
+      facade.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); loadVideo(); } });
+    }
   </script>
 </body>
 </html>
