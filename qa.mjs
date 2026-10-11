@@ -60,7 +60,11 @@ for (const page of pages) {
   // data-official="curriculum" are exempt from the open-response wording guard.
   const official = /data-official="curriculum"/.test(html);
   if (!official) assert(!/נמקו|הסבירו\s+במילים/.test(html), `page ${page}: unrestricted open response wording is forbidden`);
-  if (page === 1) assert(/<h1[^>]*>מושגים בסיסיים<\/h1>/.test(html), 'page 1: canonical opening title must be מושגים בסיסיים');
+  if (page === 1) {
+    // SOURCE_OF_TRUTH.md §17: page 1 opens with the big title „גליל” and the smaller subtitle „מושגים בסיסיים”.
+    assert(/<div class="page-titles"><h1 class="page-title">גליל<\/h1><p class="page-subtitle">מושגים בסיסיים<\/p><\/div>/.test(html), 'page 1: header must be h1 „גליל” with subtitle „מושגים בסיסיים” inside .page-titles');
+    assert(!/<h1[^>]*>מושגים בסיסיים<\/h1>/.test(html), 'page 1: „מושגים בסיסיים” must be the subtitle, not the h1');
+  }
   if (page < 19) assert(!/V\s*=/.test(html), `page ${page}: volume formula is forbidden before page 19`);
 
   // Surface-area work is no longer forbidden here. SOURCE_OF_TRUTH.md now explicitly
