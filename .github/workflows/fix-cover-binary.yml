@@ -1,0 +1,50 @@
+name: Fix approved Galil cover binary (one-shot)
+
+on:
+  push:
+    branches: [claude/galil-closure-20261011]
+    paths:
+      - '.github/workflows/fix-cover-binary.yml'
+      - 'assets/cover-bg.webp'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode approved cover only when stored as Base64 text
+        shell: bash
+        run: |
+          set -euo pipefail
+          mime="$(file --brief --mime-type assets/cover-bg.webp)"
+          echo "current mime: $mime"
+          if [ "$mime" = "text/plain" ] || [ "$mime" = "application/octet-stream" ]; then
+            if head -c 16 assets/cover-bg.webp | grep -q '^UklGR'; then
+              base64 --decode assets/cover-bg.webp > assets/cover-bg.webp.bin
+              mv assets/cover-bg.webp.bin assets/cover-bg.webp
+            fi
+          fi
+          test "$(file --brief --mime-type assets/cover-bg.webp)" = "image/webp"
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('assets/cover-bg.webp')
+          b=p.read_bytes()
+          assert b[:4] == b'RIFF' and b[8:12] == b'WEBP', 'not a valid WebP container'
+          assert len(b) > 50000, f'cover unexpectedly small: {len(b)} bytes'
+          print('validated WebP bytes:', len(b))
+          PY
+      - name: Commit binary replacement
+        shell: bash
+        run: |
+          if git diff --quiet -- assets/cover-bg.webp; then
+            echo 'already binary; nothing to commit'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/cover-bg.webp
+          git commit -m 'fix(cover): decode approved cover artwork to binary WebP [skip ci]'
+          git push
