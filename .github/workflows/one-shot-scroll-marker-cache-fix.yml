@@ -1,0 +1,78 @@
+# Triggered after workflow registration so the one-shot run executes.
+name: One-shot scroll marker cache fix
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/one-shot-scroll-marker-cache-fix.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Fix scrolling reader marker rendering and cache busting
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          old="iframe.src = `page-${n}.html`;"
+          new="iframe.src = `page-${n}.html?v=20261011-marker-fix-2`;"
+          if old not in s:
+              raise SystemExit('iframe src anchor missing')
+          s=s.replace(old,new,1)
+          anchor="""        const page = doc.querySelector('.a4-page');
+        if(!page) return;
+"""
+          inject="""        const page = doc.querySelector('.a4-page');
+        if(!page) return;
+
+        // SSOT §17: enforce question markers inside the continuous-scroll reader itself.
+        // This is deliberately injected by the parent reader so an old cached styles.css can never
+        // re-expose question numbers after a deployment. It does not alter source wording/IDs.
+        let markerGuard = doc.getElementById('scroll-marker-guard');
+        if(!markerGuard){
+          markerGuard = doc.createElement('style');
+          markerGuard.id = 'scroll-marker-guard';
+          markerGuard.textContent = `
+            .a4-page .task-row>.task-num{font-size:0!important;line-height:0!important;flex:0 0 4.2mm!important;width:4.2mm!important;height:4.2mm!important;margin-top:.6mm!important;border-radius:50%!important;background:#1d4ed8!important;border-color:#1d4ed8!important;color:transparent!important;display:block!important}
+            .a4-page .task-row>.task-num::after{content:none!important;display:none!important}
+            .a4-page .q-item .q-num{font-size:0!important;line-height:0!important;display:inline-block!important;vertical-align:middle!important;min-width:0!important;width:3.2mm!important;height:3.2mm!important;margin-inline-end:1.2mm!important;border-radius:50%!important;background:#1d4ed8!important;color:transparent!important}
+            .a4-page .q-item .q-num::after{content:none!important;display:none!important}
+            .a4-page.official-page .official-q>p>b:first-child{display:inline-block!important;vertical-align:middle!important;width:4.2mm!important;height:4.2mm!important;margin-inline-end:1.4mm!important;border-radius:50%!important;background:#1d4ed8!important;color:transparent!important;font-size:0!important;line-height:0!important}
+            .a4-page.official-page .official-q>p>b:first-child::after{content:none!important;display:none!important}
+            .a4-page.official-page .q-item .q-text>b:first-child{display:inline-block!important;vertical-align:middle!important;width:3.2mm!important;height:3.2mm!important;margin-inline-end:1.2mm!important;border-radius:50%!important;background:#1d4ed8!important;color:transparent!important;font-size:0!important;line-height:0!important}
+            .a4-page.official-page .q-item .q-text>b:first-child::after{content:none!important;display:none!important}
+            .a4-page.official-page .official-q>p:has(>b:first-child)~p>b:first-child,
+            .a4-page.official-page .official-q~.official-q>p>b:first-child{width:3.2mm!important;height:3.2mm!important;margin-inline-end:1.2mm!important}
+          `;
+          doc.head.appendChild(markerGuard);
+        }
+"""
+          if anchor not in s:
+              raise SystemExit('fitFrame anchor missing')
+          s=s.replace(anchor,inject,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify reader and workbook QA
+        run: |
+          npm install --no-audit --no-fund
+          npm run qa
+          node reader-qa.mjs
+      - name: Commit verified fix
+        shell: bash
+        run: |
+          rm -f .github/workflows/one-shot-scroll-marker-cache-fix.yml
+          git config user.name "chatgpt-repo-agent"
+          git config user.email "noreply@openai.com"
+          git add index.html .github/workflows/one-shot-scroll-marker-cache-fix.yml
+          git commit -m "fix(reader): force SSOT question dots in continuous scroll"
+          git push origin HEAD:main

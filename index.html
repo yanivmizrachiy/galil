@@ -7,8 +7,12 @@
   <style>
     *{box-sizing:border-box}
     :root{--bar-h:52px}
-    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:clip}
-    html,body{max-width:100%}
+    /* §19 mobile vertical-only: no horizontal scroll anywhere — shell and pages clip overflow-x,
+       touch gestures are pan-y + pinch-zoom only, and no element may create extra layout width. */
+    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    html,body{max-width:100%;overflow-x:clip}
+    body{overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    .bar,#reader{max-width:100%;overflow-x:clip}
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
 
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
@@ -28,8 +32,8 @@
     .download svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
-    .sheet-card{margin:0;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
-    .sheet-card + .sheet-card{border-top:3px solid #1d4ed8;padding-top:18px;margin-top:18px}
+    .sheet-card{margin:0 0 26px;padding-bottom:20px;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
     .sheet-card iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
            box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
 
@@ -55,10 +59,11 @@
       .intro-video{padding:12px 6px 0}
       .intro-video-title{font-size:17px}
       .video-play svg{width:68px}
-      .sheet-card + .sheet-card{padding-top:12px;margin-top:12px;border-top-width:3px}
+      .sheet-card{margin-bottom:16px;padding-bottom:12px}
+      .sheet-card:last-child{margin-bottom:0;padding-bottom:0}
       .sheet-card iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
     }
-    @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card + .sheet-card{border-top:0;padding-top:0;margin-top:0} iframe{box-shadow:none;border:none} }
+    @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>

@@ -35,3 +35,14 @@
 .a4-page.dense .q-grid{gap:2mm 4mm}
 .a4-page.dense .instruction{margin-bottom:1.5mm}
 .a4-page.dense .formula{margin:1mm 0}
+
+/* SSOT 2026-10-11: student questions use a prominent blue marker instead of a visible number. The original number remains in the DOM/source for traceability and QA. */
+.a4-page .task-row>.task-num{font-size:0;line-height:0;flex:0 0 4.2mm;width:4.2mm;height:4.2mm;margin-top:.6mm;background:#1d4ed8;border-color:#1d4ed8}
+/* SSOT 2026-10-11: sub-sections use a smaller blue marker instead of a visible letter/number. The original label stays in the DOM/source for traceability and QA. */
+.a4-page .q-item .q-num{font-size:0;line-height:0;display:inline-block;vertical-align:middle;min-width:0;width:3.2mm;height:3.2mm;margin-inline-end:1.2mm;border-radius:50%;background:#1d4ed8}
+
+/* Official curriculum questions (pages 44–49): presentation-only markers, preserving source text. */
+.a4-page.official-page .official-q>p>b:first-child{display:inline-block;vertical-align:middle;width:4.2mm;height:4.2mm;margin-inline-end:1.4mm;border-radius:50%;background:#1d4ed8;color:transparent;font-size:0;line-height:0}
+.a4-page.official-page .q-item .q-text>b:first-child{display:inline-block;vertical-align:middle;width:3.2mm;height:3.2mm;margin-inline-end:1.2mm;border-radius:50%;background:#1d4ed8;color:transparent;font-size:0;line-height:0}
+/* Official pages: only the first marker of the question is the big one; later parts (a <p> after a marker <p>, or a following .official-q section — pages 47/49 part ב) are sub-sections → smaller marker. */
+.a4-page.official-page .official-q>p:has(>b:first-child)~p>b:first-child,.a4-page.official-page .official-q~.official-q>p>b:first-child{width:3.2mm;height:3.2mm;margin-inline-end:1.2mm}
