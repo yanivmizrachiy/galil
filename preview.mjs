@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+const rootReal = fs.realpathSync(root);
 const port = Number(process.argv[2] || process.env.PORT || 8787);
 const types = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -20,8 +21,13 @@ http.createServer((req, res) => {
     let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (pathname.endsWith('/')) pathname += 'index.html';
     const file = path.normalize(path.join(root, pathname));
-    if (!file.startsWith(root)) { res.writeHead(403); res.end('403'); return; }
+    // Serve only files inside the preview root. Compare against root + path.sep so a sibling
+    // directory that merely shares the textual prefix (e.g. "galil-private") is rejected, not served.
+    if (file !== root && !file.startsWith(root + path.sep)) { res.writeHead(403); res.end('403'); return; }
     if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('404 ' + pathname); return; }
+    // Resolve symlinks and re-check, so a link inside the root cannot point outside it.
+    const real = fs.realpathSync(file);
+    if (real !== rootReal && !real.startsWith(rootReal + path.sep)) { res.writeHead(403); res.end('403'); return; }
     res.writeHead(200, { 'Content-Type': types[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     fs.createReadStream(file).pipe(res);
   } catch (err) { res.writeHead(500); res.end(String(err)); }
