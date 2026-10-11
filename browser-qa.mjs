@@ -147,7 +147,11 @@ async function inspectReader(width,height,label){
       counterIsSelect:counter?.tagName==='SELECT',
       counterVisible:counter?getComputedStyle(counter).display!=='none'&&counter.getBoundingClientRect().height>0:false,
       snap:card?getComputedStyle(card).scrollSnapAlign:'',
-      firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})()
+      firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})(),
+      separator:(()=>{const f=card?.querySelector('iframe'),next=card?.nextElementSibling;if(!f||!next)return null;
+        const cs=getComputedStyle(card),fc=getComputedStyle(f);
+        return {gap:next.getBoundingClientRect().top-f.getBoundingClientRect().bottom,line:parseFloat(cs.borderBottomWidth),color:cs.borderBottomColor,
+          margin:parseFloat(cs.marginBottom),padding:parseFloat(cs.paddingBottom),frameBorder:parseFloat(fc.borderWidth),frameRadius:parseFloat(fc.borderRadius),frameShadow:fc.boxShadow}})()
     };
   });
   ok(!shell.overflow,`${label}: reader shell has horizontal overflow`);
@@ -167,6 +171,10 @@ async function inspectReader(width,height,label){
   ok(/עמוד\s*1\s*מתוך\s*49/.test(shell.counterText||''),`${label}: counter should start at "עמוד 1 מתוך 49" (got "${shell.counterText}")`);
   ok(shell.snap==='start',`${label}: cards must use scroll-snap-align:start (got "${shell.snap}")`);
   if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
+  const sep=shell.separator;
+  ok(sep&&Math.abs(sep.gap-3)<1&&sep.line===3&&sep.color==='rgb(29, 78, 216)'&&sep.margin===0&&sep.padding===0,
+    `${label}: pages must meet at only the 3px blue separator (${JSON.stringify(sep)})`);
+  ok(sep&&sep.frameBorder===0&&sep.frameRadius===0&&sep.frameShadow==='none',`${label}: page frames must not add borders, rounded corners or shadows between pages`);
 
   const firstFrame=page.locator('.sheet-card iframe').first();
   await firstFrame.waitFor({state:'visible'});
@@ -182,12 +190,11 @@ async function inspectReader(width,height,label){
       pageDirection:getComputedStyle(p).direction
     };
   });
-  if(width<=700){
-    ok(scaled&&scaled.w<=scaled.frame+2,`${label}: scaled A4 wider than mobile iframe (${scaled?.w}/${scaled?.frame})`);
-    ok(scaled&&scaled.left>=-2&&scaled.right<=scaled.frame+2,`${label}: scaled A4 is outside portrait iframe viewport (${scaled?.left}, ${scaled?.right}, frame ${scaled?.frame})`);
-    ok(scaled&&scaled.textLength>30,`${label}: first mobile A4 has no readable content`);
-    ok(scaled&&scaled.bodyDirection==='ltr'&&scaled.pageDirection==='rtl',`${label}: mobile wrapper/page direction contract failed (${scaled?.bodyDirection}/${scaled?.pageDirection})`);
-  }
+  ok(scaled&&scaled.w<=scaled.frame+2,`${label}: A4 wider than its iframe (${scaled?.w}/${scaled?.frame})`);
+  ok(scaled&&scaled.left>=-2&&scaled.right<=scaled.frame+2,`${label}: A4 is outside its iframe viewport (${scaled?.left}, ${scaled?.right}, frame ${scaled?.frame})`);
+  ok(scaled&&scaled.textLength>30,`${label}: first A4 has no readable content`);
+  ok(scaled&&scaled.pageDirection==='rtl',`${label}: A4 must remain RTL`);
+  if(scaled&&scaled.frame<expectedW)ok(scaled.bodyDirection==='ltr',`${label}: scaled wrapper must position the RTL A4 from its left edge`);
   const frameShot=`qa-artifacts/reader-${label}-first-page.png`;
   await firstFrame.screenshot({path:frameShot});
   ok(fs.statSync(frameShot).size>25000,`${label}: first-page screenshot is suspiciously blank (${fs.statSync(frameShot).size} bytes)`);
@@ -198,6 +205,8 @@ await inspectReader(360,800,'android-portrait');
 await inspectReader(915,412,'android-landscape');
 await inspectReader(390,844,'iphone-portrait');
 await inspectReader(844,390,'iphone-landscape');
+for(const width of [700,701,740,768,800])await inspectReader(width,1000,`width-${width}`);
+await inspectReader(1440,1200,'desktop');
 
 // Sticky counter updates automatically as the reader scrolls (desktop).
 await page.setViewportSize({width:1440,height:1200});

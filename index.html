@@ -32,10 +32,10 @@
     .download svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
-    .sheet-card{margin:0 0 26px;padding-bottom:20px;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card{margin:0;padding-bottom:0;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
     .sheet-card:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
-    .sheet-card iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
-           box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
+    .sheet-card iframe{display:block;width:100%;max-width:100%;border:0;border-radius:0;background:#fff;
+           min-height:0;height:1120px}
 
     .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
     .intro-video-title{margin:0;font-size:19px;font-weight:800;color:#172033}
@@ -59,9 +59,7 @@
       .intro-video{padding:12px 6px 0}
       .intro-video-title{font-size:17px}
       .video-play svg{width:68px}
-      .sheet-card{margin-bottom:16px;padding-bottom:12px}
-      .sheet-card:last-child{margin-bottom:0;padding-bottom:0}
-      .sheet-card iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
+      .sheet-card iframe{height:auto;aspect-ratio:210/297}
     }
     @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
@@ -93,7 +91,6 @@
     const total = 49;
     const reader = document.getElementById('reader');
     const counter = document.getElementById('counter');
-    const mobileQuery = window.matchMedia('(max-width:700px)');
     let current = 1;
 
     for(let n=1; n<=total; n++){
@@ -136,13 +133,13 @@
         if(!page) return;
         const html = doc.documentElement, body = doc.body;
         const pageWidth = page.offsetWidth, pageHeight = page.offsetHeight;
-        const available = Math.max(1, iframe.clientWidth - 2);
-        const fitMobile = mobileQuery.matches && available < pageWidth;
+        const available = Math.max(1, iframe.clientWidth);
+        const needsFit = available < pageWidth;
 
         html.style.overflowX = 'hidden';
         body.style.overflowX = 'hidden';
 
-        if(fitMobile){
+        if(needsFit){
           const scale = Math.min(1, available / pageWidth);
           html.style.overflow = 'hidden';  html.style.direction = 'ltr';
           body.style.overflow = 'hidden';  body.style.direction = 'ltr';
@@ -151,7 +148,7 @@
           page.style.transformOrigin = 'top left';  page.style.transform = `scale(${scale})`;
           page.style.position = 'relative';  page.style.left = '0';
           html.scrollLeft = 0;  body.scrollLeft = 0;  doc.defaultView.scrollTo(0,0);
-          iframe.style.height = `${Math.ceil(pageHeight*scale)+2}px`;
+          iframe.style.height = `${Math.ceil(pageHeight*scale)}px`;
           iframe.setAttribute('scrolling','no');
         }else{
           html.style.overflow = '';  html.style.direction = '';
@@ -162,7 +159,7 @@
           page.style.transform = '';  page.style.transformOrigin = '';
           iframe.removeAttribute('scrolling');
           const h = Math.max(html.scrollHeight, body.scrollHeight, pageHeight);
-          if(h > 300) iframe.style.height = `${h+2}px`;
+          if(h > 300) iframe.style.height = `${h}px`;
         }
       }catch(e){}
     }

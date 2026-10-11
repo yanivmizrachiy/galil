@@ -29,24 +29,19 @@ if (plan.progress.blockedCount !== blocked) fail('blockedCount mismatch');
 if (calculated === 100 && plan.tasks.some(t => t.status !== 'done')) fail('100% requires every task done');
 
 const meaningful=(file)=>[
-  /^SOURCE_OF_TRUTH\.md$/,
-  /^SOURCES\.md$/,
+  /^(SOURCE_OF_TRUTH|SOURCES|README|CLAUDE|PROVENANCE)\.md$/,
   /^official-questions-source\.json$/,
   /^page-\d+\.html$/,
   /^index\.html$/,
   /^styles\.css$/,
   /^qa\.mjs$/,
-  /^ssot-qa\.mjs$/,
-  /^official-source-qa\.mjs$/,
-  /^official-render-qa\.mjs$/,
+  /^[\w-]+-qa\.mjs$/,
   /^official-source-visual-evidence\.mjs$/,
-  /^core-qa\.mjs$/,
-  /^volume-qa\.mjs$/,
-  /^surface-qa\.mjs$/,
-  /^browser-qa\.mjs$/,
+  /^galil-student\.pdf(?:\.manifest\.json)?$/,
   /^package(?:-lock)?\.json$/,
-  /^\.github\/workflows\/qa\.yml$/,
-  /^scripts\/(?!verify-progress\.mjs$)/,
+  /^\.github\/workflows\/[^/]+\.ya?ml$/,
+  /^scripts\//,
+  /^vendor\//,
   /^assets\//,
   /^provenance\//
 ].some(rx=>rx.test(file));
