@@ -23,7 +23,9 @@ jobs:
         with:
           node-version: '22'
       - name: Prepare canonical closure candidate
-        run: python3 scripts/finalize-cover.py
+        run: |
+          python3 -c "from pathlib import Path; import re; p=Path('assets/cover-bg.webp'); b=p.read_bytes(); p.write_bytes(re.sub(rb'[^A-Za-z0-9+/=]',b'',b)) if b.startswith(b'UklGR') else None"
+          python3 scripts/finalize-cover.py
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Install Chromium
