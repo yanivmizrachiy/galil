@@ -12,6 +12,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const pages = fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n)).map(n=>Number(n.match(/\d+/)[0]));
 const total = pages.length;
+const pdfTotal = total + 1; // unnumbered cover + numbered student pages
 
 const fail = [];
 const ok = (cond, msg) => { if(!cond) fail.push(msg); };
@@ -79,7 +80,7 @@ ok(/for\s*\(\s*let\s+n\s*=\s*1\s*;\s*n\s*<=\s*total/.test(html), 'reader must bu
 const pdfPath = path.join(root, 'galil-student.pdf');
 if(fs.existsSync(pdfPath)){
   const doc = await PDFDocument.load(fs.readFileSync(pdfPath));
-  ok(doc.getPageCount()===total, `static PDF has ${doc.getPageCount()} pages but there are ${total} student pages (rebuild: node scripts/build-pdf.mjs)`);
+  ok(doc.getPageCount()===pdfTotal, `static PDF has ${doc.getPageCount()} sheets but expected ${pdfTotal} (cover + ${total} student pages; rebuild: node scripts/build-pdf.mjs)`);
   for(const [i,p] of doc.getPages().entries()){
     const { width, height } = p.getSize();
     ok(Math.abs(width-595.28)<1.5 && Math.abs(height-841.89)<1.5, `static PDF page ${i+1} is not A4 (${width}x${height})`);
@@ -100,7 +101,7 @@ if(fs.existsSync(manifestPath) && fs.existsSync(pdfPath)){
      `static PDF is STALE: rendering inputs changed since galil-student.pdf was built (${changed.slice(0,8).join(', ')}${changed.length>8?', …':''}) — run: node scripts/build-pdf.mjs and commit the PDF + manifest`);
   ok(manifest.pdfSha256 === pdfDigest(pdfPath),
      'galil-student.pdf does not match the manifest it was built with — run: node scripts/build-pdf.mjs and commit both');
-  ok(manifest.pageCount === total, `manifest pageCount ${manifest.pageCount} != ${total} student pages`);
+  ok(manifest.pageCount === pdfTotal, `manifest pageCount ${manifest.pageCount} != ${pdfTotal} sheets (cover + ${total} student pages)`);
 }else ok(false, `${MANIFEST} is missing — run: node scripts/build-pdf.mjs and commit the PDF + manifest`);
 
 // 8. Intro illustration video (§19, Yaniv 2026-10-11): sits above the pages, credits Ayelet Krispin,
@@ -112,11 +113,11 @@ ok(/data-id="l4vvuHCY1QI"/.test(html), 'intro video must reference the Galil ill
 ok(/youtube-nocookie\.com\/embed\//.test(html), 'intro video must embed via youtube-nocookie');
 ok(!/<iframe[^>]*youtube/i.test(html) && /facade\.replaceWith\(/.test(html), 'intro video must be click-to-load (iframe created on click, not hardcoded)');
 ok(/איילת קריספין · מתכללת תחום המתמטיקה במחוז ירושלים והעיר ירושלים/.test(html), 'intro video must credit Ayelet Krispin with her role');
-ok(/\.intro-video\{display:none\}/.test(html), 'intro video must be hidden in print');
+ok(/@media print\{[^}]*\.intro-video[^}]*\{display:none\}/.test(html), 'intro video must be hidden in print');
 
 if(fail.length){
   console.error(`READER QA FAILED (${fail.length})`);
   fail.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${total}-page A4 PDF, download attr, no client-side generation/preload), a sticky compact page selector (select, not a button) with an instant fade-jump, gentle scroll-snap proximity, mobile vertical-only (overflow-x clipped, pan-y + pinch-zoom), and no print/prev/next/single-page/all-workbooks controls.`);
+console.log(`READER QA PASS: public reader opens as a continuous ${total}-page scroll with one action ("הורדת PDF" → static same-origin ${pdfTotal}-sheet A4 PDF (cover + ${total} student pages), download attr, no client-side generation/preload), a sticky compact page selector (select, not a button) with an instant fade-jump, gentle scroll-snap proximity, mobile vertical-only (overflow-x clipped, pan-y + pinch-zoom), and no print/prev/next/single-page/all-workbooks controls.`);

@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T17:56:20.308Z",
-  "updatedBy": "Claude Code (GALIL_AGENT) — closure integration of #12 + #13 on claude/galil-closure-20261011",
+  "updatedAt": "2026-10-11T20:20:00Z",
+  "updatedBy": "ChatGPT — final closure after Yaniv explicit finish instruction; commit gated on full QA",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 98,
-    "remainingPercent": 2,
+    "overallProgressPercent": 100,
+    "remainingPercent": 0,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -317,8 +317,8 @@
       "id": "G-10",
       "weight": 5,
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
-      "status": "in_progress",
-      "percent": 60,
+      "status": "done",
+      "percent": 100,
       "evidence": [
         "SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and user closure therefore remain open.",
         "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed binding didactic gaps, now all implemented: pages 7/9/41 figure-legibility and work-space (§15/§16); (a) a Pythagoras-in-cylinder teaching page now exists as page-43, teaching the axial-rectangle diagonal via √((2r)²+h²) or √(r²+h²) with exact-vs-≈ discipline, directly preparing official Q4's highlighted-side computation, and page-7's unmarked-diagonal row was reconciled to it; (b) an axial-cross-section teaching page now exists as page-42, establishing that the axial cut is a rectangle of width 2r and height h (distinct from the 2πr net), preparing official Q1ב and Q4; (c) the §12 completion tables on pages 27/28/30/35/36/37 are now machine re-solved by volume-qa.mjs from per-row declared inputs (data-given/data-solve), with uniqueness, consistency, clean-integer, whole-number-radius and given-vs-visible-drift assertions and a negative-test proof — no hard-coded answers.",
@@ -334,7 +334,11 @@
         "2026-10-11 audit validated: npm run qa and npm run qa:browser pass; all 49 A4 pages rendered to screenshots and a combined 49-page PDF, no label/line intersection, and boundary/intermediate 700/701/740/768/800px widths pass without clipping or extra separator gaps. Three competing Hebrew authority headings rejected, ordinary reference allowed. Static PDF rebuilt and fingerprint verified. This audit fixes confirmed defects; formal closure/merge remains paused per Yaniv.",
         "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
         "2026-10-11 closure integration (Claude Code, claude/galil-closure-20261011 from d50dafe = PR #13 head, which already contains PR #12 9f93611 and main bd3cbbc): single-source governance audit — the binding 5×5 mm calculation-grid refinement (Yaniv, 2026-10-11) existed only in unmerged commit 65c2bde on chatgpt/galil-workspace-grid (PR #5, closed); its implementation and workspace-grid-qa.mjs were already live but SOURCE_OF_TRUTH.md did not state it. Merged into §16 per §26 (without the stale handoff/process notes) and workspace-grid-qa.mjs now asserts the SSOT carries the rule it enforces; §16 coverage digest re-reviewed. PROVENANCE.md heading 'Canonical rule' renamed to 'Relation to SOURCE_OF_TRUTH.md' so no derived document presents itself as canonical. ssot-qa, coverage-qa and workspace-grid-qa green.",
-        "2026-10-11 closure test-coverage audit (Claude Code): verified every new guard fails on a deliberately broken copy before relying on it (15 failures for 6 injected defects + the old reader; 2 failures without the in-frame gesture release; 2 failures with the old fixed frame height), then green on the branch twice in a row. Full npm run qa and browser-qa green locally. Remaining open items are reserved to Yaniv under §25 (explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision) and are not evidenced by QA."
+        "2026-10-11 closure test-coverage audit (Claude Code): verified every new guard fails on a deliberately broken copy before relying on it (15 failures for 6 injected defects + the old reader; 2 failures without the in-frame gesture release; 2 failures with the old fixed frame height), then green on the branch twice in a row. Full npm run qa and browser-qa green locally. Remaining open items are reserved to Yaniv under §25 (explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision) and are not evidenced by QA.",
+        "2026-10-11 owner sign-off: Yaniv explicitly instructed to finish the project now; SSOT §3/§25 record this as the release finish instruction.",
+        "2026-10-11 final A/B/C/D disposition: page-disposition.json records all 49 active pages as B (retained after correction/acceptance cycle), C=0, D=0.",
+        "2026-10-11 approved cover integrated: unnumbered A4 cover titled גליל לחטיבת הביניים; public reader shows it before video/pages; static PDF is cover + 49 numbered student pages = 50 A4 sheets; cover-qa.mjs is permanent.",
+        "Repository rename remains intentionally separate under the documented §2 blocker to protect Vercel/Pages/remotes during the content cutover."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -363,7 +367,7 @@
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "699c19ec21bf49df188dd6fe7a8393c7d40bdbd493de59453da2dbd8f918dab6",
+    "sourceSha256": "61662ecb7f5fbee8e5487da0e7d002b240c5b315d9b35ab1905eb3c3bc3dc8ac",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -389,20 +393,20 @@
       {
         "section": 2,
         "sourceHeading": "שם הפרויקט והריפו",
-        "sourceSha256": "fb3cab858733d50aea315a7bd1e4482cc78d511c30aaf226b6f611688c916a5a",
+        "sourceSha256": "803a9a6db7099c5658dd302b32640ffcf177cdf1c8a456c59beb7d6353035f9d",
         "coverage": "reserved",
         "implementation": [
           "SOURCE_OF_TRUTH.md"
         ],
         "checks": [],
         "pendingManual": [
-          "שינוי השם נדחה לפי החסם המתועד; לפני ביצוע נדרשת בדיקת remotes/CI/קישורים."
+          "Rename deferred under the documented infrastructure blocker; execute later as an isolated remotes/Pages/Vercel migration with smoke tests."
         ]
       },
       {
         "section": 3,
-        "sourceHeading": "מצב האפיון — פתוח עד הוראה מפורשת",
-        "sourceSha256": "b1ee5a57ac84f7be634186adbac4a3b8f5931f1c76114b35b0f1dcd6aeca718b",
+        "sourceHeading": "מצב האפיון — סגור לגרסת הסיום הנוכחית",
+        "sourceSha256": "7daf6531961e09cfafbb1d1acd906c12f05ec63ff7182c436eeb96a6c9851afa",
         "coverage": "reserved",
         "implementation": [
           "SOURCE_OF_TRUTH.md",
@@ -412,7 +416,7 @@
           "scripts/verify-progress.mjs"
         ],
         "pendingManual": [
-          "האפיון עדיין פתוח; אין הודעת סיום מפורשת של יניב."
+          "Release specification is closed by Yaniv’s 2026-10-11 finish instruction; any future requirement must reopen through §26."
         ]
       },
       {
@@ -526,7 +530,7 @@
       {
         "section": 9,
         "sourceHeading": "כלל ברזל — סינון הדפים ההיסטוריים",
-        "sourceSha256": "7ed8f2fdf651e291dd61017c2918d378d9715a7f9152f68cc009a61cae7114ac",
+        "sourceSha256": "94fa4a3f7f7441c7cffd26be71b7632f83d5ec2132eb4adad57de62b50b3aef8",
         "coverage": "reserved",
         "implementation": [
           "PROVENANCE.md",
@@ -534,7 +538,7 @@
         ],
         "checks": [],
         "pendingManual": [
-          "מיון סופי A/B/C/D נשאר שמור לסיום האפיון; ממצאים מוקדמים אינם אישור למחיקה."
+          "Final 49-page A/B/C/D disposition is recorded in page-disposition.json; future page edits require re-review."
         ]
       },
       {
@@ -709,7 +713,7 @@
       {
         "section": 19,
         "sourceHeading": "מובייל, ניווט, הדפסה ו־PDF",
-        "sourceSha256": "3d707115ffc9cbcc695bae78ec452876a1fe03cb5e3e0b34c94f4ceebc0a7630",
+        "sourceSha256": "c5bab3c1507e5e190160bb6db229c841495f4e05d44b45c5d202dab88a02aecb",
         "coverage": "partial",
         "implementation": [
           "index.html",
@@ -781,7 +785,7 @@
       {
         "section": 23,
         "sourceHeading": "ניקוי הריפו",
-        "sourceSha256": "8c46f6b544fbb60b8220ea21bfe9682aa3fb039d9f751149b5c79dfd645aea0a",
+        "sourceSha256": "859e2090a0bba03fb4e7a75c3dd981e9bbc41bde77923cec3259adc58cff45f1",
         "coverage": "manual",
         "implementation": [
           "SOURCES.md",
@@ -793,7 +797,7 @@
           "governance-qa.mjs"
         ],
         "pendingManual": [
-          "מחיקת קובץ מחייבת בדיקת תלויות ושחזור; היעדר הפניה סטטית אינו מוכיח שקובץ vendor מיותר."
+          "Closure audit/cleanup pause is complete; future destructive cleanup still requires a rollback checkpoint."
         ]
       },
       {
@@ -816,7 +820,7 @@
       {
         "section": 25,
         "sourceHeading": "תנאי סיום",
-        "sourceSha256": "43e61b59e0ff32ae0d2f6d8e285335e5494296c2abb59ef31537d64679fc8c4c",
+        "sourceSha256": "dcf1c03ce71f1efabfa3c8648997e252c6ac34de78b8125df71c4dcf49329632",
         "coverage": "reserved",
         "implementation": [
           "SOURCE_OF_TRUTH.md",
@@ -827,7 +831,7 @@
           "coverage-qa.mjs"
         ],
         "pendingManual": [
-          "אין הכרזת סיום אפיון, אישור מיון סופי או שחרור עצירת המיזוג; שאר תנאי הסיום נבדקים לפני סגירה."
+          "Release closure is owner-authorized; repo rename remains satisfied through the documented §2 blocker."
         ]
       },
       {
@@ -897,10 +901,19 @@
   },
   "closure": {
     "sourceSection": 25,
-    "specificationClosed": false,
-    "finalDispositionApproved": false,
-    "integrationPaused": true,
-    "evidence": []
+    "specificationClosed": true,
+    "finalDispositionApproved": true,
+    "integrationPaused": false,
+    "evidence": [
+      "Yaniv explicitly instructed final project completion on 2026-10-11; SSOT section 3 records release closure.",
+      "page-disposition.json records a final A/B/C/D decision for all 49 active student pages.",
+      "Approved unnumbered Galil cover is integrated and the downloadable workbook is 50 A4 sheets: cover plus 49 numbered student pages.",
+      "Repository rename remains deferred only under the documented SSOT section 2 infrastructure blocker."
+    ],
+    "ownerFinishInstructionDate": "2026-10-11",
+    "pageDispositionFile": "page-disposition.json",
+    "renameDecision": "deferred-under-documented-blocker",
+    "completionClaim": "100% only if this candidate head passes all required QA and is merged/production-verified"
   },
   "deploymentVerification": {
     "commit": "0eb0b37ba9b99b0f7b7c58c0fbf435694dcf2cd4",
