@@ -13,17 +13,19 @@ if 'סימון שאלות וסעיפים ללא מספור גלוי' not in ssot
 
 qa_path=Path('qa.mjs')
 qa=qa_path.read_text(encoding='utf-8')
+if "const ssot = fs.readFileSync(path.join(dir, 'SOURCE_OF_TRUTH.md'), 'utf8');" not in qa:
+    needle="const css = fs.readFileSync(path.join(dir, 'styles.css'), 'utf8');"
+    if needle not in qa:
+        raise SystemExit('qa.mjs css read anchor not found')
+    qa=qa.replace(needle,needle+"\nconst ssot = fs.readFileSync(path.join(dir, 'SOURCE_OF_TRUTH.md'), 'utf8');",1)
 marker='// SSOT canonical marker governance guard (Yaniv 2026-10-11).'
 if marker not in qa:
-    insertion='''\n\n// SSOT canonical marker governance guard (Yaniv 2026-10-11).\nassert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול בולט') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must canonically require blue question markers instead of visible question numbering while preserving page numbers');\n'''
-    # qa.mjs already defines ssot + assert and already locks the CSS marker implementation.
-    needle="assert(/\\.a4-page \\.q-item \\.q-num::after"
-    pos=qa.find(needle)
-    if pos<0:
-        raise SystemExit('existing marker QA lock not found; refusing unrelated QA rewrite')
-    line_end=qa.find('\n',pos)
-    qa=qa[:line_end+1]+insertion+qa[line_end+1:]
-    qa_path.write_text(qa,encoding='utf-8')
+    insertion="\n// SSOT canonical marker governance guard (Yaniv 2026-10-11).\nassert(ssot.includes('סימון שאלות וסעיפים ללא מספור גלוי') && ssot.includes('עגול כחול בולט') && ssot.includes('מספרי העמודים נשארים מספריים'), 'SSOT must canonically require blue question markers instead of visible question numbering while preserving page numbers');\n"
+    needle="assert(!/\\.page-number\\{[^}]*font-size:0/.test(css), 'page numbers must remain visible digits');"
+    if needle not in qa:
+        raise SystemExit('existing visible-page-number marker QA lock not found; refusing unrelated QA rewrite')
+    qa=qa.replace(needle,needle+insertion,1)
+qa_path.write_text(qa,encoding='utf-8')
 
 tracker_path=Path('workplans/galil.json')
 tracker=json.loads(tracker_path.read_text(encoding='utf-8'))
