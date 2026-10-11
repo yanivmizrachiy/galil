@@ -7,6 +7,10 @@
   <script>MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, chtml: { fontURL: 'vendor/mathjax/tex-font/chtml/woff2' } };</script>
   <script id="MathJax-script" async src="vendor/mathjax/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page 11 ends with a multiple-choice task, so the legacy automatic lined workspace is not pedagogically useful here. */
+    .a4-page .task:last-of-type .task-body::after{display:none!important}
+  </style>
 </head>
 <body>
 <main class="a4-page">
@@ -15,7 +19,7 @@
     <div class="page-number" aria-label="עמוד 11">11</div>
   </header>
 
-  <div class="anchor">\(\pi\) הוא מספר מדויק. כאשר משתמשים ב־\(3.14\) כקירוב, כותבים \(\pi \approx 3.14\) ולא שוויון.</div>
+  <div class="anchor">\(\pi\) הוא מספר מדויק. כאשר משתמשים ב־\(3.14\) כ<span class="gap"></span>, כותבים \(\pi \approx 3.14\) ולא שוויון.</div>
 
   <section class="task">
     <div class="task-row"><div class="task-num">1</div><div class="task-body">
@@ -37,7 +41,7 @@
       <p class="instruction">בחרו את הסימן המתאים.</p>
       <div class="sentence-list">
         <div class="sentence" style="text-align:center;font-size:24px"><span dir="ltr">\(\pi\quad\underline{\hspace{12mm}}\quad3.14\)</span></div>
-        <div class="sentence" style="display:flex;justify-content:center;gap:10mm"><b class="choice-pill">\(=\)</b><b class="choice-pill">\(\approx\)</b><b class="choice-pill">\(&gt;\)</b></div>
+        <div class="sentence" style="display:flex;justify-content:center;gap:10mm"><b class="choice-pill">\(=\)</b><b class="choice-pill">\(\approx\)</b></div>
       </div>
     </div></div>
   </section>

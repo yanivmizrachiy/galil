@@ -28,4 +28,25 @@ for (const file of markdown) {
   if (/\bSSOT:ONLY-AUTHORITY\b/.test(text)) fail(`${rel} contains the authority marker reserved for ${SSOT}`);
 }
 
+// 2026-10-09 (Yaniv): make sure the repository has exactly one source of truth.
+// Competing requirement documents, JSON files pointing elsewhere, and navigation docs that
+// do not point back to SOURCE_OF_TRUTH.md all fail this gate.
+const competingNames = /^(RULES|SPEC|SPECIFICATION|REQUIREMENTS|SSOT|TRUTH|SOURCE_OF_TRUTH[-_.].+)\.md$/i;
+for (const file of walk(root)) {
+  const rel = path.relative(root, file).replaceAll('\\','/');
+  if (rel === SSOT || rel.startsWith('vendor/') || rel.startsWith('.git/')) continue;
+  if (competingNames.test(path.basename(file))) fail(`${rel} looks like a competing requirements document; merge it into ${SSOT}`);
+  if (/\.json$/i.test(file)) {
+    const text = fs.readFileSync(file, 'utf8');
+    if (/מקור האמת היחיד|SSOT:ONLY-AUTHORITY/.test(text)) fail(`${rel} declares a competing source of truth`);
+    let data = null;
+    try { data = JSON.parse(text); } catch { data = null; }
+    if (data && typeof data === 'object' && 'canonicalSourceOfTruth' in data && data.canonicalSourceOfTruth !== SSOT) fail(`${rel} points to a different source of truth: ${data.canonicalSourceOfTruth}`);
+  }
+}
+for (const doc of ['README.md', 'CLAUDE.md', 'SOURCES.md', 'PROVENANCE.md']) {
+  const docPath = path.join(root, doc);
+  if (fs.existsSync(docPath) && !fs.readFileSync(docPath, 'utf8').includes(SSOT)) fail(`${doc} must point back to ${SSOT}`);
+}
+
 console.log('SSOT QA: PASS — SOURCE_OF_TRUTH.md is the single requirements authority for גליל חדש');

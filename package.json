@@ -1,0 +1,14 @@
+{
+  "name": "galil-hadash-workbook",
+  "private": true,
+  "scripts": {
+    "qa": "node ssot-qa.mjs && node qa.mjs && node official-source-qa.mjs && node official-render-qa.mjs && node core-qa.mjs && node volume-qa.mjs && node surface-qa.mjs && node workspace-grid-qa.mjs && node reader-qa.mjs && node scripts/verify-progress.mjs",
+    "build:pdf": "node scripts/build-pdf.mjs",
+    "qa:official": "node official-source-qa.mjs && node official-render-qa.mjs",
+    "qa:browser": "node browser-qa.mjs"
+  },
+  "devDependencies": {
+    "pdf-lib": "1.17.1",
+    "playwright": "1.55.0"
+  }
+}
