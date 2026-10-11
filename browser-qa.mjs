@@ -7,7 +7,7 @@ import path from 'node:path';
 const failures=[];
 const ok=(cond,msg)=>{if(!cond)failures.push(msg)};
 const root=process.cwd();
-const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'};
+const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf'};
 const pages=fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n)).map(n=>Number(n.match(/\d+/)[0])).sort((a,b)=>a-b);
 const total=pages.length;
 
@@ -126,19 +126,35 @@ async function inspectReader(width,height,label){
     return Boolean(p && p.textContent.trim().length>30 && p.getBoundingClientRect().height>100);
   },null,{timeout:5000});
   await page.waitForTimeout(250);
-  const shell=await page.evaluate(()=>({
-    overflow:document.documentElement.scrollWidth>innerWidth+1,
-    totalText:document.querySelector('#pageTotal')?.textContent?.trim(),
-    max:document.querySelector('#page')?.max,
-    continuousPressed:document.querySelector('#continuousMode')?.getAttribute('aria-pressed'),
-    continuousVisible:getComputedStyle(document.querySelector('#continuousView')).display!=='none',
-    cards:document.querySelectorAll('.sheet-card').length,
-    firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})()
-  }));
+  const shell=await page.evaluate(()=>{
+    const dl=document.querySelector('#download');
+    const counter=document.querySelector('#counter');
+    const card=document.querySelector('.sheet-card');
+    return {
+      overflow:document.documentElement.scrollWidth>innerWidth+1,
+      cards:document.querySelectorAll('.sheet-card').length,
+      buttons:document.querySelectorAll('button').length,
+      forbidden:['#singleMode','#continuousMode','#prev','#next','#page'].filter(s=>document.querySelector(s)).join(','),
+      barActions:document.querySelectorAll('.bar a, .bar button').length,
+      dlText:dl?dl.textContent.replace(/\s+/g,' ').trim():null,
+      dlDownload:dl?dl.hasAttribute('download'):false,
+      dlHref:dl?dl.getAttribute('href'):null,
+      counterTag:counter?counter.tagName.toLowerCase():null,
+      counterText:counter?counter.textContent.trim():null,
+      snap:card?getComputedStyle(card).scrollSnapAlign:'',
+      firstFrame:(()=>{const f=document.querySelector('.sheet-card iframe');if(!f)return null;const r=f.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}})()
+    };
+  });
   ok(!shell.overflow,`${label}: reader shell has horizontal overflow`);
-  ok(shell.totalText===String(total)&&shell.max===String(total),`${label}: reader total mismatch`);
-  ok(shell.continuousPressed==='true'&&shell.continuousVisible,`${label}: continuous view is not the default`);
   ok(shell.cards===total,`${label}: expected ${total} continuous cards, got ${shell.cards}`);
+  ok(shell.buttons===0,`${label}: reader must expose no <button> (found ${shell.buttons})`);
+  ok(!shell.forbidden,`${label}: removed controls still present (${shell.forbidden})`);
+  ok(shell.barActions===1,`${label}: visible bar must have exactly one action, found ${shell.barActions}`);
+  ok(shell.dlText&&shell.dlText.includes('הורדת PDF'),`${label}: the one action must read "הורדת PDF" (got "${shell.dlText}")`);
+  ok(shell.dlDownload&&/\.pdf$/i.test(shell.dlHref||''),`${label}: action must be a static .pdf download link (download=${shell.dlDownload}, href=${shell.dlHref})`);
+  ok(shell.counterTag&&!['button','a','input'].includes(shell.counterTag),`${label}: page counter must not be button/link/input (is <${shell.counterTag}>)`);
+  ok(/עמוד\s*1\s*מתוך\s*49/.test(shell.counterText||''),`${label}: counter should start at "עמוד 1 מתוך 49" (got "${shell.counterText}")`);
+  ok(shell.snap==='start',`${label}: cards must use scroll-snap-align:start (got "${shell.snap}")`);
   if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
 
   const firstFrame=page.locator('.sheet-card iframe').first();
@@ -172,26 +188,47 @@ await inspectReader(915,412,'android-landscape');
 await inspectReader(390,844,'iphone-portrait');
 await inspectReader(844,390,'iphone-landscape');
 
-// Verify all newly authored surface-area and official-curriculum pages in single-page mobile mode.
+// Sticky counter updates automatically as the reader scrolls (desktop).
+await page.setViewportSize({width:1440,height:1200});
+await page.goto(base,{waitUntil:'load'});
+await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
+await page.evaluate(()=>document.getElementById('sheet-12').scrollIntoView());
+await page.waitForTimeout(450);
+const counterNow=await page.$eval('#counter',el=>el.textContent.trim());
+const counterNum=Number((counterNow.match(/עמוד\s*(\d+)/)||[])[1]||0);
+ok(counterNum>1,`sticky counter did not update on scroll (still "${counterNow}")`);
+
+// The one action downloads a real static same-origin PDF (not generated on click).
+const dl=await page.evaluate(async()=>{
+  const a=document.querySelector('#download'); if(!a)return null;
+  const url=new URL(a.getAttribute('href'),location.href);
+  const res=await fetch(url.href);
+  const buf=new Uint8Array(await res.arrayBuffer());
+  return {sameOrigin:url.origin===location.origin,status:res.status,
+    type:res.headers.get('content-type')||'',isPdf:String.fromCharCode(...buf.slice(0,5)).startsWith('%PDF'),bytes:buf.length};
+});
+ok(dl&&dl.sameOrigin,'download link must be same-origin');
+ok(dl&&dl.status===200&&dl.isPdf&&/pdf/i.test(dl.type),`download must serve a real static PDF (status ${dl?.status}, type ${dl?.type}, pdf ${dl?.isPdf})`);
+ok(dl&&dl.bytes>50000,`static PDF suspiciously small (${dl?.bytes} bytes)`);
+
+// Mobile A4 fit of the newer/official pages inside the continuous reader (no single-page view exists).
 await page.setViewportSize({width:390,height:844});
 await page.goto(base,{waitUntil:'load'});
-await page.click('#singleMode');
+await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
 for(const n of [39,40,41,42,43,44,45,46,47,48,49]){
-  await page.fill('#page',String(n));
-  await page.locator('#page').evaluate(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
-  await page.waitForFunction(expected=>document.querySelector('#sheet')?.getAttribute('src')===`page-${expected}.html`,n);
-  await page.waitForFunction(()=>{
-    const f=document.querySelector('#sheet');
+  await page.evaluate(n=>document.getElementById(`sheet-${n}`).scrollIntoView(),n);
+  await page.waitForFunction(n=>{
+    const f=document.querySelector(`#sheet-${n} iframe`);
     const p=f?.contentDocument?.querySelector('.a4-page');
     return Boolean(p && p.textContent.trim().length>30);
-  });
-  await page.waitForTimeout(120);
-  const fit=await page.locator('#sheet').evaluate(f=>{
+  },n,{timeout:5000});
+  await page.waitForTimeout(150);
+  const fit=await page.locator(`#sheet-${n} iframe`).evaluate(f=>{
     const p=f.contentDocument?.querySelector('.a4-page'); if(!p)return null;
-    const r=p.getBoundingClientRect(); return {pageW:r.width,left:r.left,right:r.right,frameW:f.clientWidth,src:f.getAttribute('src')};
+    const r=p.getBoundingClientRect(); return {pageW:r.width,left:r.left,right:r.right,frameW:f.clientWidth};
   });
-  ok(fit&&fit.src===`page-${n}.html`&&fit.pageW<=fit.frameW+2&&fit.left>=-2&&fit.right<=fit.frameW+2,`mobile single view page ${n}: clipping or wrong source`);
-  if(n>=44) await page.locator('#sheet').screenshot({path:`qa-artifacts/official-page-${n}-mobile.png`});
+  ok(fit&&fit.pageW<=fit.frameW+2&&fit.left>=-2&&fit.right<=fit.frameW+2,`mobile continuous page ${n}: clipping (${JSON.stringify(fit)})`);
+  if(n>=44) await page.locator(`#sheet-${n} iframe`).screenshot({path:`qa-artifacts/official-page-${n}-mobile.png`});
 }
 
 ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);
@@ -203,4 +240,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous reader default, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile single-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky non-button counter that updates on scroll, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);
