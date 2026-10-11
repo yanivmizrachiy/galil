@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T10:45:00+03:00",
-  "updatedBy": "Claude Code",
+  "updatedAt": "2026-10-11T11:12:00+03:00",
+  "updatedBy": "ChatGPT direct repo agent",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -32,7 +32,8 @@
         "README.md is navigation-only.",
         "ssot-qa.mjs exists as a source-of-truth integrity gate.",
         "2026-10-09: per Yaniv's standing instruction that every remark/requirement he gives must enter the SSOT, SOURCE_OF_TRUTH.md §3 now states that rule explicitly (the SSOT is the only canonical memory of decisions); §15 was sharpened with the binding 'letters/labels are never on the drawing lines' rule plus its automated QA enforcement; §8 adds the anchor-box active-completion principle, with the rollout scope over existing anchors reserved to an explicit Yaniv instruction (resolved 2026-10-10).",
-        "2026-10-10: per Yaniv's explicit instruction to advance to full completion, SSOT §8 was changed from a reserved-scope note to a decided rule — every anchor box in the workbook now carries one active-completion blank (a gap span); §15's QA-enforcement sentence was corrected to state the real guard tolerance (a label fails when a drawing stroke covers more than max(4px,6%) of its glyph box) rather than literal zero-tolerance; and §2 now records a dated blocker for the galil-hadash rename, satisfying §25.9 via the documented-blocker arm."
+        "2026-10-10: per Yaniv's explicit instruction to advance to full completion, SSOT §8 was changed from a reserved-scope note to a decided rule — every anchor box in the workbook now carries one active-completion blank (a gap span); §15's QA-enforcement sentence was corrected to state the real guard tolerance (a label fails when a drawing stroke covers more than max(4px,6%) of its glyph box) rather than literal zero-tolerance; and §2 now records a dated blocker for the galil-hadash rename, satisfying §25.9 via the documented-blocker arm.",
+        "2026-10-11: Yaniv reader/footer requirement recorded canonically: SSOT §17 requires a full-width blue rule above the district footer text; SSOT §19 requires immediate continuous downward scrolling, no per-page “עמוד X מתוך N” labels between pages, a full-width blue-only page separator, and keeps page-count text only in the sticky selector. QA gates were strengthened in the same work cycle. Overall remains 98% because §25 reserved closure conditions are unchanged."
       ],
       "blockedReason": null
     },

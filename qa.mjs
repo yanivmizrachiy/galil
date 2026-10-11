@@ -15,6 +15,7 @@ assert(/print-color-adjust:\s*exact/.test(css), 'print-color-adjust:exact is req
 assert(css.includes('יניב רז - מדריך מחוזי חט\\"ב בעיר ירושלים'), 'canonical first credit line is missing');
 assert(css.includes('הדרכה במחוז ירושלים והעיר ירושלים - מנח\\"י, בהובלת איילת קריספין'), 'canonical second credit line is missing');
 assert(/white-space:pre-line/.test(css), 'credit footer must render as two lines');
+assert(/\.a4-page::after\{[^}]*right:0;left:0;[^}]*border-top:\s*2px solid #1e3a8a/.test(css), 'district footer must have a full-width blue rule above the footer text');
 
 const answerFiles = fs.readdirSync(dir).filter(name => /\.answers\.json$/i.test(name));
 assert(answerFiles.length === 0, `separate answer-key files are forbidden: ${answerFiles.join(', ')}`);

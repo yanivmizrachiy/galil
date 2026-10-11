@@ -36,11 +36,8 @@
 
     /* Continuous reader — every student page as a full A4, clearly separated. */
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
-    .sheet-card{margin:0 0 26px;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
-    .sheet-card:last-child{margin-bottom:0}
-    .sheet-label{font-weight:700;text-align:center;margin:0 0 9px;color:#52627a;font-size:14px;
-                 display:flex;align-items:center;justify-content:center;gap:12px}
-    .sheet-label::before,.sheet-label::after{content:"";flex:1;max-width:120px;height:1px;background:#d2dbe8}
+    .sheet-card{margin:0 0 26px;padding-bottom:20px;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
+    .sheet-card:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
     iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
            box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
 
@@ -55,7 +52,7 @@
       /* Reserve the A4 aspect-ratio before load so lazy iframes do not resize-jump (§19). */
       iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
     }
-    @media print{ .bar{display:none} body{background:#fff} iframe{box-shadow:none;border:none} }
+    @media print{ .bar{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
@@ -161,17 +158,13 @@
         card.id = `sheet-${n}`;
         card.dataset.page = n;
 
-        const label = document.createElement('div');
-        label.className = 'sheet-label';
-        label.textContent = `עמוד ${n} מתוך ${total}`;
-
         const iframe = document.createElement('iframe');
         iframe.src = `page-${n}.html`;
         iframe.title = `חוברת הגליל — עמוד ${n}`;
         iframe.loading = n <= 2 ? 'eager' : 'lazy';
         iframe.addEventListener('load', () => fitFrame(iframe));
 
-        card.append(label, iframe);
+        card.append(iframe);
         frag.appendChild(card);
       }
       reader.appendChild(frag);

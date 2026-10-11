@@ -63,6 +63,8 @@ ok(/position:\s*sticky/.test(barRule), 'the .bar (holding the selector) must be 
 // 5. Gentle scroll-snap + continuous build of every page.
 ok(/scroll-snap-type:\s*y\s+proximity/.test(html), 'reader must use gentle scroll-snap (y proximity)');
 ok(/scroll-snap-align/.test(html), 'each page card must declare scroll-snap-align');
+ok(!html.includes('sheet-label'), 'reader must not show per-page labels such as עמוד X מתוך N; that text belongs only in the sticky selector');
+ok(/\.sheet-card\{[^}]*border-bottom:3px solid #1d4ed8/.test(html), 'reader must separate pages only with a full-width blue line');
 ok(/for\s*\(\s*let\s+n\s*=\s*1\s*;\s*n\s*<=\s*total/.test(html), 'reader must build all pages 1..total continuously');
 
 // 6. The static PDF asset is present, A4, and current (one page per student page).
