@@ -37,3 +37,7 @@
 .a4-page.dense .q-grid{gap:2mm 4mm}
 .a4-page.dense .instruction{margin-bottom:1.5mm}
 .a4-page.dense .formula{margin:1mm 0}
+
+/* Student-only question marker: preserve original question IDs in DOM and official source. */
+.a4-page .task-row > .task-num{font-size:0;line-height:0;background:#1d4ed8;border-color:#1d4ed8;position:relative}
+.a4-page .task-row > .task-num::after{content:"";display:block;width:2.3mm;height:2.3mm;border-radius:50%;background:#fff}
