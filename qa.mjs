@@ -46,6 +46,10 @@ pages.forEach((page, index) => assert(page === index + 1, `student sequence must
 const indexHtml = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 const indexTotal = Number((indexHtml.match(/const total\s*=\s*(\d+)/) || [])[1]);
 assert(indexTotal === pages.length, `index.html total (${indexTotal}) must equal the number of student pages (${pages.length})`);
+// The page count is not a target (§9), but SOURCE_OF_TRUTH.md states the current count (§19 and „מצב נוכחי”);
+// pages and SSOT must not drift apart silently — a page change must update the SSOT per §26 in the same change.
+const declaredCounts = [...ssot.matchAll(/את מספר הדפים \((\d+)\)|יש (\d+) דפי תלמיד/g)].map(m => Number(m[1] || m[2]));
+assert(declaredCounts.length === 2 && declaredCounts.every(n => n === pages.length), `SOURCE_OF_TRUTH.md states ${JSON.stringify(declaredCounts)} student pages but ${pages.length} exist — update the SSOT (§26) or restore the pages`);
 
 for (const page of pages) {
   const html = fs.readFileSync(path.join(dir, `page-${page}.html`), 'utf8')
@@ -57,6 +61,9 @@ for (const page of pages) {
   // The canonical district footer is rendered by styles.css (.a4-page::after, asserted above);
   // the legacy name/date <footer> was removed in fe9d26d, so pages must only link the shared stylesheet.
   assert(/<link rel="stylesheet" href="styles.css">/.test(html), `page ${page}: shared styles.css (canonical district footer) is required`);
+  // SOURCE_OF_TRUTH.md §17: question/sub-section numbers or letters are never typed visibly at the start of a block;
+  // they live in the marker element (.task-num / .q-num / official <b>) that CSS renders as a blue dot.
+  assert(!/class="(?:q-text|instruction)"[^>]*>\s*(?:\(?[1-9]\d?\s*[.)]|[א-י]['׳]?\s*[.)—–]|\([א-י]\))\s/.test(html), `page ${page}: visible question/sub-section number or letter typed at the start of a block (§17) — put it in the marker element`);
   assert(!/[×]/.test(html), `page ${page}: multiplication sign × is forbidden`);
   assert(!/\d\s*[xX]\s*\d/.test(html), `page ${page}: x/X must not be used as a numeric multiplication sign`);
   if (page === 11) {

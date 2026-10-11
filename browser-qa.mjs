@@ -26,12 +26,25 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const {port}=server.address();
 const base=`http://127.0.0.1:${port}/`;
 
+// Hard timeout + finally-close: a stuck headless run must never hang CI or leak browser processes.
+const hardTimeout=setTimeout(()=>{console.error('BROWSER QA FAILED: hard timeout (600s)');process.exit(1);},600000);
+let browser;
+try{
 fs.mkdirSync('qa-artifacts',{recursive:true});
-const browser=await chromium.launch({headless:true});
+browser=await chromium.launch({headless:true});
 const page=await browser.newPage({viewport:{width:1440,height:1200}});
 const consoleErrors=[];
 page.on('pageerror',e=>consoleErrors.push(`pageerror: ${e.message}`));
 page.on('console',m=>{if(m.type()==='error')consoleErrors.push(`console: ${m.text()}`)});
+// Broken links/assets: every same-origin request must succeed; nothing external may load on open (§19 video facade).
+const networkErrors=[];
+const externalRequests=[];
+page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)networkErrors.push(`${r.status()} ${r.url()}`)});
+// net::ERR_ABORTED is a request cancelled by the test's own navigation (e.g. lazy frames when leaving the reader), not a broken asset.
+page.on('requestfailed',r=>{const e=r.failure()?.errorText||'';if(r.url().startsWith(base)&&!/ERR_ABORTED/.test(e))networkErrors.push(`failed ${r.url()} (${e})`)});
+page.on('request',r=>{const u=r.url();if(!u.startsWith(base)&&!/^(data|blob|about):/.test(u))externalRequests.push(u)});
+// Wait until MathJax has typeset and fonts are ready, so screenshots/PDF never capture raw TeX.
+const settle=async()=>{await page.evaluate(async()=>{if(window.MathJax?.startup?.promise)await window.MathJax.startup.promise;await document.fonts.ready;});};
 
 const mmPx=96/25.4;
 const expectedW=210*mmPx;
@@ -40,28 +53,62 @@ const combined=await PDFDocument.create();
 
 for(const n of pages){
   await page.goto(`${base}page-${n}.html`,{waitUntil:'load'});
+  await settle();
   await page.waitForTimeout(30);
   const audit=await page.evaluate(()=>{
     const p=document.querySelector('.a4-page');
     const cs=getComputedStyle(p);
     const r=p.getBoundingClientRect();
+    const mm=96/25.4;
+    // Footer zone: everything rendered must end above the reserved bottom padding (credit footer + blue rule).
+    let contentBottom=0;
+    for(const el of p.querySelectorAll('*')){const b=el.getBoundingClientRect();if(b.width&&b.height)contentBottom=Math.max(contentBottom,b.bottom);}
+    const footerTop=r.top+parseFloat(cs.height)-parseFloat(cs.paddingBottom);
+    // SOURCE_OF_TRUTH.md §17: question/sub-section markers are single solid blue dots with no visible digits/letters.
+    const markerSel='.task-row>.task-num, .q-item .q-num, .official-page .official-q>p>b:first-child, .official-page .q-item .q-text>b:first-child';
+    const markers=[...p.querySelectorAll(markerSel)].map(el=>{const c=getComputedStyle(el),b=el.getBoundingClientRect(),after=getComputedStyle(el,'::after').content;
+      return {text:el.textContent.trim(),fs:parseFloat(c.fontSize),color:c.color,bg:c.backgroundColor,radius:c.borderTopLeftRadius,w:b.width/mm,h:b.height/mm,after};});
+    const tasksWithoutMarker=[...p.querySelectorAll('section.task')].filter(t=>!t.querySelector(':scope>.task-row>.task-num')).length;
+    // Visible numbering at the start of a question/sub-section block (only rendered, non-zero-size text counts).
+    const firstVisibleText=block=>{const w=document.createTreeWalker(block,NodeFilter.SHOW_TEXT);let t;while((t=w.nextNode())){const c=getComputedStyle(t.parentElement);if(t.textContent.trim()&&parseFloat(c.fontSize)>0&&c.color!=='rgba(0, 0, 0, 0)'&&!t.parentElement.closest('mjx-container'))return t.textContent.replace(/\s+/g,' ').trim();}return '';};
+    const numbered=[...p.querySelectorAll('.instruction, .q-text, .official-q>p, .task-body>p')].map(firstVisibleText)
+      .filter(t=>/^(\(?[1-9]\d?\s*[.)]|[א-י]['׳]?\s*[.)—–-]\s|\([א-י1-9]\))/.test(t));
+    const anchors=[...p.querySelectorAll('.anchor')];
     return {
       w:parseFloat(cs.width),h:parseFloat(cs.height),
       rectW:r.width,rectH:r.height,
       internalOverflow:p.scrollWidth>p.clientWidth+1||p.scrollHeight>p.clientHeight+1,
       bodyOverflow:document.documentElement.scrollWidth>innerWidth+1,
+      intoFooter:contentBottom-footerTop,
       h1:document.querySelectorAll('h1').length,
       dir:document.documentElement.dir,
       lang:document.documentElement.lang,
-      pageNumber:document.querySelector('.page-number')?.textContent?.trim()||''
+      pageNumber:document.querySelector('.page-number')?.textContent?.trim()||'',
+      markers,tasksWithoutMarker,numbered,
+      anchors:anchors.length,anchorsWithoutGap:anchors.filter(a=>!a.querySelector('.gap')).length,
+      mathErrors:p.querySelectorAll('mjx-merror').length,
+      rawTex:/\\\(|\\\)|\\pi\b|\\cdot\b|\\frac\b|\\underline\b/.test(p.innerText)
     };
   });
   ok(Math.abs(audit.w-expectedW)<2&&Math.abs(audit.h-expectedH)<2,`page ${n}: A4 geometry drift ${audit.w}x${audit.h}`);
   ok(!audit.internalOverflow,`page ${n}: internal A4 overflow`);
   ok(!audit.bodyOverflow,`page ${n}: desktop horizontal overflow`);
+  ok(audit.intoFooter<=1,`page ${n}: content runs ${Math.round(audit.intoFooter)}px into the reserved footer zone (§16/§17)`);
   ok(audit.h1===1,`page ${n}: expected exactly one h1`);
   ok(audit.dir==='rtl'&&audit.lang==='he',`page ${n}: Hebrew RTL root missing`);
   ok(audit.pageNumber===String(n),`page ${n}: visible page number mismatch (${audit.pageNumber})`);
+  ok(audit.mathErrors===0&&!audit.rawTex,`page ${n}: MathJax did not typeset cleanly (merror=${audit.mathErrors}, raw TeX visible=${audit.rawTex})`);
+  ok(audit.tasksWithoutMarker===0,`page ${n}: ${audit.tasksWithoutMarker} question(s) without a blue marker (§17)`);
+  for(const m of audit.markers){
+    const hiddenText=m.fs===0||m.color==='rgba(0, 0, 0, 0)';
+    ok(hiddenText,`page ${n}: question/sub-section marker shows its number/letter "${m.text}" (font-size ${m.fs}, color ${m.color}) — §17 forbids visible numbering`);
+    ok(m.bg==='rgb(29, 78, 216)'&&m.radius==='50%'&&m.w>2.5&&m.w<4.6&&Math.abs(m.w-m.h)<0.3,`page ${n}: marker "${m.text}" is not a compact single solid blue dot (${JSON.stringify(m)})`);
+    ok(m.after==='none'||m.after==='normal',`page ${n}: marker "${m.text}" draws a nested ::after circle (§17 single dot)`);
+  }
+  ok(audit.numbered.length===0,`page ${n}: visible question/sub-section numbering ${JSON.stringify(audit.numbered)} (§17)`);
+  // §8: every anchor box carries a completion gap; §17: page 1 opens without an anchor box.
+  if(n===1) ok(audit.anchors===0,'page 1: the opening anchor box was deleted per §17 and must not return');
+  ok(audit.anchorsWithoutGap===0,`page ${n}: ${audit.anchorsWithoutGap} anchor box(es) without a completion gap (§8)`);
   // SOURCE_OF_TRUTH.md §15: no SVG label may sit on a drawing stroke. Rasterize each figure with
   // its <text> removed and fail when a drawing stroke covers more than max(4px, 6%) of a label's glyph box.
   const labelHits=await page.evaluate(async()=>{
@@ -168,7 +215,7 @@ async function inspectReader(width,height,label){
   ok(shell.dlText&&shell.dlText.includes('הורדת PDF'),`${label}: the one action must read "הורדת PDF" (got "${shell.dlText}")`);
   ok(shell.dlDownload&&/\.pdf$/i.test(shell.dlHref||''),`${label}: action must be a static .pdf download link (download=${shell.dlDownload}, href=${shell.dlHref})`);
   ok(shell.counterIsSelect&&shell.counterVisible,`${label}: page selector must be a visible <select> (tag=${shell.counterTag}, visible=${shell.counterVisible})`);
-  ok(/עמוד\s*1\s*מתוך\s*49/.test(shell.counterText||''),`${label}: counter should start at "עמוד 1 מתוך 49" (got "${shell.counterText}")`);
+  ok(new RegExp(`עמוד\\s*1\\s*מתוך\\s*${total}`).test(shell.counterText||''),`${label}: counter should start at "עמוד 1 מתוך ${total}" (got "${shell.counterText}")`);
   ok(shell.snap==='start',`${label}: cards must use scroll-snap-align:start (got "${shell.snap}")`);
   if(shell.firstFrame)ok(shell.firstFrame.left>=-1&&shell.firstFrame.right<=width+1,`${label}: first iframe clipped (${shell.firstFrame.left}, ${shell.firstFrame.right})`);
   const sep=shell.separator;
@@ -263,6 +310,84 @@ ok(dl&&dl.sameOrigin,'download link must be same-origin');
 ok(dl&&dl.status===200&&dl.isPdf&&/pdf/i.test(dl.type),`download must serve a real static PDF (status ${dl?.status}, type ${dl?.type}, pdf ${dl?.isPdf})`);
 ok(dl&&dl.bytes>50000,`static PDF suspiciously small (${dl?.bytes} bytes)`);
 
+// §19 print: the reader chrome (bar + intro video) is screen-only; the PDF/print stays worksheets only.
+await page.emulateMedia({media:'print'});
+const printHidden=await page.evaluate(()=>['.bar','.intro-video'].map(s=>{const el=document.querySelector(s);return el?getComputedStyle(el).display:'missing'}));
+ok(printHidden.every(d=>d==='none'),`print media must hide the reader bar and intro video (got ${printHidden.join('/')})`);
+await page.emulateMedia({media:'screen'});
+
+// §19 deep link #page=N: a fresh load (and a reload) lands on page N under the sticky bar, with the selector on N;
+// out-of-range values clamp to the first/last page. Checked on desktop, tablet and phone (where the bar wraps).
+async function openDeepLink(hash){
+  await page.goto('about:blank');
+  await page.goto(`${base}${hash}`,{waitUntil:'load'});
+  await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
+  await page.waitForTimeout(900);
+}
+async function landing(n){
+  return page.evaluate(n=>{const c=document.getElementById(`sheet-${n}`).getBoundingClientRect();const bar=document.querySelector('.bar').getBoundingClientRect();
+    return {offset:c.top-bar.bottom,visible:c.top<innerHeight&&c.bottom>bar.bottom,atBottom:scrollY+innerHeight>=document.documentElement.scrollHeight-2,
+      sel:Number(document.getElementById('counter').value),hash:location.hash};},n);
+}
+for(const [w,h,label] of [[1440,1200,'desktop'],[768,1000,'tablet'],[390,844,'phone']]){
+  await page.setViewportSize({width:w,height:h});
+  // Selector jump on this viewport: the chosen page lands fully below the (possibly wrapped) sticky bar.
+  await openDeepLink('');
+  await page.selectOption('#counter','30');
+  await page.waitForFunction(()=>!document.getElementById('reader').classList.contains('fading'),null,{timeout:2000});
+  await page.waitForTimeout(900);
+  const jumped=await landing(30);
+  ok(jumped.offset>-3&&jumped.offset<40&&jumped.sel===30,`${label}: selector jump must land page 30 under the sticky bar (offset ${Math.round(jumped.offset)}px, selector ${jumped.sel})`);
+  for(const [hash,n] of [['#page=37',37],['#page=1',1],[`#page=${total}`,total],['#page=999',total]]){
+    await openDeepLink(hash);
+    const at=await landing(n);
+    // The last card cannot reach the top on a phone (it is shorter than the viewport): then it must be the visible end of the scroll.
+    const placed=(at.offset>-3&&at.offset<40)||(n===total&&at.visible&&at.atBottom);
+    ok(placed,`${label} deep link ${hash}: page ${n} must land under the sticky bar (offset ${Math.round(at.offset)}px, atBottom ${at.atBottom})`);
+    ok(at.sel===n,`${label} deep link ${hash}: selector must show page ${n} (got ${at.sel})`);
+    // §19 lazy loading without layout jumps: frames are pre-sized to their fitted A4 size, so loading them does not shift the page.
+    if(hash==='#page=37'){
+      const cls=await page.evaluate(()=>new Promise(r=>{let sum=0;const o=new PerformanceObserver(l=>{for(const e of l.getEntries()) if(!e.hadRecentInput) sum+=e.value;});
+        o.observe({type:'layout-shift',buffered:true});setTimeout(()=>{o.disconnect();r(sum);},200);}));
+      ok(cls<0.1,`${label} deep link ${hash}: lazy page frames must not jump the layout while loading (cumulative layout shift ${cls.toFixed(3)} ≥ 0.1)`);
+    }
+  }
+  // The landing alignment must never fight the reader: a wheel gesture over a page frame right after a deep link scrolls freely.
+  await openDeepLink('#page=37');
+  await page.mouse.move(Math.round(w/2),Math.round(h*0.6));
+  await page.mouse.wheel(0,700);
+  await page.waitForTimeout(1200);
+  const moved=await landing(37);
+  ok(moved.offset<-300,`${label}: a wheel gesture right after deep link #page=37 must scroll away from it, not be pulled back (offset ${Math.round(moved.offset)}px)`);
+  // Reload keeps the reader on the page the hash names (the hash follows manual scrolling via replaceState).
+  await openDeepLink('#page=1');
+  await page.mouse.move(Math.round(w/2),Math.round(h*0.6));
+  await page.mouse.wheel(0,200);
+  await page.waitForTimeout(300);
+  await page.evaluate(()=>document.getElementById('sheet-12').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.waitForFunction(()=>location.hash==='#page=12',null,{timeout:3000}).catch(()=>{});
+  ok(await page.evaluate(()=>location.hash)==='#page=12',`${label}: manual scroll to page 12 must update the hash to #page=12`);
+  await page.reload({waitUntil:'load'});
+  await page.waitForFunction(t=>document.querySelectorAll('.sheet-card').length===t,total);
+  await page.waitForTimeout(900);
+  const re=await landing(12);
+  ok(re.offset>-3&&re.offset<40&&re.sel===12,`${label}: reload must return to page 12 (offset ${Math.round(re.offset)}px, selector ${re.sel})`);
+}
+
+// §19 intro video: nothing external loads when the reader opens; a click swaps the facade for a youtube-nocookie player.
+ok(externalRequests.length===0,`reader/pages must not load external resources before a click (got ${[...new Set(externalRequests)].slice(0,5).join(', ')})`);
+await page.setViewportSize({width:1440,height:1200});
+await page.route('https://www.youtube-nocookie.com/**',r=>r.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>stub</title>'}));
+await page.goto('about:blank');
+await page.goto(base,{waitUntil:'load'});
+ok(await page.locator('#videoFacade').count()===1&&await page.locator('iframe.video-frame').count()===0,'intro video must start as a facade without a player iframe');
+await page.click('#videoFacade');
+const player=await page.locator('iframe.video-frame').getAttribute('src').catch(()=>null);
+ok(/^https:\/\/www\.youtube-nocookie\.com\/embed\/l4vvuHCY1QI\b/.test(player||''),`clicking the facade must load the youtube-nocookie player (got ${player})`);
+const firstSheetAfterVideo=await page.evaluate(()=>{const v=document.querySelector('.intro-video').getBoundingClientRect(),s=document.getElementById('sheet-1').getBoundingClientRect();return s.top>=v.bottom-1;});
+ok(firstSheetAfterVideo,'the student pages must follow directly after the intro video');
+await page.unroute('https://www.youtube-nocookie.com/**');
+
 // Mobile A4 fit of the newer/official pages inside the continuous reader (no single-page view exists).
 await page.setViewportSize({width:390,height:844});
 await page.goto(base,{waitUntil:'load'});
@@ -304,12 +429,18 @@ for(const [w,h] of [[390,844],[360,800]]){
 }
 
 ok(consoleErrors.length===0,`browser console errors: ${consoleErrors.join(' | ')}`);
-await browser.close();
-await new Promise(resolve=>server.close(resolve));
+ok(networkErrors.length===0,`broken same-origin links/assets: ${[...new Set(networkErrors)].join(' | ')}`);
+}catch(error){
+  failures.push(`browser QA crashed: ${error.stack||error.message}`);
+}finally{
+  if(browser) await browser.close().catch(()=>{});
+  await new Promise(resolve=>server.close(resolve));
+  clearTimeout(hardTimeout);
+}
 
 if(failures.length){
   console.error(`BROWSER QA FAILED (${failures.length})`);
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky compact page selector (select, not a button) that follows the scroll and fade-jumps on change, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow, mobile vertical-only (overflow-x clipped on shell+pages, pan-y + pinch-zoom).`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky compact page selector (select, not a button) that follows the scroll and fade-jumps on change, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow or footer-zone intrusion, mobile vertical-only (overflow-x clipped on shell+pages, pan-y + pinch-zoom), compact solid blue markers with no visible question/sub-section numbering (§17), a completion gap in every anchor (§8), MathJax typeset before capture, selector jumps, #page=N deep links (first/last/clamped) and reload landing fully below the sticky bar on desktop/tablet/phone without fighting user scroll gestures or lazy-load layout jumps, print hides reader chrome, click-to-load youtube-nocookie video with no external request on open, and no broken same-origin assets.`);

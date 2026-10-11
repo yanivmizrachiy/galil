@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T17:30:09.718Z",
+  "updatedAt": "2026-10-11T17:56:20.308Z",
   "updatedBy": "Claude Code (GALIL_AGENT) — closure integration of #12 + #13 on claude/galil-closure-20261011",
   "scoring": {
     "weightTotal": 100,
@@ -258,7 +258,8 @@
         "2026-10-11 (governance repair): the already-shipped blue question/subsection markers from PR #9 were found implemented and QA-locked but not stated explicitly in SOURCE_OF_TRUTH.md. Canonicalized the exact display rule in §17: no visible question numbers, prominent blue circle for main questions, smaller blue circle for subsections, page numbers remain numeric, locked official source numbers stay in DOM only. Added an SSOT assertion to qa.mjs; no student pixels/content/math changed.",
         "2026-10-11: Yaniv corrected marker styling: one compact solid blue dot only, no inner white dot/ring. Main question markers reduced to 4.2mm; subsection markers to 3.2mm; official locked wording remains untouched. QA now forbids nested marker circles.",
         "2026-10-11 (Yaniv explicit instruction — district emblem in page footer): the colorful circular district/instructor emblem (cream ring with Hebrew text + 3D solids: cube/pyramid/cone/Star-of-David) was added to the footer of every student page. The emblem does NOT exist as an asset in the cone workbook (harut) or razpages/workbooks/cone — both footers are text-only — nor anywhere else in razpages (verified: no logo file, no inline SVG, no data-URI). The only available instance was the ~36px emblem in Yaniv's pasted screenshot, so it was auto-isolated from the grayscale footer strip by a saturation/density bounding-box crop (Python/PIL), squared, antialiased circular-masked and smooth-upscaled to 84px, and embedded as a self-contained PNG data-URI in the .a4-page::after footer rule in styles.css (background-position right 6mm center, size 9mm; print-color-adjust:exact already set so it prints). All 49 .a4-page pages now show it. Preview-verified on page-1 (emblem on the right of the two credit lines; A4 height 1123px unchanged). Static PDF rebuilt (4.46 MB, +~0.96 MB). NOTE: the screenshot source is low-resolution — crisp on screen, soft in print; swapping in a hi-res file is a one-line data-URI change. npm run qa green; overall stays 98%.",
-        "2026-10-11 (Yaniv feedback — emblem 'not in the right place'): the footer emblem sat in the page margin (right 6 mm, outside the 18 mm content edge) and at 9 mm overflowed the ~8 mm footer text box. It is now aligned to the content edge — background-position:right 18mm center — and sized 7.5 mm so it sits inside the footer band, flush with the page text column, vertically centred on the footer line. Static PDF + manifest rebuilt."
+        "2026-10-11 (Yaniv feedback — emblem 'not in the right place'): the footer emblem sat in the page margin (right 6 mm, outside the 18 mm content edge) and at 9 mm overflowed the ~8 mm footer text box. It is now aligned to the content edge — background-position:right 18mm center — and sized 7.5 mm so it sits inside the footer band, flush with the page text column, vertically centred on the footer line. Static PDF + manifest rebuilt.",
+        "2026-10-11 closure (Claude Code, claude/galil-closure-20261011): page 49 (official Q7) captions typed the sub-section letters as visible text ('א — רוחב הדף…', 'ב — אורך הדף…'), contrary to §17 (no visible question/sub-section numbering; a single small blue marker). They now use the same hidden-letter marker as every other official sub-question (<b>א</b>/<b>ב</b> rendered as a blue dot, letter kept in the DOM only). qa.mjs now rejects any visible number/letter typed at the start of a q-text/instruction block (negative-tested against the old page 49) and checks that the page count stated in §19 (49) matches the student pages on disk."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -295,7 +296,8 @@
         "2026-10-11 (Yaniv reader requirement, SSOT §19 updated first): the sticky bar now holds exactly two controls — the single button-like action „הורדת PDF” and a compact page <select> showing „עמוד X מתוך 49” (not a button). Changing the selector fades #reader out (180ms opacity), scrolls INSTANTLY to the target card (behavior:'instant', no smooth scroll through all pages), then fades in; the IntersectionObserver keeps the selector in sync during manual scrolling and is paused while jumping; #page=N deep-link kept. No prev/next/single/continuous/full-page/all-workbooks/print controls exist. reader-qa.mjs and browser-qa.mjs enforce: visible download, visible select, forbidden controls absent, fade class + 150–220ms transition, instant jump landing under the bar in <900ms, selector follows manual scroll. browser-qa green at 49 pages (desktop + Android/iPhone).",
         "2026-10-11 (Yaniv: mobile vertical-only, SSOT §19 updated first): the public reader clips overflow-x on html/body/.bar/#reader, uses touch-action:pan-y pinch-zoom + overscroll-behavior-x:none, and keeps every A4 iframe within the viewport width; the selector fade-jump (§19) is unchanged. reader-qa.mjs locks the CSS contract; browser-qa.mjs asserts at desktop + Android/iPhone portrait/landscape that scrollWidth ≤ viewport, no bar/reader/card/iframe exceeds the viewport, computed overflow-x=clip and touch-action pan-y pinch-zoom. browser-qa green at 49 pages.",
         "2026-10-11 (Yaniv explicit instruction — illustration video above the download pages): index.html now embeds Ayelet Krispin's Galil illustration video (YouTube l4vvuHCY1QI, public; oEmbed title „המחשה לגליל”) in a block above the continuous page scroll, under the sticky bar, with heading „סרטון המחשה — גליל” and credit „איילת קריספין · מתכללת תחום המתמטיקה במחוז ירושלים והעיר ירושלים”. It is click-to-load: a dependency-free CSS/SVG facade until clicked, then a youtube-nocookie iframe, so nothing external loads when the reader opens. It sits outside #reader and every .sheet-card, so the 49 cards and the two navigation controls are unchanged; it is display:none in print. The A4 iframe CSS was scoped to .sheet-card iframe so the 16:9 player does not inherit A4 sizing. SOURCE_OF_TRUTH.md §19 records the requirement; reader-qa.mjs gate 8 locks it. index.html is not a PDF rendering input (pdf-fingerprint covers page-*.html/styles.css/vendor), so no PDF rebuild was needed. Overall stays 98%.",
-        "2026-10-11 audit: baseline probe confirmed A4 clipping at 701/740/768/800px and 31/49px inter-page gaps. Reader now fits available width at every viewport and separates pages only by the 3px blue line; browser QA covers boundary and intermediate widths."
+        "2026-10-11 audit: baseline probe confirmed A4 clipping at 701/740/768/800px and 31/49px inter-page gaps. Reader now fits available width at every viewport and separates pages only by the 3px blue line; browser QA covers boundary and intermediate widths.",
+        "2026-10-11 closure (Claude Code, claude/galil-closure-20261011): §19 reader landing defect fixed in index.html — on phones the sticky bar wraps to ~92px while scroll-margin used the fixed --bar-h 48px, so a selected/deep-linked page landed 34px under the bar; on tablets frames resizing after load (fitFrame) left the target 54-59px under it, and reload restored a stale browser scroll position. --bar-h now follows the bar's real height (ResizeObserver); a jump/deep-link target is re-aligned on frame loads for at most 2.5s and released by any user gesture in the shell or inside a page frame; history.scrollRestoration='manual' so the #page=N hash is the single reload source. Frames are pre-sized to their fitted A4 size (aspect-ratio 210/297, capped at 297mm) instead of a fixed 1120px, so lazy loading no longer jumps the layout (§19 „בלי קפיצות פריסה”): cumulative layout shift after a #page=20 deep link fell from 0.385 to 0.003 at 768px and from 0.128 to 0 at 800px. scripts/build-pdf.mjs now waits for MathJax/fonts and refuses to print raw TeX; galil-student.pdf + manifest regenerated (49 A4 pages, reader-qa staleness gate green). browser-qa.mjs hardened: hard timeout + browser close in finally, runtime §17 marker/visible-numbering, §8 anchor-gap, page-1 no-anchor, MathJax and footer-zone checks on every page, network 4xx/failed-request and external-request gates, selector jump + #page=N first/last/clamped + reload on desktop 1440, tablet 768 and phone 390, a wheel gesture right after a deep link is never pulled back, layout shift after a deep link < 0.1, print hides reader chrome, click-to-load youtube-nocookie video. Negative proofs on throwaway copies: the old reader fails 8 landing checks (tablet -54/-59px, phone -34px); removing the in-frame gesture release fails the wheel check; the old fixed 1120px frame height fails the layout-shift check (tablet 0.389, phone 4.923); injected defects (anchor on page 1, anchor without gap, visible marker digits, broken TeX, old page 49) each fail."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -331,7 +333,8 @@
         "2026-10-11: Codex adversarial review on 5921d6f (3 findings) triaged and resolved with evidence: P1 page-43 √(r²+h²) vs √((2r)²+h²) (fixed + §13 + QA), P2 PDF staleness gate (deterministic manifest), P1 official diagram metadata (verified against pinned scans; Q4 ג/ד figures corrected). G-10 stays at 60% — §25 closure items (Yaniv's explicit finished sign-off, final A/B/C/D disposition, rename, teacher pages) remain reserved; overall held at 98%.",
         "2026-10-11 audit validated: npm run qa and npm run qa:browser pass; all 49 A4 pages rendered to screenshots and a combined 49-page PDF, no label/line intersection, and boundary/intermediate 700/701/740/768/800px widths pass without clipping or extra separator gaps. Three competing Hebrew authority headings rejected, ordinary reference allowed. Static PDF rebuilt and fingerprint verified. This audit fixes confirmed defects; formal closure/merge remains paused per Yaniv.",
         "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
-        "2026-10-11 closure integration (Claude Code, claude/galil-closure-20261011 from d50dafe = PR #13 head, which already contains PR #12 9f93611 and main bd3cbbc): single-source governance audit — the binding 5×5 mm calculation-grid refinement (Yaniv, 2026-10-11) existed only in unmerged commit 65c2bde on chatgpt/galil-workspace-grid (PR #5, closed); its implementation and workspace-grid-qa.mjs were already live but SOURCE_OF_TRUTH.md did not state it. Merged into §16 per §26 (without the stale handoff/process notes) and workspace-grid-qa.mjs now asserts the SSOT carries the rule it enforces; §16 coverage digest re-reviewed. PROVENANCE.md heading 'Canonical rule' renamed to 'Relation to SOURCE_OF_TRUTH.md' so no derived document presents itself as canonical. ssot-qa, coverage-qa and workspace-grid-qa green."
+        "2026-10-11 closure integration (Claude Code, claude/galil-closure-20261011 from d50dafe = PR #13 head, which already contains PR #12 9f93611 and main bd3cbbc): single-source governance audit — the binding 5×5 mm calculation-grid refinement (Yaniv, 2026-10-11) existed only in unmerged commit 65c2bde on chatgpt/galil-workspace-grid (PR #5, closed); its implementation and workspace-grid-qa.mjs were already live but SOURCE_OF_TRUTH.md did not state it. Merged into §16 per §26 (without the stale handoff/process notes) and workspace-grid-qa.mjs now asserts the SSOT carries the rule it enforces; §16 coverage digest re-reviewed. PROVENANCE.md heading 'Canonical rule' renamed to 'Relation to SOURCE_OF_TRUTH.md' so no derived document presents itself as canonical. ssot-qa, coverage-qa and workspace-grid-qa green.",
+        "2026-10-11 closure test-coverage audit (Claude Code): verified every new guard fails on a deliberately broken copy before relying on it (15 failures for 6 injected defects + the old reader; 2 failures without the in-frame gesture release; 2 failures with the old fixed frame height), then green on the branch twice in a row. Full npm run qa and browser-qa green locally. Remaining open items are reserved to Yaniv under §25 (explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision) and are not evidenced by QA."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -356,7 +359,7 @@
   "lastProgressReport": {
     "completedPercent": 98,
     "remainingPercent": 2,
-    "summary": "2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 now records the 5×5 mm calculation-grid rule that was only in an unmerged PR #5 handoff commit. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
+    "summary": "2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
@@ -513,7 +516,8 @@
         "checks": [
           "core-qa.mjs",
           "surface-qa.mjs",
-          "qa.mjs"
+          "qa.mjs",
+          "browser-qa.mjs"
         ],
         "pendingManual": [
           "איכות כל השלמת עוגן והדרגתיות בכל הדפים דורשות ביקורת ידנית; החריג המאושר בעמוד 1 נשמר."
@@ -673,7 +677,8 @@
         "coverage": "partial",
         "implementation": [
           "styles.css",
-          "page-1.html"
+          "page-1.html",
+          "page-49.html"
         ],
         "checks": [
           "qa.mjs",
@@ -882,7 +887,7 @@
       "workspace-grid-qa.mjs",
       "browser-qa.mjs",
       "qa.mjs",
-      "official-render-qa.mjs",
+      "index.html",
       "scripts/build-pdf.mjs",
       "page-49.html",
       "galil-student.pdf",

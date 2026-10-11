@@ -35,7 +35,8 @@
     .sheet-card{margin:0;padding-bottom:0;border-bottom:3px solid #1d4ed8;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
     .sheet-card:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
     .sheet-card iframe{display:block;width:100%;max-width:100%;border:0;border-radius:0;background:#fff;
-           min-height:0;height:1120px}
+           min-height:0;height:auto;aspect-ratio:210/297;max-height:297mm}
+    /* Pre-load size = the fitted A4 size (width-scaled, never taller than A4), so lazy frames do not jump when they load (§19). */
 
     .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
     .intro-video-title{margin:0;font-size:19px;font-weight:800;color:#172033}
@@ -59,7 +60,6 @@
       .intro-video{padding:12px 6px 0}
       .intro-video-title{font-size:17px}
       .video-play svg{width:68px}
-      .sheet-card iframe{height:auto;aspect-ratio:210/297}
     }
     @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card{border-bottom:0;padding-bottom:0} iframe{box-shadow:none;border:none} }
   </style>
@@ -93,6 +93,29 @@
     const counter = document.getElementById('counter');
     let current = 1;
 
+    // The sticky bar wraps to two rows on phones; scroll-margin-top must follow its real height so a
+    // selected/deep-linked page lands fully below the bar instead of under it.
+    const bar = document.querySelector('.bar');
+    const syncBar = () => document.documentElement.style.setProperty('--bar-h', `${Math.ceil(bar.getBoundingClientRect().height)}px`);
+    syncBar();
+    if('ResizeObserver' in window) new ResizeObserver(syncBar).observe(bar);
+
+    // Keep a jump/deep-link target aligned while the frames around it finish loading and resizing;
+    // any user gesture (in the shell or inside a page frame) releases it immediately.
+    let pinTarget = null, pinUntil = 0;
+    const pin = n => { pinTarget = n; pinUntil = performance.now() + 2500; };
+    const unpin = () => { pinTarget = null; };
+    const gestures = ['wheel','touchstart','keydown','pointerdown'];
+    const watchGestures = win => gestures.forEach(t => win.addEventListener(t, unpin, {passive:true}));
+    function realign(){
+      if(pinTarget === null) return;
+      if(performance.now() > pinUntil){ pinTarget = null; return; }
+      document.getElementById(`sheet-${pinTarget}`)?.scrollIntoView({block:'start', behavior:'instant'});
+    }
+    watchGestures(window);
+    // The hash (kept in sync with scrolling) is the single source of the reading position on reload.
+    if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
     for(let n=1; n<=total; n++){
       const o = document.createElement('option');
       o.value = n; o.textContent = `עמוד ${n} מתוך ${total}`;
@@ -117,6 +140,7 @@
       setTimeout(() => {
         card.scrollIntoView({block:'start', behavior:'instant'});
         setCounter(n);
+        pin(n);
         requestAnimationFrame(() => {
           reader.classList.remove('fading');
           setTimeout(() => { jumping = false; }, 200);
@@ -159,7 +183,7 @@
           page.style.transform = '';  page.style.transformOrigin = '';
           iframe.removeAttribute('scrolling');
           const h = Math.max(html.scrollHeight, body.scrollHeight, pageHeight);
-          if(h > 300) iframe.style.height = `${h}px`;
+          if(h > 300){ iframe.style.maxHeight = 'none'; iframe.style.height = `${h}px`; }
         }
       }catch(e){}
     }
@@ -178,12 +202,18 @@
         iframe.src = `page-${n}.html`;
         iframe.title = `חוברת הגליל — עמוד ${n}`;
         iframe.loading = n <= 2 ? 'eager' : 'lazy';
-        iframe.addEventListener('load', () => fitFrame(iframe));
+        iframe.addEventListener('load', () => {
+          fitFrame(iframe);
+          try{ watchGestures(iframe.contentWindow); }catch(e){}
+          realign();
+        });
 
         card.appendChild(iframe);
         frag.appendChild(card);
       }
       reader.appendChild(frag);
+      // Frames that have not loaded yet still receive gestures in their initial blank document.
+      reader.querySelectorAll('iframe').forEach(f => { try{ watchGestures(f.contentWindow); }catch(e){} });
     }
 
     build();
@@ -205,7 +235,7 @@
       const n = Math.max(1, Math.min(total, Number(m[1])));
       requestAnimationFrame(() => {
         const card = document.getElementById(`sheet-${n}`);
-        if(card){ card.scrollIntoView({block:'start',behavior:'instant'}); setCounter(n); }
+        if(card){ card.scrollIntoView({block:'start',behavior:'instant'}); setCounter(n); pin(n); }
       });
     }
 
