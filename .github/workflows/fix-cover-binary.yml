@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/fix-cover-binary.yml
       - scripts/finalize-cover.py
+      - scripts/fix-closure-fixtures.py
 
 permissions:
   contents: write
@@ -27,6 +28,7 @@ jobs:
         run: |
           python3 -c "from pathlib import Path; import re; p=Path('assets/cover-bg.webp'); b=p.read_bytes(); p.write_bytes(re.sub(rb'[^A-Za-z0-9+/=]',b'',b)) if b.startswith(b'UklGR') else None"
           python3 scripts/finalize-cover.py
+          python3 scripts/fix-closure-fixtures.py
           python3 -c "import json; p='workplans/galil.json'; d=json.load(open(p,encoding='utf-8')); c=d.setdefault('closure',{}); c['specificationClosed']=True; c['finalDispositionApproved']=True; c['evidence']=['Yaniv explicitly instructed final project completion on 2026-10-11; SSOT section 3 records release closure.','page-disposition.json records a final A/B/C/D decision for all 49 active student pages.','Approved unnumbered Galil cover is integrated and the downloadable workbook is 50 A4 sheets: cover plus 49 numbered student pages.','Repository rename remains deferred only under the documented SSOT section 2 infrastructure blocker.']; open(p,'w',encoding='utf-8').write(json.dumps(d,ensure_ascii=False,indent=2)+'\n')"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
@@ -41,7 +43,7 @@ jobs:
       - name: Remove one-shot closure machinery
         run: |
           rm -f .github/workflows/fix-cover-binary.yml
-          rm -f scripts/finalize-cover.py
+          rm -f scripts/finalize-cover.py scripts/fix-closure-fixtures.py
           rm -f assets/cover-note.txt assets/cover-image-readme.md assets/cover-bg.b64
       - name: Commit only the validated final state
         run: |
