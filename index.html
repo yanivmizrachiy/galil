@@ -12,14 +12,16 @@
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
 
     /* Sticky top bar: title + non-button page counter + the single action (PDF download). */
+    /* flex-wrap + a shrinkable title guarantee the bar never overflows horizontally,
+       independent of font metrics (CI's Linux fallback fonts are wider than Windows). */
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
-         box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;gap:12px;padding:8px 16px}
-    .title{font-weight:800;font-size:18px;white-space:nowrap}
+         box-shadow:0 2px 10px rgba(42,61,89,.06);display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:8px 16px}
+    .title{font-weight:800;font-size:18px;white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
     /* Page counter — a sticky read-out, NOT a button and not interactive. */
-    .counter{margin-inline-start:auto;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
+    .counter{flex:0 0 auto;margin-inline-start:auto;font-size:14px;font-weight:600;color:#41526b;white-space:nowrap;
              background:#f1f5fb;border:1px solid #e0e8f3;border-radius:999px;padding:5px 12px;user-select:none}
     /* The one and only action button. Static same-origin download — no client-side PDF generation. */
-    .download{display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
+    .download{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;text-decoration:none;
               background:#1d4ed8;color:#fff;border:1px solid #1d4ed8;border-radius:10px;padding:8px 15px;white-space:nowrap}
     .download:hover{background:#1744b8;border-color:#1744b8}
     .download:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
