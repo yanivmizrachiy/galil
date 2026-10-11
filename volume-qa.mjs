@@ -14,7 +14,7 @@ ok(has(29,'r = 1.5','r = 0.5','2.5π סמ״ק'),'page 29: decimal-volume practic
 ok(has(30,'אין מציבים בנוסחת נפח נתונים ביחידות שונות','r = 30','d = 80','r = 0.05','d = 0.12'),'page 30: mixed-unit conversion practice incomplete');
 ok(has(31,'שמרו π בתשובה המדויקת','≈','20π','62.83'),'page 31: exact/approx π distinction incomplete');
 ok(has(32,'נפח וקיבול','1 סמ״ק = 1 מ״ל','d=10'),'page 32: capacity conversion and diameter case incomplete');
-ok(has(33,'מ״ל או ליטר','785 סמ״ק','≈ 785 מ״ל'),'page 33: real-world capacity practice incomplete');
+ok(has(33,'מ״ל או ליטר','452 סמ״ק','≈ 452 מ״ל'),'page 33: real-world capacity practice incomplete');
 ok(has(34,'קיבול מלא','כמות קיימת','מקום שנשאר','1200 מ״ל'),'page 34: remaining-capacity application incomplete');
 ok(has(35,'h = נפח ÷ ','25π סמ״ר','100π סמ״ק'),'page 35: inverse height calculation incomplete');
 ok(has(36,'שטח הבסיס = נפח ÷ ','150π ÷ 6','25π סמ״ר'),'page 36: inverse base-area calculation incomplete');

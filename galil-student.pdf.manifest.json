@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "Deterministic staleness gate for the static public PDF (SOURCE_OF_TRUTH.md §19). Derived file — regenerate with node scripts/build-pdf.mjs.",
-  "builtAt": "2026-10-11T11:39:36.394Z",
+  "builtAt": "2026-10-11T12:21:09.130Z",
   "pageCount": 49,
   "inputs": {
     "page-1.html": "39aabe8018a4e555205591387d1f37d4034983727f9a81cc6a2845d547a5a6f1",
@@ -28,7 +28,7 @@
     "page-22.html": "a0a8b3e922f559924c0983fc85aac59b2c378ac439dc08483610b4abe420f06f",
     "page-23.html": "b1f17c5157d2abe9d916f885cb23f899430f4d65c22f0aa2e75a02dde8b95a53",
     "page-24.html": "3b324218919b9afed1ac4a814525333a29022c7058e78dc068886571d0e046cd",
-    "page-25.html": "6093d7017a6d6c6174b3449fb8acacdef6ad7622c85de4dbcedb2a74e535f2fc",
+    "page-25.html": "b8b7b2ef9b2ebdf409ab24a30d4f77933bf0305339a579077fc69e264a71da24",
     "page-26.html": "488755fe287c66408c29ee3243444973e0654cd2a0e58d8cf9e80815357afb1b",
     "page-27.html": "b626595eb0754d25e2739e55e935082072bde5c39e370729c563065b55ca741e",
     "page-28.html": "33e57732222a8d6b545e169447176f60afea044eecb905ef1debb71d7be59c70",
@@ -36,7 +36,7 @@
     "page-30.html": "4e2fc7edbffa3baf5af614035ed8edca12f8faa502142b652a1c4bd35dfef491",
     "page-31.html": "37e4a4e2817588b4ea66d0742170c90a4d5e9ca04b33532233c8cc0348395cfe",
     "page-32.html": "6680457a1172d6d554cf787b45af7a5181bfdbdc7b410f0535cf8b7a0e8d039b",
-    "page-33.html": "b28692c6182aaf00f7ec135fb86f396caa7ddeb72bfe509fa11a7f7a3552b63b",
+    "page-33.html": "0ac25d63194105ff852ce61fb9bcd1390ffcd247fdebbffcede0c3cc7ecd4223",
     "page-34.html": "2b1cb4840d019ae86cc30bae7971bd182bb0179e2a7225cc8cc5f500cdf6f87b",
     "page-35.html": "ebb1dfe35e5650039dd150a832c9dad408433798486328c0e9b03acdd89ae3b9",
     "page-36.html": "5de5db0f269bebdfcad1228eeff374c9af6c770f6a15d42200d5bd25c65e3c01",
@@ -97,6 +97,6 @@
     "vendor/mathjax/tex-font/chtml/woff2/mjx-tex-zero.woff2": "2c146f72c9a345aa282398a752d03af71d83a011f3d067297b533a31f0c5f5cb",
     "vendor/mathjax/tex-mml-chtml.js": "b4ee932e3dddcbaa59bf6097793e951257d651c85d235086dc295b5f7b71b185"
   },
-  "sourceDigest": "1fc0e38389f328978826a7095c308f29df1a1aaa55fec728710a9d5898f64b05",
-  "pdfSha256": "730e94f534780bd42fefedec882dcca0e26c564f623dc110d8597f91c93d4c47"
+  "sourceDigest": "ef14fe3e01af26cc22dbf43e25e4b24120bfe0f1cace9e5f7621228c0085cdcc",
+  "pdfSha256": "96e233af5772fb13efc56cda799b96dad40a53f3ff92197a51ef3b5dcdaea6f1"
 }
