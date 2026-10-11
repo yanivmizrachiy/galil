@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "purpose": "Deterministic staleness gate for the static public PDF (SOURCE_OF_TRUTH.md §19). Derived file — regenerate with node scripts/build-pdf.mjs.",
-  "builtAt": "2026-10-11T13:45:47.120Z",
+  "builtAt": "2026-10-11T14:27:50.943Z",
   "pageCount": 49,
   "inputs": {
-    "page-1.html": "be05653184c40416f6e464879c6ae232c4aa5b3d0436e672337cae57287196cc",
+    "page-1.html": "1c96bfcc86997b0a2938b5ba6024b483952e70dbbaafeb395ce7fe18cf1747c4",
     "page-2.html": "9814022947146b05411c6657cd2f5d95b670e162872615af7e34a9992ce5a38f",
     "page-3.html": "e0dc43b3a8b0fd81a1ba61ec54abaa0ae6bbc3d2b43e8fdf801414e5c1fcade2",
     "page-4.html": "299cc5080ed8bcd1bd62a12237a6b1997895961d39692b1782e1fa9b9b4fd62c",
@@ -53,7 +53,7 @@
     "page-47.html": "a74ae08e54baa7e8f982398fdcb0a57e7ae0f46afd34f70d190267fe1f6fc22a",
     "page-48.html": "bbc62cf4fe8859dd5c0b43077a0875c6dca7df882068a0d600413c15af4d9169",
     "page-49.html": "f94acf29257524d59d910b62538761808ad28672eafb93c92d67c067a73355de",
-    "styles.css": "2800caa8b3ecf156fb2da421b37bb7fe33d937d2c9651ea21780e9a425a6e84b",
+    "styles.css": "c9756f25b4f10f2c3597bede65620ae0270666bff23e8e0847ccb0ddd16bef3a",
     "vendor/mathjax/sre/mathmaps/af.json": "b906ca6e91517ac8d6f87c304223839c9998daf2d29ac8d79ce5fa967c23dc77",
     "vendor/mathjax/sre/mathmaps/base.json": "72558700556d997a95e9281044e330eba9a472dda43642a9b5cc0483294d875f",
     "vendor/mathjax/sre/mathmaps/ca.json": "750a034984f3b5966a2a391eb5ad0c7b50bfa02eb576a82656a0bf43ebe34ee7",
@@ -97,6 +97,6 @@
     "vendor/mathjax/tex-font/chtml/woff2/mjx-tex-zero.woff2": "2c146f72c9a345aa282398a752d03af71d83a011f3d067297b533a31f0c5f5cb",
     "vendor/mathjax/tex-mml-chtml.js": "b4ee932e3dddcbaa59bf6097793e951257d651c85d235086dc295b5f7b71b185"
   },
-  "sourceDigest": "84da2f4e3633d1bac7372c77275d096174677d46296a9e41fa549836cac129af",
-  "pdfSha256": "fe220d38acfb04ccc2d6b3769e0d1cd354fc7e99b3dc9b101f7c8595a4843b8c"
+  "sourceDigest": "e1354ec7a6ee6adcb4b0f244b2dcb686932cf2c4e097197b7ad67d6ce1e3a0bf",
+  "pdfSha256": "68f8ddce0bb5d43097cdca1b6c21f12fc51347c5b123ba5a3ff7ab1324e68c41"
 }
