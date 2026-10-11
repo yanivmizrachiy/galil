@@ -17,6 +17,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import json
 
           ssot = Path('SOURCE_OF_TRUTH.md')
           s = ssot.read_text(encoding='utf-8')
@@ -63,6 +64,18 @@ jobs:
               assert qa_anchor in q
               q = q.replace(qa_anchor, qa_anchor + qa_extra, 1)
           qa.write_text(q, encoding='utf-8')
+
+          tracker = Path('workplans/galil.json')
+          d = json.loads(tracker.read_text(encoding='utf-8'))
+          d['updatedAt'] = '2026-10-11T11:12:00+03:00'
+          d['updatedBy'] = 'ChatGPT direct repo agent'
+          note = '2026-10-11: Yaniv reader/footer requirement recorded canonically: SSOT §17 requires a full-width blue rule above the district footer text; SSOT §19 requires immediate continuous downward scrolling, no per-page “עמוד X מתוך N” labels between pages, a full-width blue-only page separator, and keeps page-count text only in the sticky selector. QA gates were strengthened in the same work cycle. Overall remains 98% because §25 reserved closure conditions are unchanged.'
+          g1 = next(t for t in d['tasks'] if t['id']=='G-01')
+          if note not in g1['evidence']:
+              g1['evidence'].append(note)
+          d['progress']['overallProgressPercent'] = 98
+          d['progress']['remainingPercent'] = 2
+          tracker.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
       - name: Install
         run: npm install --no-audit --no-fund
@@ -74,6 +87,6 @@ jobs:
           git config user.name "ChatGPT Repo Agent"
           git config user.email "actions@users.noreply.github.com"
           git rm .github/workflows/reader-separator-hotfix.yml
-          git add SOURCE_OF_TRUTH.md index.html reader-qa.mjs qa.mjs
+          git add SOURCE_OF_TRUTH.md workplans/galil.json index.html reader-qa.mjs qa.mjs
           git commit -m "fix(reader): blue-only page separators and full-width footer rule"
           git push origin HEAD:main
