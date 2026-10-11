@@ -132,6 +132,9 @@ async function inspectReader(width,height,label){
     const card=document.querySelector('.sheet-card');
     return {
       overflow:document.documentElement.scrollWidth>innerWidth+1,
+      vertical:(()=>{const vw=document.documentElement.clientWidth;const wide=[...document.querySelectorAll('.bar,#reader,.sheet-card,.sheet-card iframe')].filter(el=>{const r=el.getBoundingClientRect();return r.left<-1||r.right>vw+1||el.scrollWidth>el.clientWidth+1}).length;
+        const cs=getComputedStyle(document.documentElement),bs=getComputedStyle(document.body);
+        return {vw,scrollW:document.documentElement.scrollWidth,bodyScrollW:document.body.scrollWidth,wide,ox:cs.overflowX,bodyOx:bs.overflowX,touch:cs.touchAction,bodyTouch:bs.touchAction,osx:cs.overscrollBehaviorX,readerOx:getComputedStyle(document.getElementById('reader')).overflowX}})(),
       cards:document.querySelectorAll('.sheet-card').length,
       buttons:document.querySelectorAll('button').length,
       forbidden:['#singleMode','#continuousMode','#prev','#next','#page'].filter(s=>document.querySelector(s)).join(','),
@@ -148,6 +151,12 @@ async function inspectReader(width,height,label){
     };
   });
   ok(!shell.overflow,`${label}: reader shell has horizontal overflow`);
+  // §19 mobile vertical-only: nothing may create horizontal layout width; gestures pan-y + pinch-zoom.
+  ok(shell.vertical.scrollW<=shell.vertical.vw+1&&shell.vertical.bodyScrollW<=shell.vertical.vw+1,`${label}: horizontal layout width detected (scrollWidth ${shell.vertical.scrollW}/${shell.vertical.bodyScrollW} > viewport ${shell.vertical.vw})`);
+  ok(shell.vertical.wide===0,`${label}: ${shell.vertical.wide} bar/reader/card/iframe element(s) exceed the viewport width`);
+  ok(shell.vertical.ox==='clip'&&shell.vertical.bodyOx==='clip'&&shell.vertical.readerOx==='clip',`${label}: overflow-x must be clip on html/body/#reader (got ${shell.vertical.ox}/${shell.vertical.bodyOx}/${shell.vertical.readerOx})`);
+  ok(/pan-y/.test(shell.vertical.touch)&&/pinch-zoom/.test(shell.vertical.touch)&&/pan-y/.test(shell.vertical.bodyTouch),`${label}: touch-action must be pan-y pinch-zoom (got ${shell.vertical.touch} / ${shell.vertical.bodyTouch})`);
+  ok(shell.vertical.osx==='none',`${label}: overscroll-behavior-x must be none (got ${shell.vertical.osx})`);
   ok(shell.cards===total,`${label}: expected ${total} continuous cards, got ${shell.cards}`);
   ok(shell.buttons===0,`${label}: reader must expose no <button> (found ${shell.buttons})`);
   ok(!shell.forbidden,`${label}: removed controls still present (${shell.forbidden})`);
@@ -294,4 +303,4 @@ if(failures.length){
   failures.forEach((f,i)=>console.error(`${i+1}. ${f}`));
   process.exit(1);
 }
-console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky compact page selector (select, not a button) that follows the scroll and fade-jumps on change, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow.`);
+console.log(`BROWSER QA PASS: ${total} A4 pages, ${total} page screenshots, combined ${total}-page A4 PDF, continuous-only reader with one "הורדת PDF" action serving a real static same-origin PDF, sticky compact page selector (select, not a button) that follows the scroll and fade-jumps on change, gentle scroll-snap, Android/iPhone portrait+landscape with painted first-page evidence, pages 39-49 mobile continuous-view fit, official pages 44-49 mobile screenshots, no SVG label on a drawing line (§15), no horizontal/internal overflow, mobile vertical-only (overflow-x clipped on shell+pages, pan-y + pinch-zoom).`);

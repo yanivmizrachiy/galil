@@ -7,8 +7,12 @@
   <style>
     *{box-sizing:border-box}
     :root{--bar-h:52px}
-    html{scroll-snap-type:y proximity;scroll-behavior:smooth;overflow-x:clip}
-    html,body{max-width:100%}
+    /* §19 mobile vertical-only: no horizontal scroll anywhere — shell and pages clip overflow-x,
+       touch gestures are pan-y + pinch-zoom only, and no element may create extra layout width. */
+    html{scroll-snap-type:y proximity;scroll-behavior:smooth;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    html,body{max-width:100%;overflow-x:clip}
+    body{overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    .bar,#reader{max-width:100%;overflow-x:clip}
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033}
 
     /* Sticky top bar: title + non-button page counter + the single action (PDF download). */
