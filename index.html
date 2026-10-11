@@ -30,8 +30,20 @@
     #reader{max-width:1050px;margin:0 auto;padding:16px 12px 48px}
     .sheet-card{margin:0;scroll-snap-align:start;scroll-margin-top:calc(var(--bar-h) + 10px);max-width:100%}
     .sheet-card + .sheet-card{border-top:3px solid #1d4ed8;padding-top:18px;margin-top:18px}
-    iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
+    .sheet-card iframe{display:block;width:100%;max-width:100%;border:1px solid #ced9e8;border-radius:14px;background:#fff;
            box-shadow:0 10px 34px rgba(42,61,89,.10);min-height:760px;height:1120px}
+
+    .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
+    .intro-video-title{margin:0;font-size:19px;font-weight:800;color:#172033}
+    .intro-video-by{margin:3px 0 12px;font-size:14px;font-weight:600;color:#41526b}
+    .video-facade,.video-frame{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:14px;box-shadow:0 10px 34px rgba(42,61,89,.14)}
+    .video-facade{position:relative;cursor:pointer;overflow:hidden;outline:0;background:radial-gradient(130% 130% at 50% 0%,#2b4a9e 0%,#16244a 72%)}
+    .video-facade::after{content:"לחצו להפעלת הסרטון";position:absolute;inset-inline:0;bottom:12px;text-align:center;color:#dbe6ff;font-size:14px;font-weight:600}
+    .video-facade:focus-visible{outline:3px solid #93b4ff;outline-offset:3px}
+    .video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .video-play svg{width:92px;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));transition:transform .15s ease}
+    .video-play-bg{fill:#ff2d2d}
+    .video-facade:hover .video-play svg{transform:scale(1.07)}
 
     @media(max-width:700px){
       :root{--bar-h:48px}
@@ -40,10 +52,13 @@
       .counter{font-size:13px;padding:4px 26px 4px 10px;background-position:right 9px center}
       .download{padding:7px 12px}
       #reader{padding:10px 6px 32px}
+      .intro-video{padding:12px 6px 0}
+      .intro-video-title{font-size:17px}
+      .video-play svg{width:68px}
       .sheet-card + .sheet-card{padding-top:12px;margin-top:12px;border-top-width:3px}
-      iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
+      .sheet-card iframe{min-height:0;height:auto;aspect-ratio:210/297;border-radius:8px}
     }
-    @media print{ .bar{display:none} body{background:#fff} .sheet-card + .sheet-card{border-top:0;padding-top:0;margin-top:0} iframe{box-shadow:none;border:none} }
+    @media print{ .bar,.intro-video{display:none} body{background:#fff} .sheet-card + .sheet-card{border-top:0;padding-top:0;margin-top:0} iframe{box-shadow:none;border:none} }
   </style>
 </head>
 <body>
@@ -55,6 +70,17 @@
       הורדת PDF
     </a>
   </header>
+
+  <section class="intro-video" aria-labelledby="intro-video-title">
+    <h2 class="intro-video-title" id="intro-video-title">סרטון המחשה — גליל</h2>
+    <p class="intro-video-by">איילת קריספין · מתכללת תחום המתמטיקה במחוז ירושלים והעיר ירושלים</p>
+    <div class="video-facade" id="videoFacade" role="button" tabindex="0" data-id="l4vvuHCY1QI"
+         aria-label="הפעלת סרטון ההמחשה „המחשה לגליל” מאת איילת קריספין">
+      <span class="video-play" aria-hidden="true">
+        <svg viewBox="0 0 68 48"><path class="video-play-bg" d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.3.5 34 .5 34 .5S12.7.5 7.4 1.7C4.5 2.5 2.3 4.8 1.5 7.7.3 13 .3 24 .3 24s0 11 1.2 16.3c.8 2.9 3 5.2 5.9 6C12.7 47.5 34 47.5 34 47.5s21.3 0 26.6-1.2c2.9-.8 5.1-3.1 5.9-6C67.7 35 67.7 24 67.7 24s0-11-1.2-16.3z"/><path d="M27 34V14l18 10z" fill="#fff"/></svg>
+      </span>
+    </div>
+  </section>
 
   <main id="reader" aria-label="חוברת הגליל — גלילה רציפה של כל הדפים"></main>
 
@@ -184,6 +210,23 @@
     let resizeTimer;
     window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitAll, 120); });
     window.addEventListener('orientationchange', () => setTimeout(fitAll, 180));
+
+    // Illustration video (Ayelet Krispin): click-to-load via youtube-nocookie, so nothing external loads on open.
+    const facade = document.getElementById('videoFacade');
+    if(facade){
+      const loadVideo = () => {
+        const frame = document.createElement('iframe');
+        frame.className = 'video-frame';
+        frame.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.id}?autoplay=1&rel=0`;
+        frame.title = 'סרטון המחשה — גליל — איילת קריספין';
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.setAttribute('allowfullscreen', '');
+        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        facade.replaceWith(frame);
+      };
+      facade.addEventListener('click', loadVideo);
+      facade.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); loadVideo(); } });
+    }
   </script>
 </body>
 </html>
