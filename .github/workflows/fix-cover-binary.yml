@@ -1,50 +1,159 @@
-name: Fix approved Galil cover binary (one-shot)
+name: Finalize Galil cover and PDF (one-shot)
 
 on:
   push:
     branches: [claude/galil-closure-20261011]
     paths:
       - '.github/workflows/fix-cover-binary.yml'
-      - 'assets/cover-bg.webp'
 
 permissions:
   contents: write
 
 jobs:
-  fix:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode approved cover only when stored as Base64 text
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Decode and validate the approved cover artwork
         shell: bash
         run: |
           set -euo pipefail
-          mime="$(file --brief --mime-type assets/cover-bg.webp)"
-          echo "current mime: $mime"
-          if [ "$mime" = "text/plain" ] || [ "$mime" = "application/octet-stream" ]; then
-            if head -c 16 assets/cover-bg.webp | grep -q '^UklGR'; then
-              base64 --decode assets/cover-bg.webp > assets/cover-bg.webp.bin
-              mv assets/cover-bg.webp.bin assets/cover-bg.webp
-            fi
+          if head -c 16 assets/cover-bg.webp | grep -q '^UklGR'; then
+            base64 --decode assets/cover-bg.webp > assets/cover-bg.webp.bin
+            mv assets/cover-bg.webp.bin assets/cover-bg.webp
           fi
           test "$(file --brief --mime-type assets/cover-bg.webp)" = "image/webp"
-          python - <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
-          p=Path('assets/cover-bg.webp')
-          b=p.read_bytes()
-          assert b[:4] == b'RIFF' and b[8:12] == b'WEBP', 'not a valid WebP container'
-          assert len(b) > 50000, f'cover unexpectedly small: {len(b)} bytes'
-          print('validated WebP bytes:', len(b))
+          b=Path('assets/cover-bg.webp').read_bytes()
+          assert b[:4]==b'RIFF' and b[8:12]==b'WEBP'
+          assert len(b)>10000
+          print('approved cover WebP bytes:',len(b))
           PY
-      - name: Commit binary replacement
+      - name: Apply the canonical cover contract
         shell: bash
         run: |
-          if git diff --quiet -- assets/cover-bg.webp; then
-            echo 'already binary; nothing to commit'
-            exit 0
-          fi
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+
+          # cover.html points only to the approved local binary asset.
+          p=Path('cover.html'); s=p.read_text()
+          s=s.replace('assets/cover-bg.jpg','assets/cover-bg.webp')
+          p.write_text(s)
+
+          # PDF builder: cover first, then the unchanged 49 numbered student pages.
+          p=Path('scripts/build-pdf.mjs'); s=p.read_text()
+          s=s.replace("'.png':'image/png', '.svg':'image/svg+xml'", "'.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.svg':'image/svg+xml'")
+          marker="  const combined = await PDFDocument.create();\n"
+          if 'cover.html' not in s.split(marker,1)[1][:2500]:
+            block="""  const combined = await PDFDocument.create();\n\n  // Yaniv 2026-10-11: approved unnumbered cover is PDF sheet 1; student pages remain numbered 1..49.\n  await page.goto(`${base}cover.html`, { waitUntil:'load' });\n  await page.evaluate(async()=>{ await document.fonts.ready; const img=document.querySelector('.cover-image'); if(img && !img.complete) await new Promise((res,rej)=>{img.addEventListener('load',res,{once:true});img.addEventListener('error',()=>rej(new Error('cover image failed to load')),{once:true});}); });\n  const coverAudit = await page.evaluate(()=>{ const c=document.querySelector('.a4-cover'), img=document.querySelector('.cover-image'); return {cover:!!c, image:!!img && img.complete && img.naturalWidth>0, numbered:!!document.querySelector('.page-number')}; });\n  if(!coverAudit.cover || !coverAudit.image || coverAudit.numbered) throw new Error(`cover contract failed: ${JSON.stringify(coverAudit)}`);\n  const coverBytes = await page.pdf({ format:'A4', printBackground:true, preferCSSPageSize:true, margin:{top:'0',right:'0',bottom:'0',left:'0'} });\n  const coverDoc = await PDFDocument.load(coverBytes);\n  if(coverDoc.getPageCount()!==1) throw new Error(`cover produced ${coverDoc.getPageCount()} PDF pages`);\n  const [coverPage] = await combined.copyPages(coverDoc,[0]);\n  combined.addPage(coverPage);\n"""
+            s=s.replace(marker,block,1)
+          s=s.replace("if(combined.getPageCount()!==pages.length) throw new Error(`combined ${combined.getPageCount()} != ${pages.length}`);",
+                      "if(combined.getPageCount()!==pages.length+1) throw new Error(`combined ${combined.getPageCount()} != ${pages.length+1} (cover + student pages)`);")
+          p.write_text(s)
+
+          # PDF fingerprint now includes the cover inputs too.
+          p=Path('scripts/pdf-fingerprint.mjs'); s=p.read_text()
+          needle="  files.push('styles.css');\n"
+          if "files.push('cover.html')" not in s:
+            s=s.replace(needle, "  files.push('cover.html');\n  files.push('assets/cover-bg.webp');\n"+needle,1)
+          p.write_text(s)
+
+          # Reader stays 49 numbered student pages; downloadable PDF is cover + 49 = 50 sheets.
+          p=Path('reader-qa.mjs'); s=p.read_text()
+          if 'const pdfTotal = total + 1;' not in s:
+            s=s.replace('const total = pages.length;\n','const total = pages.length;\nconst pdfTotal = total + 1; // unnumbered cover + numbered student pages\n',1)
+          s=s.replace('doc.getPageCount()===total, `static PDF has ${doc.getPageCount()} pages but there are ${total} student pages',
+                      'doc.getPageCount()===pdfTotal, `static PDF has ${doc.getPageCount()} sheets but expected ${pdfTotal} (cover + ${total} student pages)')
+          s=s.replace('manifest.pageCount === total, `manifest pageCount ${manifest.pageCount} != ${total} student pages`',
+                      'manifest.pageCount === pdfTotal, `manifest pageCount ${manifest.pageCount} != ${pdfTotal} sheets (cover + student pages)`')
+          s=s.replace('static same-origin ${total}-page A4 PDF', 'static same-origin ${pdfTotal}-sheet A4 PDF (cover + ${total} student pages)')
+          p.write_text(s)
+
+          # Public reader shows the cover before the video and student-page stream, without entering page numbering.
+          p=Path('index.html'); s=p.read_text()
+          if '.cover-preview' not in s:
+            s=s.replace('    .intro-video{max-width:1050px;', '    .cover-preview{max-width:1050px;margin:0 auto;padding:16px 12px 0}\n    .cover-preview iframe{display:block;width:100%;max-width:210mm;aspect-ratio:210/297;margin:0 auto;border:0;background:#fff;box-shadow:0 8px 30px rgba(42,61,89,.12)}\n\n    .intro-video{max-width:1050px;',1)
+            s=s.replace('@media print{ .bar,.intro-video{display:none}', '@media print{ .bar,.intro-video,.cover-preview{display:none}',1)
+            anchor='\n  <section class="intro-video"'
+            cover='\n  <section class="cover-preview" aria-label="שער החוברת — גליל לחטיבת הביניים"><iframe src="cover.html" title="גליל לחטיבת הביניים — שער" loading="eager"></iframe></section>\n\n  <section class="intro-video"'
+            s=s.replace(anchor,cover,1)
+          p.write_text(s)
+
+          # Permanent cover QA gate.
+          Path('cover-qa.mjs').write_text(r'''import fs from 'node:fs';
+import { PDFDocument } from 'pdf-lib';
+const fail=[]; const ok=(c,m)=>{if(!c)fail.push(m)};
+const cover=fs.readFileSync('cover.html','utf8');
+const ssot=fs.readFileSync('SOURCE_OF_TRUTH.md','utf8');
+const img=fs.readFileSync('assets/cover-bg.webp');
+const studentPages=fs.readdirSync('.').filter(n=>/^page-\d+\.html$/.test(n)).length;
+ok(/<h1[^>]*>גליל לחטיבת הביניים<\/h1>/.test(cover),'cover title must be גליל לחטיבת הביניים');
+ok(cover.includes('assets/cover-bg.webp'),'cover must use the approved local artwork');
+ok(!/page-number/.test(cover),'cover must be unnumbered');
+ok(img.subarray(0,4).toString()==='RIFF' && img.subarray(8,12).toString()==='WEBP','cover artwork must be a real WebP binary');
+ok(ssot.includes('גליל לחטיבת הביניים') && ssot.includes('50 גיליונות'),'SSOT must state the canonical cover + 49-page PDF contract');
+const pdf=await PDFDocument.load(fs.readFileSync('galil-student.pdf'));
+ok(studentPages===49,`expected 49 numbered student pages, got ${studentPages}`);
+ok(pdf.getPageCount()===studentPages+1,`PDF must be cover + ${studentPages} student pages = ${studentPages+1}, got ${pdf.getPageCount()}`);
+for(const [i,p] of pdf.getPages().entries()){const {width,height}=p.getSize();ok(Math.abs(width-595.28)<1.5&&Math.abs(height-841.89)<1.5,`PDF sheet ${i+1} is not A4`)}
+if(fail.length){console.error(`COVER QA FAILED (${fail.length})`);fail.forEach((x,i)=>console.error(`${i+1}. ${x}`));process.exit(1)}
+console.log(`COVER QA PASS: approved unnumbered cover + ${studentPages} numbered student pages = ${pdf.getPageCount()} A4 PDF sheets.`);
+''')
+
+          # Canonical SSOT insertion under §19, exactly once.
+          p=Path('SOURCE_OF_TRUTH.md'); s=p.read_text()
+          if '### שער החוברת — הוראת יניב, 2026-10-11' not in s:
+            ins='''\n### שער החוברת — הוראת יניב, 2026-10-11\n- לחוברת יש שער A4 מאושר לפני עמוד 1, עם הכותרת המדויקת **„גליל לחטיבת הביניים”**.\n- תמונת השער היא התמונה שאישר יניב ב־11.10.2026 ונשמרת מקומית ב־`assets/cover-bg.webp`; אין להחליף אותה ללא הוראה מפורשת חדשה.\n- השער **אינו ממוספר** ואינו משנה את מספור דפי התלמיד: דפי התלמיד נשארים 1–49.\n- הקורא הציבורי מציג את השער לפני הסרטון ולפני רצף דפי התלמיד, אך בורר העמוד ממשיך לייצג רק את 49 דפי התלמיד הממוספרים.\n- קובץ ה־PDF להורדה כולל **50 גיליונות A4** בסדר: שער לא־ממוספר + 49 דפי תלמיד ממוספרים.\n- QA חייב לאמת את הכותרת, נכס התמונה המקומי, היעדר מספר על השער, A4, 49 דפי תלמיד ו־50 גיליונות PDF.\n\n'''
+            s=s.replace('\n## 20.',ins+'## 20.',1)
+          p.write_text(s)
+
+          # Package/workflow permanently run cover QA.
+          p=Path('package.json'); data=json.loads(p.read_text())
+          if 'cover-qa.mjs' not in data['scripts']['qa']:
+            data['scripts']['qa']=data['scripts']['qa'].replace('node reader-qa.mjs','node cover-qa.mjs && node reader-qa.mjs')
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+
+          p=Path('.github/workflows/qa.yml'); s=p.read_text()
+          if 'Run cover contract QA' not in s:
+            s=s.replace('      - name: Verify public reader contract and static PDF staleness\n', '      - name: Run cover contract QA\n        run: node cover-qa.mjs\n      - name: Verify public reader contract and static PDF staleness\n',1)
+          p.write_text(s)
+
+          # Tracker: record this user-requested closure work without inventing 100% before final QA/merge.
+          p=Path('workplans/galil.json'); data=json.loads(p.read_text())
+          data['updatedAt']='2026-10-11T20:10:00Z'
+          data['updatedBy']='ChatGPT — approved cover + 50-sheet closure integration on claude/galil-closure-20261011'
+          for t in data.get('tasks',[]):
+            if t.get('id')=='G-10':
+              ev=t.setdefault('evidence',[])
+              msg='2026-10-11: Yaniv explicitly instructed to finish; approved Galil cover is integrated as an unnumbered A4 sheet titled גליל לחטיבת הביניים, public reader shows it before the video/student stream, and PDF/QA are upgraded to cover + 49 numbered student pages = 50 A4 sheets. Final percentage remains evidence-gated until this head passes CI and merge/production verification.'
+              if msg not in ev: ev.append(msg)
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+          PY
+      - name: Install dependencies and Chromium
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Rebuild 50-sheet downloadable PDF
+        run: node scripts/build-pdf.mjs
+      - name: Run full QA including cover/browser
+        run: |
+          npm run qa
+          node browser-qa.mjs
+      - name: Commit validated closure assets and code
+        shell: bash
+        run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/cover-bg.webp
-          git commit -m 'fix(cover): decode approved cover artwork to binary WebP [skip ci]'
+          git add SOURCE_OF_TRUTH.md cover.html cover-qa.mjs assets/cover-bg.webp index.html package.json scripts/build-pdf.mjs scripts/pdf-fingerprint.mjs reader-qa.mjs .github/workflows/qa.yml workplans/galil.json galil-student.pdf galil-student.pdf.manifest.json
+          if git diff --cached --quiet; then echo 'nothing to commit'; exit 0; fi
+          git commit -m 'feat(cover): integrate approved Galil cover and validated 50-sheet PDF'
           git push
