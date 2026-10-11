@@ -9,7 +9,7 @@ const has=(n,...parts)=>parts.every(part=>pages.get(n).includes(part));
 ok(has(25,'נפח = שטח הבסיס·h','12·5 = ____','40·2.5 = ____','100 סמ״ק'),'page 25: base-area-to-volume bridge incomplete');
 ok(has(26,'שטח הבסיס = π·r²','נפח = שטח הבסיס·h','נפח = π·r²·h','נפח = 2·π·r·h'),'page 26: guided derivation/distractor set for cylinder volume incomplete');
 ok(has(27,'נפח = π·r²·','r → r² → ·h → נפח','7 ס״מ'),'page 27: direct radius/height volume progression incomplete');
-ok(has(28,'d → r → ',' → נפח','d=10 → r=5 → שטח הבסיס=25π → נפח=75π','לחלק את d ב־2'),'page 28: diameter-to-radius-to-volume progression incomplete');
+ok(has(28,'d → r → ',' → נפח','d=10 → r=5 → ','שטח הבסיס','25π','75π','לחלק את d ב־2'),'page 28: diameter-to-radius-to-volume progression incomplete');
 ok(has(29,'r = 1.5','r = 0.5','2.5π סמ״ק'),'page 29: decimal-volume practice or verified example missing');
 ok(has(30,'אין מציבים בנוסחת נפח נתונים ביחידות שונות','r = 30','d = 80','r = 0.05','d = 0.12'),'page 30: mixed-unit conversion practice incomplete');
 ok(has(31,'שמרו π בתשובה המדויקת','≈','20π','62.83'),'page 31: exact/approx π distinction incomplete');

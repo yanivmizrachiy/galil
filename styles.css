@@ -3,9 +3,9 @@
 /* A4 utilization (SOURCE_OF_TRUTH.md §16): fill otherwise-empty A4 space with a 5×5 mm calculation grid ONLY on
    pages whose last task is computational — never a large box on a short recognition/selection task. */
 .a4-page:has(.page-number[aria-label="עמוד 34"]),.a4-page:has(.page-number[aria-label="עמוד 38"]){--a4-work-extra:35mm}
-.a4-page:has(.page-number[aria-label="עמוד 20"]),.a4-page:has(.page-number[aria-label="עמוד 21"]){--a4-work-extra:40mm}
-.a4-page:has(.page-number[aria-label="עמוד 18"]){--a4-work-extra:85mm}
-.a4-page:has(.page-number[aria-label="עמוד 18"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 20"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 21"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 34"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 38"]) .task:last-of-type .task-body::after{content:"מרחב עבודה / חישוב";display:block;height:var(--a4-work-extra);margin-top:3mm;border:1px dashed #cbd5e1;border-radius:2.5mm;padding:2mm 3mm;color:#64748b;font-size:11px;font-weight:500;background-color:#fff;background-image:linear-gradient(to right,#e2e8f0 .3mm,transparent .3mm),linear-gradient(to bottom,#e2e8f0 .3mm,transparent .3mm);background-size:5mm 5mm}
+.a4-page:has(.page-number[aria-label="עמוד 20"]){--a4-work-extra:40mm}
+.a4-page:has(.page-number[aria-label="עמוד 21"]){--a4-work-extra:20mm}
+.a4-page:has(.page-number[aria-label="עמוד 20"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 21"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 34"]) .task:last-of-type .task-body::after,.a4-page:has(.page-number[aria-label="עמוד 38"]) .task:last-of-type .task-body::after{content:"מרחב עבודה / חישוב";display:block;height:var(--a4-work-extra);margin-top:3mm;border:1px dashed #cbd5e1;border-radius:2.5mm;padding:2mm 3mm;color:#64748b;font-size:11px;font-weight:500;background-color:#fff;background-image:linear-gradient(to right,#e2e8f0 .3mm,transparent .3mm),linear-gradient(to bottom,#e2e8f0 .3mm,transparent .3mm);background-size:5mm 5mm}
 .a4-page,.a4-page *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 /* SOURCE_OF_TRUTH.md §15: every SVG label must read cleanly off the drawing lines. Positional
    separation (labels live in safe-label zones) is enforced in HTML + by QA; this white halo is
