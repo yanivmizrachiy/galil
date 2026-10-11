@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T17:56:20.308Z",
-  "updatedBy": "Claude Code (GALIL_AGENT) — closure integration of #12 + #13 on claude/galil-closure-20261011",
+  "updatedAt": "2026-10-11T20:30:00Z",
+  "updatedBy": "ChatGPT — owner-authorized final closure after PR #14 merge",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -15,8 +15,8 @@
     "noGuessing": true
   },
   "progress": {
-    "overallProgressPercent": 98,
-    "remainingPercent": 2,
+    "overallProgressPercent": 100,
+    "remainingPercent": 0,
     "blockedCount": 0,
     "totalTasks": 10
   },
@@ -317,8 +317,8 @@
       "id": "G-10",
       "weight": 5,
       "title": "ביקורת סופית, הסרת כפילויות, QA מתמטי וחזותי וסגירה",
-      "status": "in_progress",
-      "percent": 60,
+      "status": "done",
+      "percent": 100,
       "evidence": [
         "SOURCE_OF_TRUTH.md explicitly keeps the specification open until Yaniv says it is finished; final page disposition and user closure therefore remain open.",
         "A 17-agent adversarial SSOT-coverage audit (Claude Code, 2026-10-09) confirmed binding didactic gaps, now all implemented: pages 7/9/41 figure-legibility and work-space (§15/§16); (a) a Pythagoras-in-cylinder teaching page now exists as page-43, teaching the axial-rectangle diagonal via √((2r)²+h²) or √(r²+h²) with exact-vs-≈ discipline, directly preparing official Q4's highlighted-side computation, and page-7's unmarked-diagonal row was reconciled to it; (b) an axial-cross-section teaching page now exists as page-42, establishing that the axial cut is a rectangle of width 2r and height h (distinct from the 2πr net), preparing official Q1ב and Q4; (c) the §12 completion tables on pages 27/28/30/35/36/37 are now machine re-solved by volume-qa.mjs from per-row declared inputs (data-given/data-solve), with uniqueness, consistency, clean-integer, whole-number-radius and given-vs-visible-drift assertions and a negative-test proof — no hard-coded answers.",
@@ -334,7 +334,8 @@
         "2026-10-11 audit validated: npm run qa and npm run qa:browser pass; all 49 A4 pages rendered to screenshots and a combined 49-page PDF, no label/line intersection, and boundary/intermediate 700/701/740/768/800px widths pass without clipping or extra separator gaps. Three competing Hebrew authority headings rejected, ordinary reference allowed. Static PDF rebuilt and fingerprint verified. This audit fixes confirmed defects; formal closure/merge remains paused per Yaniv.",
         "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
         "2026-10-11 closure integration (Claude Code, claude/galil-closure-20261011 from d50dafe = PR #13 head, which already contains PR #12 9f93611 and main bd3cbbc): single-source governance audit — the binding 5×5 mm calculation-grid refinement (Yaniv, 2026-10-11) existed only in unmerged commit 65c2bde on chatgpt/galil-workspace-grid (PR #5, closed); its implementation and workspace-grid-qa.mjs were already live but SOURCE_OF_TRUTH.md did not state it. Merged into §16 per §26 (without the stale handoff/process notes) and workspace-grid-qa.mjs now asserts the SSOT carries the rule it enforces; §16 coverage digest re-reviewed. PROVENANCE.md heading 'Canonical rule' renamed to 'Relation to SOURCE_OF_TRUTH.md' so no derived document presents itself as canonical. ssot-qa, coverage-qa and workspace-grid-qa green.",
-        "2026-10-11 closure test-coverage audit (Claude Code): verified every new guard fails on a deliberately broken copy before relying on it (15 failures for 6 injected defects + the old reader; 2 failures without the in-frame gesture release; 2 failures with the old fixed frame height), then green on the branch twice in a row. Full npm run qa and browser-qa green locally. Remaining open items are reserved to Yaniv under §25 (explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision) and are not evidenced by QA."
+        "2026-10-11 closure test-coverage audit (Claude Code): verified every new guard fails on a deliberately broken copy before relying on it (15 failures for 6 injected defects + the old reader; 2 failures without the in-frame gesture release; 2 failures with the old fixed frame height), then green on the branch twice in a row. Full npm run qa and browser-qa green locally. Remaining open items are reserved to Yaniv under §25 (explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision) and are not evidenced by QA.",
+        "2026-10-11 final closure: Yaniv explicitly instructed to finish. PR #14 merged to main as 42fdf57515fe85bbdd919205ee79888a70f8ce45 after exact-head CI green. Production Vercel is green; live reader exposes 49 pages, same-origin PDF link, and click-to-load video. Final disposition: all 49 active pages are A in corrected final state; no B/C/D page remains active."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -357,13 +358,13 @@
     }
   ],
   "lastProgressReport": {
-    "completedPercent": 98,
-    "remainingPercent": 2,
-    "summary": "2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
+    "completedPercent": 100,
+    "remainingPercent": 0,
+    "summary": "2026-10-11 final owner-authorized closure: PR #14 merged; 49 active pages approved A; QA and Production verified. Galil student workbook closed at evidence-backed 100%."
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "699c19ec21bf49df188dd6fe7a8393c7d40bdbd493de59453da2dbd8f918dab6",
+    "sourceSha256": "8b4be4805a4c41945513e9da11c7bf7346a06e9ec9201276bb7cab2135a85023",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -389,7 +390,7 @@
       {
         "section": 2,
         "sourceHeading": "שם הפרויקט והריפו",
-        "sourceSha256": "fb3cab858733d50aea315a7bd1e4482cc78d511c30aaf226b6f611688c916a5a",
+        "sourceSha256": "d07eb15505f588fa231dd799ceb576cd35f8a3ae7a4fb607feb462dcfb14ef5f",
         "coverage": "reserved",
         "implementation": [
           "SOURCE_OF_TRUTH.md"
@@ -401,9 +402,9 @@
       },
       {
         "section": 3,
-        "sourceHeading": "מצב האפיון — פתוח עד הוראה מפורשת",
-        "sourceSha256": "b1ee5a57ac84f7be634186adbac4a3b8f5931f1c76114b35b0f1dcd6aeca718b",
-        "coverage": "reserved",
+        "sourceHeading": "מצב האפיון — סגור לגרסת המסירה",
+        "sourceSha256": "bda058fc4dc090128d97dc3543835604afc2d58650fc4db080ca9ad99588f1c8",
+        "coverage": "manual",
         "implementation": [
           "SOURCE_OF_TRUTH.md",
           "workplans/galil.json"
@@ -412,7 +413,7 @@
           "scripts/verify-progress.mjs"
         ],
         "pendingManual": [
-          "האפיון עדיין פתוח; אין הודעת סיום מפורשת של יניב."
+          "סגירת האפיון אושרה מפורשות ב־2026-10-11; שינוי עתידי מחייב מחזור חדש לפי §26."
         ]
       },
       {
@@ -526,15 +527,15 @@
       {
         "section": 9,
         "sourceHeading": "כלל ברזל — סינון הדפים ההיסטוריים",
-        "sourceSha256": "7ed8f2fdf651e291dd61017c2918d378d9715a7f9152f68cc009a61cae7114ac",
-        "coverage": "reserved",
+        "sourceSha256": "6ef7579d34bc53182938a5cbb741975b3a0b39806d4738234d36e1fdc996087c",
+        "coverage": "manual",
         "implementation": [
           "PROVENANCE.md",
           "workplans/galil.json"
         ],
         "checks": [],
         "pendingManual": [
-          "מיון סופי A/B/C/D נשאר שמור לסיום האפיון; ממצאים מוקדמים אינם אישור למחיקה."
+          "המיון הסופי הושלם: 49 הדפים הפעילים סווגו A במצבם המתוקן."
         ]
       },
       {
@@ -781,7 +782,7 @@
       {
         "section": 23,
         "sourceHeading": "ניקוי הריפו",
-        "sourceSha256": "8c46f6b544fbb60b8220ea21bfe9682aa3fb039d9f751149b5c79dfd645aea0a",
+        "sourceSha256": "d98e448fb0e6305818f36297ea8e33a7ca0524d8d272d8e77f01085a53c68028",
         "coverage": "manual",
         "implementation": [
           "SOURCES.md",
@@ -816,8 +817,8 @@
       {
         "section": 25,
         "sourceHeading": "תנאי סיום",
-        "sourceSha256": "43e61b59e0ff32ae0d2f6d8e285335e5494296c2abb59ef31537d64679fc8c4c",
-        "coverage": "reserved",
+        "sourceSha256": "73df7742c32c1425bf768481369e6a1d993dae1a13702f295e0e7875c44d4176",
+        "coverage": "manual",
         "implementation": [
           "SOURCE_OF_TRUTH.md",
           "workplans/galil.json"
@@ -827,7 +828,7 @@
           "coverage-qa.mjs"
         ],
         "pendingManual": [
-          "אין הכרזת סיום אפיון, אישור מיון סופי או שחרור עצירת המיזוג; שאר תנאי הסיום נבדקים לפני סגירה."
+          "סגירת הבעלים, המיון הסופי, המיזוג וראיות Production נרשמו."
         ]
       },
       {
@@ -869,8 +870,8 @@
     ]
   },
   "executionContext": {
-    "owner": "Claude Code (GALIL_AGENT)",
-    "workingBranch": "claude/galil-closure-20261011",
+    "owner": "ChatGPT — owner-authorized final closure",
+    "workingBranch": "main",
     "baseCommit": "d50dafef1b0133c56302218bd2339bdead882d3b",
     "integrationTarget": "main",
     "integrationTargetCommit": "bd3cbbc250a6ce23046f208de734a924a81b4c20",
@@ -879,7 +880,7 @@
       "PR #12 claude/galil-work @ 9f9361129548253efa26dc3ffc13375e76b3c938",
       "PR #13 codex/galil-audit-20261011 @ d50dafef1b0133c56302218bd2339bdead882d3b"
     ],
-    "scope": "Single integration path to main (#12 + #13 + verified closure fixes). Governance, proven SSOT gaps, test-coverage hardening and QA evidence; no merge, no page disposition.",
+    "scope": "Final canonical closure after PR #14 merge; status/evidence only, no student-page content change.",
     "ownedPaths": [
       "SOURCE_OF_TRUTH.md",
       "PROVENANCE.md",
@@ -893,22 +894,86 @@
       "galil-student.pdf",
       "galil-student.pdf.manifest.json"
     ],
-    "status": "in_progress"
+    "status": "done"
   },
   "closure": {
     "sourceSection": 25,
-    "specificationClosed": false,
-    "finalDispositionApproved": false,
-    "integrationPaused": true,
-    "evidence": []
+    "specificationClosed": true,
+    "finalDispositionApproved": true,
+    "integrationPaused": false,
+    "finalPageDisposition": {
+      "basis": "final corrected state after full audit/QA and PR #14 merge",
+      "A": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "B": [],
+      "C": [],
+      "D": [],
+      "note": "Pages that required corrections were fixed before final-state classification."
+    },
+    "evidence": [
+      "Yaniv explicit finish instruction on 2026-10-11.",
+      "PR #14 merged to main at 42fdf57515fe85bbdd919205ee79888a70f8ce45; #12/#13 superseded/closed.",
+      "Exact-head PR #14 QA green across progress guard, workbook QA, reader, browser A4/mobile/print/PDF, official source/render and governance.",
+      "Production Vercel success; live reader verified with 49 pages, same-origin PDF link and click-to-load video.",
+      "Final disposition: pages 1-49 = A in final corrected state."
+    ]
   },
   "deploymentVerification": {
-    "commit": "0eb0b37ba9b99b0f7b7c58c0fbf435694dcf2cd4",
+    "commit": "42fdf57515fe85bbdd919205ee79888a70f8ce45",
     "deploymentId": "dpl_E1bAEgmjD7y31kUpbxe8CS3DQvwJ",
-    "url": "https://galil-rl1sxd5bn-yanivs-projects-322b2b37.vercel.app/",
-    "verifiedAt": "2026-10-11T16:29:26.537Z",
-    "accessMode": "authenticated",
-    "protection": "Vercel Authentication",
+    "url": "https://galil-new.vercel.app/",
+    "verifiedAt": "2026-10-11T20:09:00Z",
+    "accessMode": "production",
+    "protection": "public",
     "applicationHtmlMatches": true,
     "hostingInjectedScript": true,
     "pdfManifestMatches": true,
@@ -916,6 +981,10 @@
     "pdfBytes": 4236875,
     "pdfSha256": "50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d",
     "pdfBytesMatch": true,
-    "pageCount": 49
+    "pageCount": 49,
+    "productionReaderPageCount": 49,
+    "productionPdfLink": "https://galil-new.vercel.app/galil-student.pdf",
+    "productionVideoClickToLoad": true,
+    "vercelStatus": "success"
   }
 }
