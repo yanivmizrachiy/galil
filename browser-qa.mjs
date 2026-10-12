@@ -7,7 +7,7 @@ import path from 'node:path';
 const failures=[];
 const ok=(cond,msg)=>{if(!cond)failures.push(msg)};
 const root=process.cwd();
-const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf'};
+const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf','.jpg':'image/jpeg','.woff2':'font/woff2'};
 const pages=fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n)).map(n=>Number(n.match(/\d+/)[0])).sort((a,b)=>a-b);
 const total=pages.length;
 
@@ -245,8 +245,18 @@ async function inspectReader(width,height,label){
   // Fit mode (CSS zoom, transform fallback): the frame document itself must not be wider than the frame, so nothing can pan sideways.
   if(scaled&&scaled.frame<expectedW)ok(scaled.docW<=scaled.frame,`${label}: fitted frame document is wider than its frame (${scaled.docW}/${scaled.frame})`);
   const frameShot=`qa-artifacts/reader-${label}-first-page.png`;
-  await firstFrame.screenshot({path:frameShot});
-  ok(fs.statSync(frameShot).size>25000,`${label}: first-page screenshot is suspiciously blank (${fs.statSync(frameShot).size} bytes)`);
+  const shotBytes=await firstFrame.screenshot({path:frameShot});
+  // Blankness is measured as ink (share of dark pixels), not PNG byte size: identical renders drifted ±1.5 KB
+  // between runs around the old 25 KB threshold. A rendered student page has several percent ink; a blank sheet ~0.
+  const ink=await page.evaluate(async b64=>{
+    const img=new Image();img.src='data:image/png;base64,'+b64;await img.decode();
+    const c=document.createElement('canvas');c.width=img.width;c.height=img.height;
+    const x=c.getContext('2d');x.drawImage(img,0,0);
+    const d=x.getImageData(0,0,c.width,c.height).data;let dark=0;
+    for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]<600)dark++;
+    return dark/(d.length/4);
+  },shotBytes.toString('base64'));
+  ok(ink>0.01,`${label}: first-page screenshot is suspiciously blank (ink ${(ink*100).toFixed(2)}%)`);
   await page.screenshot({path:`qa-artifacts/reader-${label}.png`,fullPage:false});
 }
 
