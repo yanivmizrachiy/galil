@@ -930,5 +930,12 @@
     "pdfSha256": "50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d",
     "pdfBytesMatch": true,
     "pageCount": 49
-  }
+  },
+  "maintenanceNotes": [
+    {
+      "date": "2026-10-12",
+      "change": "Consolidate equivalent mobile CSS declarations without changing rendering or workbook content.",
+      "validation": "Pending full CI and browser QA; do not treat tracker completion as deployment verification."
+    }
+  ]
 }
