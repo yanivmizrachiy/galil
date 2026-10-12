@@ -19,7 +19,6 @@ export function sourceFiles(root){
   const files = fs.readdirSync(root).filter(n => /^page-\d+\.html$/.test(n))
     .sort((a,b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
   files.push('cover.html');
-  files.push('assets/cover-bg.webp');
   files.push('styles.css');
   if(fs.existsSync(path.join(root, 'vendor'))) walk(path.join(root, 'vendor'), 'vendor', files);
   return files;

@@ -9,9 +9,9 @@
     :root{--bar-h:52px}
     /* §19 mobile vertical-only: no horizontal scroll anywhere — shell and pages clip overflow-x,
        touch gestures are pan-y + pinch-zoom only, and no element may create extra layout width. */
-    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
-    html,body{max-width:100%;overflow-x:clip}
-    .bar,#reader{max-width:100%;overflow-x:clip}
+    html{scroll-snap-type:y proximity;scroll-behavior:auto;overflow-x:hidden;overflow-x:clip;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
+    html,body{max-width:100%;overflow-x:hidden;overflow-x:clip}
+    .bar,#reader{max-width:100%;overflow-x:hidden;overflow-x:clip}
     body{margin:0;background:#eef2f7;font-family:"Rubik","Heebo","Noto Sans Hebrew",Arial,sans-serif;color:#172033;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom}
 
     .bar{position:sticky;top:0;z-index:20;min-height:var(--bar-h);background:#fff;border-bottom:1px solid #d9e2ef;
@@ -37,7 +37,7 @@
            min-height:0;height:auto;aspect-ratio:210/297;max-height:297mm}
     /* Pre-load size = the fitted A4 size (width-scaled, never taller than A4), so lazy frames do not jump when they load (§19). */
 
-    .cover-preview{max-width:1050px;margin:0 auto;padding:16px 12px 0}
+    .cover-preview{max-width:1050px;margin:0 auto;padding:16px 12px 0;overflow-x:hidden;overflow-x:clip}
     .cover-preview iframe{display:block;width:100%;max-width:210mm;aspect-ratio:210/297;margin:0 auto;border:0;background:#fff;box-shadow:0 8px 30px rgba(42,61,89,.12)}
 
     .intro-video{max-width:1050px;margin:0 auto;padding:18px 12px 0}
@@ -155,6 +155,10 @@
     }
     counter.addEventListener('change', () => jumpTo(Number(counter.value)));
 
+    // Fit an A4 document to the frame width. CSS `zoom` shrinks the page's layout box itself, so the
+    // frame document is never wider than the frame and there is nothing to pan sideways on any phone
+    // (iOS sizes a frame to its content, which a transform-only fit left 794px wide). Engines without
+    // `zoom` keep the transform fit.
     function fitFrame(iframe){
       try{
         const doc = iframe.contentDocument;
@@ -162,6 +166,8 @@
         const page = doc.querySelector('.a4-page, .a4-cover');
         if(!page) return;
         const html = doc.documentElement, body = doc.body;
+        const hasZoom = 'zoom' in page.style;
+        page.style.zoom = '';  page.style.transform = '';      // measure the unscaled page
         const pageWidth = page.offsetWidth, pageHeight = page.offsetHeight;
         const available = Math.max(1, iframe.clientWidth);
         const needsFit = available < pageWidth;
@@ -171,14 +177,22 @@
 
         if(needsFit){
           const scale = Math.min(1, available / pageWidth);
-          html.style.overflow = 'hidden';  html.style.direction = 'ltr';
-          body.style.overflow = 'hidden';  body.style.direction = 'ltr';
-          body.style.width = `${pageWidth}px`;  body.style.maxWidth = 'none';  body.style.margin = '0';
-          page.style.direction = 'rtl';  page.style.margin = '0';
-          page.style.transformOrigin = 'top left';  page.style.transform = `scale(${scale})`;
-          page.style.position = 'relative';  page.style.left = '0';
+          html.style.overflow = 'hidden';
+          body.style.overflow = 'hidden';  body.style.margin = '0';
+          page.style.margin = '0';
+          if(hasZoom){
+            html.style.direction = '';  body.style.direction = '';
+            body.style.width = '';  body.style.maxWidth = '';
+            page.style.direction = '';  page.style.position = '';  page.style.left = '';  page.style.transformOrigin = '';
+            page.style.zoom = String(scale);
+          }else{
+            html.style.direction = 'ltr';  body.style.direction = 'ltr';
+            body.style.width = `${pageWidth}px`;  body.style.maxWidth = 'none';
+            page.style.direction = 'rtl';  page.style.position = 'relative';  page.style.left = '0';
+            page.style.transformOrigin = 'top left';  page.style.transform = `scale(${scale})`;
+          }
           html.scrollLeft = 0;  body.scrollLeft = 0;  doc.defaultView.scrollTo(0,0);
-          iframe.style.height = `${Math.ceil(pageHeight*scale)}px`;
+          iframe.style.height = `${Math.ceil(page.getBoundingClientRect().height)}px`;
           iframe.setAttribute('scrolling','no');
         }else{
           html.style.overflow = '';  html.style.direction = '';
@@ -186,7 +200,7 @@
           body.style.width = '';  body.style.maxWidth = '';  body.style.margin = '';
           page.style.direction = '';  page.style.margin = '0 auto';
           page.style.position = '';  page.style.left = '';
-          page.style.transform = '';  page.style.transformOrigin = '';
+          page.style.transformOrigin = '';
           iframe.removeAttribute('scrolling');
           const h = Math.max(html.scrollHeight, body.scrollHeight, pageHeight);
           if(h > 300){ iframe.style.maxHeight = 'none'; iframe.style.height = `${h}px`; }

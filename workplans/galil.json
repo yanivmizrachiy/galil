@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-11T20:20:00Z",
-  "updatedBy": "ChatGPT — final closure after Yaniv explicit finish instruction; commit gated on full QA",
+  "updatedAt": "2026-10-12T05:49:35Z",
+  "updatedBy": "Claude Code — Yaniv 2026-10-12: designed cover (aeb12c5) restored as cover.html (inline SVG, no binary asset); reader frames fit by CSS zoom so no horizontal width on any phone; cover-qa/build-pdf/fingerprint/SSOT §19 aligned; PDF rebuilt (cover + 49).",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -35,7 +35,8 @@
         "2026-10-10: per Yaniv's explicit instruction to advance to full completion, SSOT §8 was changed from a reserved-scope note to a decided rule — every anchor box in the workbook now carries one active-completion blank (a gap span); §15's QA-enforcement sentence was corrected to state the real guard tolerance (a label fails when a drawing stroke covers more than max(4px,6%) of its glyph box) rather than literal zero-tolerance; and §2 now records a dated blocker for the galil-hadash rename, satisfying §25.9 via the documented-blocker arm.",
         "2026-10-11: Yaniv reader/footer requirement recorded canonically: SSOT §17 requires a full-width blue rule above the district footer text; SSOT §19 requires immediate continuous downward scrolling, no per-page “עמוד X מתוך N” labels between pages, a full-width blue-only page separator, and keeps page-count text only in the sticky selector. QA gates were strengthened in the same work cycle. Overall remains 98% because §25 reserved closure conditions are unchanged.",
         "2026-10-11 audit: competing Hebrew authority headings are rejected at every heading level; SOURCES.md is an evidence map without a duplicate rule hierarchy; stale source and page-count statements corrected; existing footer agreement and current pause recorded only in SOURCE_OF_TRUTH.md.",
-        "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged."
+        "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
+        "2026-10-12 (Yaniv: designed covers lost — fix): cover.html restored from commit aeb12c5 (title גָּלִיל, subtitle חוברת עבודה במתמטיקה, inline SVG Jerusalem scene); placeholder assets/cover-bg.webp removed; SSOT §19 cover rule rewritten; index.html fitFrame uses CSS zoom (layout-level fit, transform fallback) + overflow-x:hidden fallback before clip; build-pdf/pdf-fingerprint/cover-qa updated; PDF rebuilt as cover + 49 A4 sheets."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -363,11 +364,11 @@
   "lastProgressReport": {
     "completedPercent": 98,
     "remainingPercent": 2,
-    "summary": "2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
+    "summary": "2026-10-12: designed cover restored and mobile zoom-fit shipped on top of the closed 100% version; 2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "61662ecb7f5fbee8e5487da0e7d002b240c5b315d9b35ab1905eb3c3bc3dc8ac",
+    "sourceSha256": "b94ace93d83ff4d903888b7a31a3331c171ed5c39e8dfc03317195c4bc9a45ea",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -713,7 +714,7 @@
       {
         "section": 19,
         "sourceHeading": "מובייל, ניווט, הדפסה ו־PDF",
-        "sourceSha256": "c5bab3c1507e5e190160bb6db229c841495f4e05d44b45c5d202dab88a02aecb",
+        "sourceSha256": "9efa706cad9be377cdb5f37467a2ca1cc1b0d3e639bf9f4c0e08e9f0b059f3cb",
         "coverage": "partial",
         "implementation": [
           "index.html",
