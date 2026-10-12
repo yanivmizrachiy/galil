@@ -6,7 +6,9 @@
     "build:pdf": "node scripts/build-pdf.mjs",
     "qa:official": "node official-source-qa.mjs && node official-render-qa.mjs",
     "qa:governance": "node ssot-qa.mjs && node coverage-qa.mjs && node governance-qa.mjs",
-    "qa:browser": "node browser-qa.mjs"
+    "qa:browser": "node browser-qa.mjs",
+    "qa:quick": "npm run qa:governance && node qa.mjs && node cover-qa.mjs && node reader-qa.mjs",
+    "qa:all": "npm run qa && npm run qa:browser"
   },
   "devDependencies": {
     "pdf-lib": "1.17.1",
