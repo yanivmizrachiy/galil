@@ -4,7 +4,7 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-12T06:49:11.291Z",
+  "updatedAt": "2026-10-12T07:05:53.291Z",
   "updatedBy": "Claude Code — Yaniv 2026-10-12: Galil cover restored in the approved Harut cover style with the approved artwork (assets/cover-bg.jpg) and local district logo; root cause: 71e53ae referenced an artwork file that was never committed, then a 15 KB webp placeholder rendered blank; cover-qa/build-pdf/fingerprint/SSOT §19 aligned; PDF rebuilt (cover + 49).",
   "scoring": {
     "weightTotal": 100,
@@ -39,7 +39,8 @@
         "2026-10-12 (Yaniv: designed covers lost — fix): cover.html restored from commit aeb12c5 (title גָּלִיל, subtitle חוברת עבודה במתמטיקה, inline SVG Jerusalem scene); placeholder assets/cover-bg.webp removed; SSOT §19 cover rule rewritten; index.html fitFrame uses CSS zoom (layout-level fit, transform fallback) + overflow-x:hidden fallback before clip; build-pdf/pdf-fingerprint/cover-qa updated; PDF rebuilt as cover + 49 A4 sheets.",
         "2026-10-12 (Yaniv: the Harut-style cover broke — fix deeply): root cause — commit 71e53ae added the Harut-style cover.html pointing at assets/cover-bg.jpg which was never committed (blank image); d43071d replaced it with a 15 KB assets/cover-bg.webp placeholder that rendered as a white box and a plain white layout; the SVG cover restored in 7a1d48d was the wrong design. Fixed: cover.html rebuilt in the approved Harut cover style (full-bleed approved artwork assets/cover-bg.jpg from Yaniv's 2026-10-11 upload, dark bands, heavy Rubik title גליל, tagline, subtitle, cylinder formulas, local assets/district-logo.png, credit); build-pdf fails if any cover image does not load; cover-qa verifies texts, both image assets (magic bytes, size) and the 50-sheet PDF; SSOT §19 records the design and the breakage history.",
         "2026-10-12: cover fonts self-hosted in assets/fonts (no external resource before a click; browser-qa + cover-qa enforce); PDF fingerprint covers the fonts.",
-        "2026-10-12: browser-qa first-page blankness now measured as pixel ink (>1%, observed ~3.0-3.2% on CI/local) instead of PNG byte size, which drifted ±1.5 KB around a 25 KB threshold on identical renders."
+        "2026-10-12: browser-qa first-page blankness now measured as pixel ink (>1%, observed ~3.0-3.2% on CI/local) instead of PNG byte size, which drifted ±1.5 KB around a 25 KB threshold on identical renders.",
+        "2026-10-12: cover switched to the bright light-filled variant Yaniv approved (artwork brightness filter + sun glow, light bands, deep-blue title); SSOT §19 updated; cover-qa guards it; PDF rebuilt."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -371,7 +372,7 @@
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "8558ba84594f20c9f19824b3387d739bd3085727bf724a52c8cbb5677b228362",
+    "sourceSha256": "2aa4761d7c6f5cf655b7cd89da9e4d93da6ef2cae98d37f1f7f3581bbdca180a",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -717,7 +718,7 @@
       {
         "section": 19,
         "sourceHeading": "מובייל, ניווט, הדפסה ו־PDF",
-        "sourceSha256": "ff373e16fc20231a57fc2aa9d2b4aec7a9a617413d5d223bc9d9883fc8de5fb6",
+        "sourceSha256": "36e88ea1442537eb24a1c2d3925e1fa0de771a60587aa31257bd18d64af3ed46",
         "coverage": "partial",
         "implementation": [
           "index.html",

@@ -22,6 +22,7 @@ for(const name of ['rubik-hebrew','rubik-latin','heebo-hebrew','heebo-latin']){
   ok(cover.includes(`url(${file})`),`cover must load ${file} locally`);
 }
 ok(!/https?:\/\//.test(cover),'cover must not reference any external resource');
+ok(/\.cover-art\{[^}]*filter:brightness\(/.test(cover) && /--cover-band:255,251,242/.test(cover),'cover must keep the approved bright light-filled rendering (Yaniv, 2026-10-12)');
 ok(/class="a4-cover"/.test(cover) && /width:210mm;height:297mm/.test(cover) && /\.cover-art\{[^}]*object-fit:cover/.test(cover),'cover must be one full-bleed A4 sheet the reader can fit');
 ok(!/page-number/.test(cover),'cover must be unnumbered');
 ok(!fs.existsSync('assets/cover-bg.webp'),'the withdrawn placeholder artwork must not return');

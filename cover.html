@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>גליל — שער החוברת</title>
 <style>
-/* SSOT §19 "שער החוברת" (Yaniv, 2026-10-12): the Galil cover follows the approved Harut cover design —
-   full-bleed approved artwork, dark translucent bands, heavy Rubik title, gold rule, formulas, district logo and credit. */
+/* SSOT §19 "שער החוברת" (Yaniv, 2026-10-12): the Galil cover follows the approved Harut cover design, in the bright
+   light-filled variant Yaniv approved the same day — the approved artwork lifted into warm sunlight, light translucent
+   bands, deep-blue heavy Rubik title, gold rule, formulas, district logo and credit. */
 @page{size:A4;margin:0}
 *{box-sizing:border-box}
 html,body{margin:0;background:#eef2f7}
@@ -15,32 +16,34 @@ html,body{margin:0;background:#eef2f7}
 @font-face{font-family:"Galil Cover Rubik";font-style:normal;font-weight:300 900;font-display:swap;src:url(assets/fonts/rubik-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Galil Cover Heebo";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/heebo-hebrew.woff2) format('woff2');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:"Galil Cover Heebo";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/heebo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-.a4-cover{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;background:#0e1830;container-type:size;font-family:"Galil Cover Heebo","Heebo","Noto Sans Hebrew",Arial,sans-serif;direction:rtl;box-shadow:0 8px 30px #1e293b22;-webkit-print-color-adjust:exact;print-color-adjust:exact;--cover-band:10,14,32;--cover-gold:#e9c572}
-.cover-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;z-index:0}
-.cover-band{position:absolute;left:0;right:0;z-index:2;text-align:center;-webkit-backdrop-filter:blur(2px) saturate(1.08);backdrop-filter:blur(2px) saturate(1.08)}
-.cover-top{top:0;padding:4.4cqw 7% 5.6cqw;background:linear-gradient(180deg,rgba(var(--cover-band),.86) 0%,rgba(var(--cover-band),.66) 52%,rgba(var(--cover-band),0) 100%)}
-.cover-top::after{content:"";position:absolute;left:9%;right:9%;bottom:2.4cqw;height:.22cqw;background:linear-gradient(90deg,transparent,rgba(233,197,114,.75),transparent)}
-.cover-bottom{bottom:0;padding:6cqw 7% 3.2cqw;background:linear-gradient(0deg,rgba(var(--cover-band),.96) 0%,rgba(var(--cover-band),.92) 38%,rgba(var(--cover-band),.6) 74%,rgba(var(--cover-band),0) 100%)}
-.cover-bottom::before{content:"";position:absolute;left:9%;right:9%;top:3cqw;height:.22cqw;background:linear-gradient(90deg,transparent,rgba(233,197,114,.7),transparent)}
-.cover-kicker{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:700;letter-spacing:.4em;font-size:1.72cqw;color:var(--cover-gold);padding-inline-start:.4em;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.cover-dot{color:#fff;opacity:.5;margin:0 .45em}
-.cover-title{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:900;font-size:15.5cqw;line-height:.92;letter-spacing:.01em;margin:.4cqw 0 0;background:linear-gradient(183deg,#fff 22%,#ffe4ac 97%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 16px rgba(0,0,0,.55))}
-.cover-rule{width:17cqw;height:.42cqw;margin:1.6cqw auto 1.3cqw;border-radius:2px;background:linear-gradient(90deg,transparent,var(--cover-gold),#f6e7bb,var(--cover-gold),transparent)}
-.cover-tagline{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:500;font-size:2.85cqw;color:#fdf3dd;margin:0;text-shadow:0 2px 14px rgba(0,0,0,.6)}
-.cover-subtitle{font-family:"Galil Cover Heebo","Heebo",sans-serif;font-weight:500;font-size:2.15cqw;color:#ecdcbe;opacity:.95;letter-spacing:.02em;margin:.7cqw 0 0;text-shadow:0 1px 10px rgba(0,0,0,.55)}
-.cover-formula{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-size:2cqw;font-weight:500;color:#fff6e4;letter-spacing:.02em;text-shadow:0 2px 12px rgba(0,0,0,.7);margin-bottom:3.4cqw;white-space:nowrap;direction:ltr}
-.cover-sep{color:var(--cover-gold);margin:0 1cqw;opacity:.8}
+.a4-cover{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;background:#fff8ea;container-type:size;font-family:"Galil Cover Heebo","Heebo","Noto Sans Hebrew",Arial,sans-serif;direction:rtl;box-shadow:0 8px 30px #1e293b22;-webkit-print-color-adjust:exact;print-color-adjust:exact;--cover-band:255,251,242;--cover-gold:#b8860b;--cover-ink:#0f2a63}
+/* Bright variant: the artwork is lifted into warm daylight and washed with a soft sun glow from the top. */
+.cover-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;z-index:0;filter:brightness(1.32) contrast(1.03) saturate(1.15)}
+.a4-cover::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 70% at 50% 0%,rgba(255,246,214,.55) 0%,rgba(255,246,214,0) 60%),linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 40%,rgba(255,255,255,0) 70%,rgba(255,250,240,.25))}
+.cover-band{position:absolute;left:0;right:0;z-index:2;text-align:center;-webkit-backdrop-filter:blur(3px) brightness(1.08);backdrop-filter:blur(3px) brightness(1.08)}
+.cover-top{top:0;padding:4.4cqw 7% 5.6cqw;background:linear-gradient(180deg,rgba(var(--cover-band),.94) 0%,rgba(var(--cover-band),.78) 52%,rgba(var(--cover-band),0) 100%)}
+.cover-top::after{content:"";position:absolute;left:9%;right:9%;bottom:2.4cqw;height:.22cqw;background:linear-gradient(90deg,transparent,rgba(184,134,11,.85),transparent)}
+.cover-bottom{bottom:0;padding:6cqw 7% 3.2cqw;background:linear-gradient(0deg,rgba(var(--cover-band),.97) 0%,rgba(var(--cover-band),.93) 38%,rgba(var(--cover-band),.62) 74%,rgba(var(--cover-band),0) 100%)}
+.cover-bottom::before{content:"";position:absolute;left:9%;right:9%;top:3cqw;height:.22cqw;background:linear-gradient(90deg,transparent,rgba(184,134,11,.85),transparent)}
+.cover-kicker{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:700;letter-spacing:.4em;font-size:1.72cqw;color:#9a6b12;padding-inline-start:.4em;text-shadow:0 1px 8px rgba(255,255,255,.9)}
+.cover-dot{color:#1d4ed8;opacity:.6;margin:0 .45em}
+.cover-title{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:900;font-size:15.5cqw;line-height:.92;letter-spacing:.01em;margin:.4cqw 0 0;background:linear-gradient(183deg,#0f2a63 15%,#1d4ed8 95%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 10px rgba(255,255,255,.95)) drop-shadow(0 6px 18px rgba(29,78,216,.18))}
+.cover-rule{width:17cqw;height:.42cqw;margin:1.6cqw auto 1.3cqw;border-radius:2px;background:linear-gradient(90deg,transparent,var(--cover-gold),#f3d98a,var(--cover-gold),transparent)}
+.cover-tagline{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:500;font-size:2.85cqw;color:var(--cover-ink);margin:0;text-shadow:0 1px 10px rgba(255,255,255,.95)}
+.cover-subtitle{font-family:"Galil Cover Heebo","Heebo",sans-serif;font-weight:500;font-size:2.15cqw;color:#1e3a8a;letter-spacing:.02em;margin:.7cqw 0 0;text-shadow:0 1px 8px rgba(255,255,255,.9)}
+.cover-formula{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-size:2cqw;font-weight:500;color:var(--cover-ink);letter-spacing:.02em;text-shadow:0 1px 10px rgba(255,255,255,.95);margin-bottom:3.4cqw;white-space:nowrap;direction:ltr}
+.cover-sep{color:var(--cover-gold);margin:0 1cqw}
 .cover-foot{display:flex;align-items:center;justify-content:center;gap:2.4cqw}
-.cover-logo{width:8cqw;height:8cqw;object-fit:contain;flex:none;border-radius:50%;background:rgba(253,248,238,.94);padding:.9cqw;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.cover-logo{width:8cqw;height:8cqw;object-fit:contain;flex:none;border-radius:50%;background:#fff;padding:.9cqw;box-shadow:0 2px 12px rgba(15,42,99,.18)}
 .cover-credit{text-align:center;line-height:1.5}
-.cover-credit .f1{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:500;font-size:1.78cqw;color:#f6ecd7;text-shadow:0 1px 8px rgba(0,0,0,.55)}
-.cover-credit .f2{font-family:"Galil Cover Heebo","Heebo",sans-serif;font-weight:400;font-size:1.52cqw;color:#cdbf9f;margin-top:.3cqw;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.cover-credit .f1{font-family:"Galil Cover Rubik","Rubik",sans-serif;font-weight:500;font-size:1.78cqw;color:var(--cover-ink);text-shadow:0 1px 8px rgba(255,255,255,.9)}
+.cover-credit .f2{font-family:"Galil Cover Heebo","Heebo",sans-serif;font-weight:400;font-size:1.52cqw;color:#3b4d75;margin-top:.3cqw;text-shadow:0 1px 8px rgba(255,255,255,.9)}
 @media print{html,body{background:#fff}.a4-cover{margin:0;box-shadow:none}}
 </style>
 </head>
 <body>
 <main class="a4-cover" aria-label="שער החוברת — גליל">
-  <img class="cover-art" src="assets/cover-bg.jpg" alt="ציור שמן של רחוב יפו בירושלים בשעת שקיעה: הרכבת הקלה חולפת, ותלמידים רכונים סביב שולחן זכוכית שעליו גלילים הולוגרפיים זוהרים">
+  <img class="cover-art" src="assets/cover-bg.jpg" alt="ציור שמן של רחוב יפו בירושלים באור שמש חם: הרכבת הקלה חולפת, ותלמידים רכונים סביב שולחן זכוכית שעליו גלילים הולוגרפיים זוהרים">
   <div class="cover-band cover-top">
     <div class="cover-kicker">מנח״י<span class="cover-dot">◆</span>מחוז ירושלים והעיר ירושלים</div>
     <h1 class="cover-title">גליל</h1>
