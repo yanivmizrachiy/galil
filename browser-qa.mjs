@@ -234,6 +234,7 @@ async function inspectReader(width,height,label){
       w:r.width,left:r.left,right:r.right,frame:f.clientWidth,
       textLength:(p.textContent||'').trim().length,
       bodyDirection:body?getComputedStyle(body).direction:'',
+      docW:f.contentDocument.documentElement.scrollWidth,
       pageDirection:getComputedStyle(p).direction
     };
   });
@@ -241,7 +242,8 @@ async function inspectReader(width,height,label){
   ok(scaled&&scaled.left>=-2&&scaled.right<=scaled.frame+2,`${label}: A4 is outside its iframe viewport (${scaled?.left}, ${scaled?.right}, frame ${scaled?.frame})`);
   ok(scaled&&scaled.textLength>30,`${label}: first A4 has no readable content`);
   ok(scaled&&scaled.pageDirection==='rtl',`${label}: A4 must remain RTL`);
-  if(scaled&&scaled.frame<expectedW)ok(scaled.bodyDirection==='ltr',`${label}: scaled wrapper must position the RTL A4 from its left edge`);
+  // Fit mode (CSS zoom, transform fallback): the frame document itself must not be wider than the frame, so nothing can pan sideways.
+  if(scaled&&scaled.frame<expectedW)ok(scaled.docW<=scaled.frame,`${label}: fitted frame document is wider than its frame (${scaled.docW}/${scaled.frame})`);
   const frameShot=`qa-artifacts/reader-${label}-first-page.png`;
   await firstFrame.screenshot({path:frameShot});
   ok(fs.statSync(frameShot).size>25000,`${label}: first-page screenshot is suspiciously blank (${fs.statSync(frameShot).size} bytes)`);
