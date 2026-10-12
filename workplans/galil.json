@@ -936,6 +936,11 @@
       "date": "2026-10-12",
       "change": "Consolidate equivalent mobile CSS declarations without changing rendering or workbook content.",
       "validation": "Pending full CI and browser QA; do not treat tracker completion as deployment verification."
+    },
+    {
+      "date": "2026-10-12",
+      "change": "Add npm run qa:quick and npm run qa:all shortcuts while preserving existing QA commands and sole SOURCE_OF_TRUTH.md authority.",
+      "validation": "CI and browser QA required before merge; no workbook content or PDF changes."
     }
   ]
 }
