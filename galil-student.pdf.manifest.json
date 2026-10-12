@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "Deterministic staleness gate for the static public PDF (SOURCE_OF_TRUTH.md §19). Derived file — regenerate with node scripts/build-pdf.mjs.",
-  "builtAt": "2026-10-12T06:30:13.361Z",
+  "builtAt": "2026-10-12T06:36:23.060Z",
   "pageCount": 50,
   "inputs": {
     "page-1.html": "1c96bfcc86997b0a2938b5ba6024b483952e70dbbaafeb395ce7fe18cf1747c4",
@@ -53,9 +53,13 @@
     "page-47.html": "a74ae08e54baa7e8f982398fdcb0a57e7ae0f46afd34f70d190267fe1f6fc22a",
     "page-48.html": "bbc62cf4fe8859dd5c0b43077a0875c6dca7df882068a0d600413c15af4d9169",
     "page-49.html": "78bdd0eb6d4fafb32ab1e05ea60e5030c3f9c8cc36afd23ce9af64a511307a0b",
-    "cover.html": "3b45a8486bb18cbde1c95ff5fb1b4d9a3df288c94c54e5daaaad378716de0013",
+    "cover.html": "5782c3c46b039f32933a0e64d07e904e1f908c4d6c059ed4161f8193c243cac3",
     "assets/cover-bg.jpg": "d88008cafebea47140df687a1f7fe4e72a83290c5fcb48b8bc0b9996f488becd",
     "assets/district-logo.png": "4b28e0b6d4a69e0dd9d55d54ca5071a902bf11b2f1d2df8e559fc26eb39b35c6",
+    "assets/fonts/heebo-hebrew.woff2": "50dae2e12dae22c920388023e35aaebcd1e1d27bbe915c83d64210377e083e60",
+    "assets/fonts/heebo-latin.woff2": "f1f7cfaef59431c7b391df81fb05520273303840bbe917213a2ab9f41b839675",
+    "assets/fonts/rubik-hebrew.woff2": "197b6dbe5c6bec7276c59b02d70a16ee6acd44322fc2f8d0226c07f8d57976c2",
+    "assets/fonts/rubik-latin.woff2": "691cd1d9b4c0cdf31a1dcf04259c86f92c85e69f6622abab7964d81e36890691",
     "styles.css": "dbc8d0cd364c4fb194b2fa9ba92a0f0ca790f92ccafbaa9a64e6014758e2a329",
     "vendor/mathjax/sre/mathmaps/af.json": "b906ca6e91517ac8d6f87c304223839c9998daf2d29ac8d79ce5fa967c23dc77",
     "vendor/mathjax/sre/mathmaps/base.json": "72558700556d997a95e9281044e330eba9a472dda43642a9b5cc0483294d875f",
@@ -100,6 +104,6 @@
     "vendor/mathjax/tex-font/chtml/woff2/mjx-tex-zero.woff2": "2c146f72c9a345aa282398a752d03af71d83a011f3d067297b533a31f0c5f5cb",
     "vendor/mathjax/tex-mml-chtml.js": "b4ee932e3dddcbaa59bf6097793e951257d651c85d235086dc295b5f7b71b185"
   },
-  "sourceDigest": "fd0f652edd89c7c2cf65b0838c51fc5e0aa658ab73f064f2edd0e134f3ff443a",
-  "pdfSha256": "161462a8a0025bcec320fb35ab2a834129f72ee77cda136f259e3a6717bc87c9"
+  "sourceDigest": "96365a58a3d38fd0b2f49888b16e424146313a3f1a53c94cb9e1e56ad9db7359",
+  "pdfSha256": "d50655d10e4f26714c9bc9fbfa81c7471617570031972e3b36d4788e9e7b6918"
 }

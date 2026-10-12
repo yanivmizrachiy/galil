@@ -21,6 +21,7 @@ export function sourceFiles(root){
   files.push('cover.html');
   files.push('assets/cover-bg.jpg');
   files.push('assets/district-logo.png');
+  walk(path.join(root, 'assets/fonts'), 'assets/fonts', files);
   files.push('styles.css');
   if(fs.existsSync(path.join(root, 'vendor'))) walk(path.join(root, 'vendor'), 'vendor', files);
   return files;

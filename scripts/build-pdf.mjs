@@ -13,7 +13,7 @@ import { sourceDigest, pdfDigest, MANIFEST } from './pdf-fingerprint.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'galil-student.pdf');
 const mime = { '.html':'text/html; charset=utf-8', '.css':'text/css; charset=utf-8',
-  '.js':'text/javascript; charset=utf-8', '.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.svg':'image/svg+xml' };
+  '.js':'text/javascript; charset=utf-8', '.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.svg':'image/svg+xml', '.woff2':'font/woff2' };
 
 const pages = fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n))
   .map(n=>Number(n.match(/\d+/)[0])).sort((a,b)=>a-b);

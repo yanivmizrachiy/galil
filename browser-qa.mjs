@@ -7,7 +7,7 @@ import path from 'node:path';
 const failures=[];
 const ok=(cond,msg)=>{if(!cond)failures.push(msg)};
 const root=process.cwd();
-const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf'};
+const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf','.jpg':'image/jpeg','.woff2':'font/woff2'};
 const pages=fs.readdirSync(root).filter(n=>/^page-\d+\.html$/.test(n)).map(n=>Number(n.match(/\d+/)[0])).sort((a,b)=>a-b);
 const total=pages.length;
 

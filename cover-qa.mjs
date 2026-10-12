@@ -15,6 +15,13 @@ ok(/<img class="cover-logo" src="assets\/district-logo\.png"/.test(cover),'cover
 for(const [file,magic] of [['assets/cover-bg.jpg','ffd8ff'],['assets/district-logo.png','89504e47']]){
   ok(fs.existsSync(file) && fs.readFileSync(file).subarray(0,magic.length/2).toString('hex')===magic && fs.statSync(file).size>20000,`${file} must be a real image asset`);
 }
+// The cover fonts are self-hosted (wOF2 magic 774f4632): the reader must not load any external resource before a click.
+for(const name of ['rubik-hebrew','rubik-latin','heebo-hebrew','heebo-latin']){
+  const file=`assets/fonts/${name}.woff2`;
+  ok(fs.existsSync(file) && fs.readFileSync(file).subarray(0,4).toString('hex')==='774f4632' && fs.statSync(file).size>5000,`${file} must be a real woff2 font`);
+  ok(cover.includes(`url(${file})`),`cover must load ${file} locally`);
+}
+ok(!/https?:\/\//.test(cover),'cover must not reference any external resource');
 ok(/class="a4-cover"/.test(cover) && /width:210mm;height:297mm/.test(cover) && /\.cover-art\{[^}]*object-fit:cover/.test(cover),'cover must be one full-bleed A4 sheet the reader can fit');
 ok(!/page-number/.test(cover),'cover must be unnumbered');
 ok(!fs.existsSync('assets/cover-bg.webp'),'the withdrawn placeholder artwork must not return');
