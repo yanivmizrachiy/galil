@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-12T05:49:35Z",
-  "updatedBy": "Claude Code — Yaniv 2026-10-12: designed cover (aeb12c5) restored as cover.html (inline SVG, no binary asset); reader frames fit by CSS zoom so no horizontal width on any phone; cover-qa/build-pdf/fingerprint/SSOT §19 aligned; PDF rebuilt (cover + 49).",
+  "updatedAt": "2026-10-12T06:29:59Z",
+  "updatedBy": "Claude Code — Yaniv 2026-10-12: Galil cover restored in the approved Harut cover style with the approved artwork (assets/cover-bg.jpg) and local district logo; root cause: 71e53ae referenced an artwork file that was never committed, then a 15 KB webp placeholder rendered blank; cover-qa/build-pdf/fingerprint/SSOT §19 aligned; PDF rebuilt (cover + 49).",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
@@ -36,7 +36,8 @@
         "2026-10-11: Yaniv reader/footer requirement recorded canonically: SSOT §17 requires a full-width blue rule above the district footer text; SSOT §19 requires immediate continuous downward scrolling, no per-page “עמוד X מתוך N” labels between pages, a full-width blue-only page separator, and keeps page-count text only in the sticky selector. QA gates were strengthened in the same work cycle. Overall remains 98% because §25 reserved closure conditions are unchanged.",
         "2026-10-11 audit: competing Hebrew authority headings are rejected at every heading level; SOURCES.md is an evidence map without a duplicate rule hierarchy; stale source and page-count statements corrected; existing footer agreement and current pause recorded only in SOURCE_OF_TRUTH.md.",
         "2026-10-11 follow-up audit validated: npm run qa passes all workbook gates plus 40 permanent positive/negative governance cases; all 27 source sections are fingerprinted and mapped, all 10 tasks have source/check acceptance references. Invalid evidence paths, empty manual statements and malformed acceptance records are rejected. Protected Preview for base commit 0eb0b37 was accessed with Vercel authentication; application HTML and PDF manifest match, and the actual 49-page PDF is byte-identical to the local file (SHA-256 50faa7e9033bd415f4aef0bad892abefb1af1f770b928c5c555ac2bc47f4991d). This follow-up changes no student pages, styles, reader or PDF. Manual limitations and reserved closure remain explicit; weighted score unchanged.",
-        "2026-10-12 (Yaniv: designed covers lost — fix): cover.html restored from commit aeb12c5 (title גָּלִיל, subtitle חוברת עבודה במתמטיקה, inline SVG Jerusalem scene); placeholder assets/cover-bg.webp removed; SSOT §19 cover rule rewritten; index.html fitFrame uses CSS zoom (layout-level fit, transform fallback) + overflow-x:hidden fallback before clip; build-pdf/pdf-fingerprint/cover-qa updated; PDF rebuilt as cover + 49 A4 sheets."
+        "2026-10-12 (Yaniv: designed covers lost — fix): cover.html restored from commit aeb12c5 (title גָּלִיל, subtitle חוברת עבודה במתמטיקה, inline SVG Jerusalem scene); placeholder assets/cover-bg.webp removed; SSOT §19 cover rule rewritten; index.html fitFrame uses CSS zoom (layout-level fit, transform fallback) + overflow-x:hidden fallback before clip; build-pdf/pdf-fingerprint/cover-qa updated; PDF rebuilt as cover + 49 A4 sheets.",
+        "2026-10-12 (Yaniv: the Harut-style cover broke — fix deeply): root cause — commit 71e53ae added the Harut-style cover.html pointing at assets/cover-bg.jpg which was never committed (blank image); d43071d replaced it with a 15 KB assets/cover-bg.webp placeholder that rendered as a white box and a plain white layout; the SVG cover restored in 7a1d48d was the wrong design. Fixed: cover.html rebuilt in the approved Harut cover style (full-bleed approved artwork assets/cover-bg.jpg from Yaniv's 2026-10-11 upload, dark bands, heavy Rubik title גליל, tagline, subtitle, cylinder formulas, local assets/district-logo.png, credit); build-pdf fails if any cover image does not load; cover-qa verifies texts, both image assets (magic bytes, size) and the 50-sheet PDF; SSOT §19 records the design and the breakage history."
       ],
       "blockedReason": null,
       "acceptanceCriteria": [
@@ -364,11 +365,11 @@
   "lastProgressReport": {
     "completedPercent": 98,
     "remainingPercent": 2,
-    "summary": "2026-10-12: designed cover restored and mobile zoom-fit shipped on top of the closed 100% version; 2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
+    "summary": "2026-10-12: Harut-style Galil cover restored with the approved artwork and local logo; mobile zoom-fit kept; 2026-10-11 closure integration on claude/galil-closure-20261011 (PR #12 + PR #13 + fixes): §16 records the 5×5 mm grid rule; page 49 no longer shows visible sub-section letters (§17); the reader lands selected/deep-linked/reloaded pages fully below the sticky bar on phone, tablet and desktop, and lazy frames no longer jump the layout (§19); the PDF build waits for MathJax and the PDF was regenerated; QA gates were hardened and negative-tested. Weighted progress unchanged at 98%: the remaining 2% (G-10) is Yaniv's §25 closure — explicit 'finished' sign-off, final A/B/C/D page disposition, rename decision — which cannot be evidenced by QA."
   },
   "requirementsCoverage": {
     "source": "SOURCE_OF_TRUTH.md",
-    "sourceSha256": "b94ace93d83ff4d903888b7a31a3331c171ed5c39e8dfc03317195c4bc9a45ea",
+    "sourceSha256": "838d5319f70dd7c541c05369d1343bc55d787529a8a1bf932c4bb9e0ba1cf346",
     "isCompletionApproval": false,
     "sections": [
       {
@@ -714,7 +715,7 @@
       {
         "section": 19,
         "sourceHeading": "מובייל, ניווט, הדפסה ו־PDF",
-        "sourceSha256": "9efa706cad9be377cdb5f37467a2ca1cc1b0d3e639bf9f4c0e08e9f0b059f3cb",
+        "sourceSha256": "beead455fa52d9dd915d11c4f9c9ac4e211d2cd130e0543d25586ba1fbbc67ba",
         "coverage": "partial",
         "implementation": [
           "index.html",

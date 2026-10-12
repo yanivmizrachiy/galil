@@ -42,15 +42,21 @@ try{
   const page = await browser.newPage({ viewport:{ width:1440, height:1200 } });
   const combined = await PDFDocument.create();
 
-  // Yaniv 2026-10-11/12: the designed unnumbered cover (inline SVG scene) is PDF sheet 1; student pages remain numbered 1..49.
+  // Yaniv 2026-10-12: the approved Harut-style unnumbered cover (artwork + logo) is PDF sheet 1; student pages remain numbered 1..49.
   await page.goto(`${base}cover.html`, { waitUntil:'load' });
-  await page.evaluate(async()=>{ await document.fonts.ready; });
+  await page.evaluate(async()=>{
+    await document.fonts.ready;
+    await Promise.all([...document.images].map(img=>img.complete?null:new Promise((resolve,reject)=>{
+      img.addEventListener('load',resolve,{once:true});
+      img.addEventListener('error',()=>reject(new Error(`cover image failed to load: ${img.getAttribute('src')}`)),{once:true});
+    })));
+  });
   const coverAudit = await page.evaluate(()=>({
     cover:!!document.querySelector('.a4-cover'),
-    scene:!!document.querySelector('.a4-cover .scene svg'),
+    images:[...document.images].every(img=>img.complete && img.naturalWidth>0) && document.querySelectorAll('.cover-art,.cover-logo').length===2,
     numbered:!!document.querySelector('.page-number')
   }));
-  if(!coverAudit.cover || !coverAudit.scene || coverAudit.numbered) throw new Error(`cover contract failed: ${JSON.stringify(coverAudit)}`);
+  if(!coverAudit.cover || !coverAudit.images || coverAudit.numbered) throw new Error(`cover contract failed: ${JSON.stringify(coverAudit)}`);
   const coverBytes = await page.pdf({ format:'A4', printBackground:true, preferCSSPageSize:true,
     margin:{ top:'0', right:'0', bottom:'0', left:'0' } });
   const coverDoc = await PDFDocument.load(coverBytes);
