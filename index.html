@@ -159,7 +159,7 @@
       try{
         const doc = iframe.contentDocument;
         if(!doc || !doc.body) return;
-        const page = doc.querySelector('.a4-page');
+        const page = doc.querySelector('.a4-page, .a4-cover');
         if(!page) return;
         const html = doc.documentElement, body = doc.body;
         const pageWidth = page.offsetWidth, pageHeight = page.offsetHeight;
@@ -194,7 +194,8 @@
       }catch(e){}
     }
 
-    function fitAll(){ reader.querySelectorAll('iframe').forEach(fitFrame); }
+    function fitAll(){ document.querySelectorAll('.cover-preview iframe, #reader iframe').forEach(fitFrame); }
+    document.querySelector('.cover-preview iframe')?.addEventListener('load', e => fitFrame(e.currentTarget));
 
     function build(){
       const frag = document.createDocumentFragment();

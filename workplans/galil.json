@@ -936,6 +936,11 @@
       "date": "2026-10-12",
       "change": "Consolidate equivalent mobile CSS declarations without changing rendering or workbook content.",
       "validation": "Pending full CI and browser QA; do not treat tracker completion as deployment verification."
+    },
+    {
+      "date": "2026-10-12",
+      "change": "Fit existing designed cover iframe to mobile width, same as student A4 pages.",
+      "validation": "Pending browser and CI verification; preserve original cover artwork and all pages."
     }
   ]
 }
