@@ -92,6 +92,10 @@ try{
     pdfSha256: pdfDigest(out)
   }, null, 2) + '\n');
   console.log(`build-pdf: wrote ${path.basename(out)} — ${combined.getPageCount()} A4 pages (${(fs.statSync(out).size/1024).toFixed(0)} KB)`);
+  // Keep the district reader's WORKBOOK_MANIFEST.json (contentHash + pdf.sha256) in lockstep
+  // with this rebuild, so the HTML pages and the downloadable PDF are always one version.
+  const { execFileSync } = await import('node:child_process');
+  execFileSync(process.execPath, [path.join(root, 'scripts', 'build-workbook-manifest.mjs')], { cwd: root, stdio: 'inherit' });
 }finally{
   if(browser) await browser.close();
   await new Promise(r=>server.close(r));
