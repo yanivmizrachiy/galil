@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 3,
+  "id": "galil",
+  "name": "חוברת הגליל",
+  "author": "יניב רז",
+  "credit": [
+    "יניב רז - מדריך מחוזי חט״ב בעיר ירושלים",
+    "הדרכה במחוז ירושלים והעיר ירושלים - מנח״י, בהובלת איילת קריספין"
+  ],
+  "totalPages": 49,
+  "cover": {
+    "file": "cover.html",
+    "selector": ".a4-cover"
+  },
+  "pageSelector": "main.a4-page",
+  "assets": {
+    "css": [
+      "styles.css"
+    ],
+    "pageCssPattern": null,
+    "fontsCss": "styles/reader-fonts.css",
+    "mathjax": "vendor/mathjax/tex-mml-chtml.js",
+    "mathjaxFontRoot": "vendor/mathjax/tex-font/chtml/woff2"
+  },
+  "pages": [
+    {
+      "file": "page-1.html",
+      "workbookNumber": 1,
+      "chapterId": "recognition",
+      "title": "גליל — מושגים בסיסיים"
+    },
+    {
+      "file": "page-2.html",
+      "workbookNumber": 2,
+      "chapterId": "recognition",
+      "title": "מזהים גליל"
+    },
+    {
+      "file": "page-3.html",
+      "workbookNumber": 3,
+      "chapterId": "recognition",
+      "title": "שני בסיסים"
+    },
+    {
+      "file": "page-4.html",
+      "workbookNumber": 4,
+      "chapterId": "recognition",
+      "title": "מעטפת הגליל"
+    },
+    {
+      "file": "page-5.html",
+      "workbookNumber": 5,
+      "chapterId": "recognition",
+      "title": "רדיוס וקוטר בבסיס"
+    },
+    {
+      "file": "page-6.html",
+      "workbookNumber": 6,
+      "chapterId": "recognition",
+      "title": "גובה הגליל"
+    },
+    {
+      "file": "page-7.html",
+      "workbookNumber": 7,
+      "chapterId": "recognition",
+      "title": "מה באמת ידוע מן השרטוט?"
+    },
+    {
+      "file": "page-8.html",
+      "workbookNumber": 8,
+      "chapterId": "recognition",
+      "title": "תכונות הגליל"
+    },
+    {
+      "file": "page-9.html",
+      "workbookNumber": 9,
+      "chapterId": "recognition",
+      "title": "מעגל ועיגול בבסיס"
+    },
+    {
+      "file": "page-10.html",
+      "workbookNumber": 10,
+      "chapterId": "recognition",
+      "title": "רדיוס וקוטר — חזרה"
+    },
+    {
+      "file": "page-11.html",
+      "workbookNumber": 11,
+      "chapterId": "base-area",
+      "title": "π — תזכורת מדויקת"
+    },
+    {
+      "file": "page-12.html",
+      "workbookNumber": 12,
+      "chapterId": "base-area",
+      "title": "שטח בסיס מנתון רדיוס"
+    },
+    {
+      "file": "page-13.html",
+      "workbookNumber": 13,
+      "chapterId": "base-area",
+      "title": "שטח בסיס מנתון קוטר"
+    },
+    {
+      "file": "page-14.html",
+      "workbookNumber": 14,
+      "chapterId": "base-area",
+      "title": "אורך, שטח או נפח?"
+    },
+    {
+      "file": "page-15.html",
+      "workbookNumber": 15,
+      "chapterId": "base-area",
+      "title": "משווים שטחי בסיס"
+    },
+    {
+      "file": "page-16.html",
+      "workbookNumber": 16,
+      "chapterId": "base-area",
+      "title": "מוצאים רדיוס משטח הבסיס"
+    },
+    {
+      "file": "page-17.html",
+      "workbookNumber": 17,
+      "chapterId": "volume",
+      "title": "מהו נפח?"
+    },
+    {
+      "file": "page-18.html",
+      "workbookNumber": 18,
+      "chapterId": "volume",
+      "title": "יחידה מעוקבת"
+    },
+    {
+      "file": "page-19.html",
+      "workbookNumber": 19,
+      "chapterId": "volume",
+      "title": "שטח בסיס · גובה"
+    },
+    {
+      "file": "page-20.html",
+      "workbookNumber": 20,
+      "chapterId": "volume",
+      "title": "אותו בסיס, גבהים שונים"
+    },
+    {
+      "file": "page-21.html",
+      "workbookNumber": 21,
+      "chapterId": "volume",
+      "title": "אותו גובה, שטחי בסיס שונים"
+    },
+    {
+      "file": "page-22.html",
+      "workbookNumber": 22,
+      "chapterId": "volume",
+      "title": "שטח בסיס · גובה"
+    },
+    {
+      "file": "page-23.html",
+      "workbookNumber": 23,
+      "chapterId": "volume",
+      "title": "יחידות נפח"
+    },
+    {
+      "file": "page-24.html",
+      "workbookNumber": 24,
+      "chapterId": "volume",
+      "title": "נפח וקיבול"
+    },
+    {
+      "file": "page-25.html",
+      "workbookNumber": 25,
+      "chapterId": "volume",
+      "title": "מן הבסיס אל הנפח"
+    },
+    {
+      "file": "page-26.html",
+      "workbookNumber": 26,
+      "chapterId": "volume",
+      "title": "נוסחת נפח הגליל"
+    },
+    {
+      "file": "page-27.html",
+      "workbookNumber": 27,
+      "chapterId": "volume",
+      "title": "נפח מרדיוס וגובה"
+    },
+    {
+      "file": "page-28.html",
+      "workbookNumber": 28,
+      "chapterId": "volume",
+      "title": "נפח מקוטר וגובה"
+    },
+    {
+      "file": "page-29.html",
+      "workbookNumber": 29,
+      "chapterId": "volume",
+      "title": "נפח עם מספרים עשרוניים"
+    },
+    {
+      "file": "page-30.html",
+      "workbookNumber": 30,
+      "chapterId": "volume",
+      "title": "מאחדים יחידות לפני חישוב"
+    },
+    {
+      "file": "page-31.html",
+      "workbookNumber": 31,
+      "chapterId": "volume",
+      "title": "מדויק ומקורב"
+    },
+    {
+      "file": "page-32.html",
+      "workbookNumber": 32,
+      "chapterId": "volume",
+      "title": "נפח וקיבול של כלי גלילי"
+    },
+    {
+      "file": "page-33.html",
+      "workbookNumber": 33,
+      "chapterId": "volume",
+      "title": "כמה נוזל נכנס?"
+    },
+    {
+      "file": "page-34.html",
+      "workbookNumber": 34,
+      "chapterId": "volume",
+      "title": "כמה מקום נשאר?"
+    },
+    {
+      "file": "page-35.html",
+      "workbookNumber": 35,
+      "chapterId": "volume",
+      "title": "מוצאים את הגובה"
+    },
+    {
+      "file": "page-36.html",
+      "workbookNumber": 36,
+      "chapterId": "volume",
+      "title": "מוצאים את שטח הבסיס"
+    },
+    {
+      "file": "page-37.html",
+      "workbookNumber": 37,
+      "chapterId": "volume",
+      "title": "מוצאים את הרדיוס"
+    },
+    {
+      "file": "page-38.html",
+      "workbookNumber": 38,
+      "chapterId": "volume",
+      "title": "נפח גליל — סיכום"
+    },
+    {
+      "file": "page-39.html",
+      "workbookNumber": 39,
+      "chapterId": "surface",
+      "title": "גליל — חישוב שטח הבסיס"
+    },
+    {
+      "file": "page-40.html",
+      "workbookNumber": 40,
+      "chapterId": "surface",
+      "title": "גליל — חישוב שטח המעטפת"
+    },
+    {
+      "file": "page-41.html",
+      "workbookNumber": 41,
+      "chapterId": "surface",
+      "title": "גליל — חישוב שטח הפנים"
+    },
+    {
+      "file": "page-42.html",
+      "workbookNumber": 42,
+      "chapterId": "prep",
+      "title": "חתך צירי של הגליל"
+    },
+    {
+      "file": "page-43.html",
+      "workbookNumber": 43,
+      "chapterId": "prep",
+      "title": "משפט פיתגורס בגליל"
+    },
+    {
+      "file": "page-44.html",
+      "workbookNumber": 44,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 1"
+    },
+    {
+      "file": "page-45.html",
+      "workbookNumber": 45,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 2"
+    },
+    {
+      "file": "page-46.html",
+      "workbookNumber": 46,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 3"
+    },
+    {
+      "file": "page-47.html",
+      "workbookNumber": 47,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 4"
+    },
+    {
+      "file": "page-48.html",
+      "workbookNumber": 48,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 5"
+    },
+    {
+      "file": "page-49.html",
+      "workbookNumber": 49,
+      "chapterId": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים — שאלה 7"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "recognition",
+      "title": "זיהוי הגליל ומושגי יסוד",
+      "startPage": 1,
+      "endPage": 10,
+      "color": "#2563eb",
+      "tint": "#eff6ff"
+    },
+    {
+      "id": "base-area",
+      "title": "π ושטח הבסיס",
+      "startPage": 11,
+      "endPage": 16,
+      "color": "#0f766e",
+      "tint": "#ecfdf5"
+    },
+    {
+      "id": "volume",
+      "title": "נפח הגליל",
+      "startPage": 17,
+      "endPage": 38,
+      "color": "#7c3aed",
+      "tint": "#f5f3ff"
+    },
+    {
+      "id": "surface",
+      "title": "שטח הפנים",
+      "startPage": 39,
+      "endPage": 41,
+      "color": "#c2410c",
+      "tint": "#fff7ed"
+    },
+    {
+      "id": "prep",
+      "title": "הכנה לשאלות התוכנית",
+      "startPage": 42,
+      "endPage": 43,
+      "color": "#15803d",
+      "tint": "#f0fdf4"
+    },
+    {
+      "id": "curriculum",
+      "title": "שאלות מתוך תוכנית הלימודים",
+      "startPage": 44,
+      "endPage": 49,
+      "color": "#a16207",
+      "tint": "#fefce8"
+    }
+  ],
+  "pdf": {
+    "file": "galil-student.pdf",
+    "pageCount": 50,
+    "sha256": "5841f30601775e091c61e4feb8081e1c5e20889d18cc086d982cf7f74eb7a016",
+    "coverPages": 1
+  },
+  "contentHash": "5d4eb12ef3bbf820626d43d7b0d084d2bc1277bfcfafef2e672d81d7c3e845a7",
+  "builtAt": "2026-10-12T07:06:02.629Z",
+  "version": "0.0.0"
+}

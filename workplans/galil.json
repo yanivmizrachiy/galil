@@ -4,8 +4,8 @@
   "repository": "yanivmizrachiy/galil",
   "canonicalSourceOfTruth": "SOURCE_OF_TRUTH.md",
   "canonicalProgressTracker": true,
-  "updatedAt": "2026-10-12T07:05:53.291Z",
-  "updatedBy": "Claude Code — Yaniv 2026-10-12: Galil cover restored in the approved Harut cover style with the approved artwork (assets/cover-bg.jpg) and local district logo; root cause: 71e53ae referenced an artwork file that was never committed, then a 15 KB webp placeholder rendered blank; cover-qa/build-pdf/fingerprint/SSOT §19 aligned; PDF rebuilt (cover + 49).",
+  "updatedAt": "2026-11-08T22:10:00.000Z",
+  "updatedBy": "Claude Code — Yaniv 2026-11-08: expose WORKBOOK_MANIFEST.json v3 + self-hosted reader fonts for the Jerusalem district native reader (no page content changed); build-workbook-manifest + verify-manifest added to the qa chain and regenerated on every build-pdf; CI runner pinned so Playwright can install Chromium.",
   "scoring": {
     "weightTotal": 100,
     "formula": "round(sum(task.weight * task.percent / 100))",
